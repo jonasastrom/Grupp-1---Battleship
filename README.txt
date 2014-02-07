@@ -1,1 +1,1 @@
-Här kan det stå roliga saker
+Här kan det stå roliga saker, te.x hur många laxar en braxlax har.
