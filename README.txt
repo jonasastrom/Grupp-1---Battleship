@@ -1,1 +1,3 @@
-Här kan det stå roliga saker, te.x hur många laxar en braxlax har.
+Hï¿½r kan det stï¿½ roliga saker, te.x hur mï¿½nga laxar en braxlax har.
+
+Tre laxar i en laxask // steff
