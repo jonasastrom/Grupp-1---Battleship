@@ -1,4 +1,4 @@
-Battleship/bin*
-Battleship/bin/*
 Battleship/bin
 Battleship/bin/
+.classpath
+.metadata
