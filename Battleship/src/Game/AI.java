@@ -1,25 +1,28 @@
 package Game;
+import java.lang.*;
+import java.awt.*;
+
 /**
  * 
  * @author Steffi Daniel, Robert Larsson
  *
  */
 public class AI extends Player 
-{
+{	
 	/**
-	 * Decides where AI is going to shoot.
+	 * Computer will randomly place the ships on the map
 	 */
-	private void createFireSolution()
+	public void placeShips()
 	{
-		
+
 	}
 
 	/**
-	 * Shoots down the zone
-	 * @return
+	 * Decides where AI is going to shoot.
 	 */
-	public boolean shoot()
+	private void createFire()
 	{
-		return false;
+
 	}
+
 }
