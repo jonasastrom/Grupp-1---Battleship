@@ -27,11 +27,19 @@ public class GameEngine {
 
 	// keeps the game running
 	public void run() {
-		boolean playerTurn = false;
+		boolean playerTurn = true;
 		
-		
-		
-		
+		while(!winPlayer){
+			if(playerTurn){
+				player.shoot();
+				playerTurn = false;
+			}
+			else{
+				//ai.shoot();
+				playerTurn = true;
+			}
+		}
+
 	}
 
 	// starts the game
