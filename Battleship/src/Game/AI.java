@@ -34,4 +34,11 @@ public class AI extends Player {
 		//battlefield.setShip();
 		
 	}
+	
+	/**
+	 * AIs turn to attack
+	 */
+	public void attack(){
+		
+	}
 }
