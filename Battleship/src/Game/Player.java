@@ -6,13 +6,14 @@ public class Player {
 		return false;
 	}
 	
-	public void placeShips(){
-		
-	}
-	
 	public void shoot(){
 		
 	}
-	
+
+	public void placeShips(int ship) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

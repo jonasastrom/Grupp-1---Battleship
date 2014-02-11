@@ -9,19 +9,23 @@ import java.awt.*;
  * 
  */
 public class AI extends Player {
+	int difficulties;
+	
+	/**
+	 * the constructor of this class
+	 */
+	public AI(int difficulties){
+		this.difficulties = difficulties;
+	}
+	
 	@Override
 	/**
-	 * 
+	 * Placing out the ships and 
+	 * it will override the Player class method placeShips() 
+	 * steff does this
 	 */
-	public void placeShips(){
+	public void placeShips(int ship){
 		super.placeShips();
 	}
 	
-	/**
-	 * Decides where AI is going to shoot.
-	 */
-	private void createFire(int diff) {
-		
-	}
-
 }
