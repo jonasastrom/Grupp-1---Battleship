@@ -25,7 +25,14 @@ public class AI extends Player {
 	 * steff does this
 	 */
 	public void placeShips(int ship){
-		super.placeShips();
+		
+		//super.placeShips();
+	}
+	
+	private boolean ifShips(int ship){
+		
+			return false;
+		
 	}
 	
 }
