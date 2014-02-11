@@ -27,6 +27,11 @@ public class GameEngine {
 
 	// keeps the game running
 	public void run() {
+		boolean playerTurn = false;
+		
+		
+		
+		
 	}
 
 	// starts the game
