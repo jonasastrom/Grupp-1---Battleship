@@ -2,10 +2,13 @@ package Game;
 import GUI.Gui;
 
 public class GameEngine {
-
+	
 	public static void main(String[] args) {
 		// Creates a new object of GUI (for creating a frame)
 		Gui gui = new GUI.Gui();
+		Player player = new Player();
+		AI ai = new AI();
+		
 
 		//TODO:
 		
@@ -26,6 +29,7 @@ public class GameEngine {
 
 	// ends the game and pops a prompt to the player
 	private void gameOver() {
+		
 	}
 
 }
