@@ -20,7 +20,7 @@ public class AI extends Player {
 	/**
 	 * Decides where AI is going to shoot.
 	 */
-	private void createFire() {
+	private void createFire(int diff) {
 		
 	}
 
