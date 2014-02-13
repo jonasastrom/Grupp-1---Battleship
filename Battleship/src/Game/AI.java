@@ -41,4 +41,7 @@ public class AI extends Player {
 	public void attack(){
 		
 	}
+	
+	// Meningslös kommentar för att testa
+	
 }
