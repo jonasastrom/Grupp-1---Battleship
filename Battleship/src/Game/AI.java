@@ -42,6 +42,11 @@ public class AI extends Player {
 		
 	}
 	
-	// Meningslös kommentar för att testa
+	/**
+	 * Create the AI-players firing solution based on the set difficulty.
+	 */
+	private void createFiringSolution() {
+		
+	}
 	
 }
