@@ -100,20 +100,15 @@ public class GameEngine {
 		}
 		resetGame();	// If the game is not over but the menu option for a New Game has been chosen, then the win/lose messages won't be displayed.
 	}
-	public void testGameOver(int gameOverState) {
-		if(gameOverState == 0) {
+	public void testGameOver(boolean gameOverState) {
+		if(!gameOverState) {
 			gameOver = true;
 			winPlayer = false;
 			gameOver();
 		}
-		else if(gameOverState == 1) {
+		else if(gameOverState) {
 			gameOver = true;
 			winPlayer = true;
-			gameOver();
-		}
-		else if(gameOverState == 2) {
-			gameOver = false;
-			winPlayer = false;
 			gameOver();
 		}
 	}
