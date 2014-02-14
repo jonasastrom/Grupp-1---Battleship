@@ -37,10 +37,18 @@ public class GameEngine {
 			if(playerTurn){
 				//player.attack();
 				playerTurn = false;
+				if(!ai.hasShips()){
+					winPlayer = true;
+					gameOver = true;
+				}
 			}
 			else{
 				//ai.attack();
 				playerTurn = true;
+				if(!player.hasShips()){
+					winPlayer = false;
+					gameOver = true;
+				}
 			}
 		}
 
