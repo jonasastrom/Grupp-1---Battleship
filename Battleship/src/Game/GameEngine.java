@@ -17,21 +17,14 @@ public class GameEngine {
 		player = new Player();
 		ai = new AI(0);	//0 för att milstolpe 1 inte har något val av svårighet
 	}
-<<<<<<< HEAD
 	public static void main(String[] args) {
-		GameEngine gaem = new GameEngine();
+		GameEngine gamE = new GameEngine();
 		
-		gaem.run();
-		
-=======
+		gamE.run();
+	}
 	
 	public enum Status{
 		MISS,HIT,SUNK,SHIP
-	}
-	
-	public void main(String[] args) {
-		run();
->>>>>>> ded5f71c957ae7a530be472cb26a9187f1298a2b
 	}
 	
 	/**
