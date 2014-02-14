@@ -10,14 +10,14 @@ import javax.swing.*;
  */
 public class AI extends Player {
 	int difficulties;
-	private HashSet firingSolution;
+	private ArrayList<int[]> firingSolution;
 
 	/**
 	 * the constructor of this class
 	 */
 	public AI(int difficulties) {
 		this.difficulties = difficulties;
-		firingSolution = new HashSet<>();
+		firingSolution = new ArrayList<>();
 	}
 
 	@Override
@@ -56,8 +56,5 @@ public class AI extends Player {
 		// firingSolution = pullListofZones;
 	}
 
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 34c899fccbce8fd8a7f91b18d433a82000215d4c

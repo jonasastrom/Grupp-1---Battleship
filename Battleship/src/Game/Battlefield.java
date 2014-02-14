@@ -1,13 +1,14 @@
 package Game;
 
 /**
- * Handles the battefield
+ * Handles the Battefield
  * @author grupp1
  *
  */
 public class Battlefield {
 
 	int [10] [10] zones;
+	
 	/**
 	 * Constructor
 	 */
@@ -65,8 +66,7 @@ public class Battlefield {
 	public Ship getShip(int x, int y)
 	{
 		zones[x][y] = Zone zone;
-		zone.getShip();
-
+		return zone.getShip();
 	}
 
 	/**
@@ -79,7 +79,4 @@ public class Battlefield {
 		zones[x][y] = Zone zone;
 		zone.setShip(ship);
 	}
-
-
-
 }

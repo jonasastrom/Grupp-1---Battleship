@@ -1,7 +1,7 @@
 package Game;
 
 /**
- * Handles the zones of the Dattlefield
+ * Handles the zones of the Battlefield
  * @author grupp1
  *
  */
@@ -70,5 +70,4 @@ public class Zone {
 	{
 		this.ship = ship;
 	}
-
 }
