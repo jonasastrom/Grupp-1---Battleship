@@ -30,13 +30,11 @@ public class GameEngine {
 	// keeps the game running
 	public void run() {
 		boolean playerTurn = true;
-<<<<<<< HEAD
+
 		boolean gameOver = false;
 		
 		newGame();
-=======
-			
->>>>>>> 153f515fd037f7bec027561a95d3d510bacc80f3
+
 		while(!gameOver){
 			if(playerTurn){
 				//player.attack();
@@ -55,7 +53,11 @@ public class GameEngine {
 		
 	}
 
-	// ends the game and pops a prompt to the player
+	/**
+	 *  Ends the game, pops a prompt to the player, and cleans variables
+	 *  between games. This also starts a new game if the player has prompted it
+	 *  whether through the prompt or from being called before the game is over.
+	 */
 	private void gameOver() {
 		
 		String winText;
