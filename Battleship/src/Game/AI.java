@@ -1,6 +1,7 @@
 package Game;
 
 import java.util.HashSet;
+import java.util.Random;
 
 /**
  * 
@@ -8,19 +9,14 @@ import java.util.HashSet;
  * 
  */
 public class AI extends Player {
-	
-	private Battlefield battlefield;
-	private int difficulties;
-	
+	int difficulties;
 	private HashSet firingSolution;
-	
 
 	/**
 	 * the constructor of this class
 	 */
-	public AI(int difficulties, Battlefield givenField) {
+	public AI(int difficulties) {
 		this.difficulties = difficulties;
-		this.battlefield = givenField;
 		firingSolution = new HashSet<>();
 	}
 
@@ -32,13 +28,17 @@ public class AI extends Player {
 	 * steff does this
 	 */
 	public void placeShips(int ship) {
-		int tempNumber = (int) (Math.random());
-		char tempAlfapet; //big letters
+		Random random = new Random();
+		int xNumber  = random.nextInt(10) + 1;
+		int yNumber  = random.nextInt(10) + 1;
 		
-		//battlefield.hasShip();
-		//battlefield.setShip();
+		System.out.println(xNumber);
+		System.out.println(yNumber);
+		//battlefield.hasShip(xNumber, yNumber);
+		//battlefield.setShip(xNumber, yNumber);
 		
 	}
+	
 	
 	/**
 	 * AIs turn to attack
