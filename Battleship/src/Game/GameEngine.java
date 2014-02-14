@@ -13,7 +13,7 @@ public class GameEngine {
 	
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
-		Gui gui = new GUI.Gui();
+		gui = new GUI.Gui();
 		player = new Player();
 		ai = new AI(0);	//0 för att milstolpe 1 inte har något val av svårighet
 	}
