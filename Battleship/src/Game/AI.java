@@ -1,7 +1,8 @@
 package Game;
 
-import java.util.*;
-import javax.swing.*;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * 
@@ -10,14 +11,14 @@ import javax.swing.*;
  */
 public class AI extends Player {
 	int difficulties;
-	private ArrayList<int[]> firingSolution;
+	private Set<int[]> firingSolution;
 
 	/**
 	 * the constructor of this class
 	 */
 	public AI(int difficulties) {
 		this.difficulties = difficulties;
-		firingSolution = new ArrayList<>();
+		firingSolution = new HashSet<>();
 	}
 
 	@Override
@@ -53,8 +54,7 @@ public class AI extends Player {
 	 */
 	private void createFiringSolution() {
 		// In the initial, stupid iteration, only randomly attack zones.
-		// firingSolution = pullListofZones;
+		// Do a loop to create random attacks, manually checking for conflicts?
 	}
-
 
 }
