@@ -39,9 +39,8 @@ public class AI extends Player {
 			// battlefield.hasShip(xNumber, yNumber);
 			// battlefield.setShip(xNumber, yNumber);
 		//}
-		
 	}
-	
+
 	/**
 	 * AIs turn to attack
 	 */
@@ -57,4 +56,8 @@ public class AI extends Player {
 		// firingSolution = pullListofZones;
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 34c899fccbce8fd8a7f91b18d433a82000215d4c
