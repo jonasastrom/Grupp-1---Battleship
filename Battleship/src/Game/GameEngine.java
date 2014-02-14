@@ -11,13 +11,13 @@ public class GameEngine {
 	Boolean winPlayer;
 	Boolean gameOver;
 	
-	public static void main(String[] args) {
+	public void main(String[] args) {
 		// Creates a new object of GUI (for creating a frame)
 		Gui gui = new GUI.Gui();
 		Player player = new Player();
 		AI ai = new AI(0);	//0 för att milstolpe 1 inte har något val av svårighet
 		
-
+		run();
 		//TODO:
 		
 		// GameEngine kontrollerar players hasShip och anropar gameOver n�r en
@@ -58,7 +58,8 @@ public class GameEngine {
 	}
 
 	/**
-	 *  starts the game
+	 *  Sets a new game up by saying that the game is not over
+	 *  and making the players place their ships.
 	 */
 	public void newGame() {
 		gameOver = false;
@@ -93,6 +94,6 @@ public class GameEngine {
 		ai = null;
 		gui = null;
 		System.gc();
-		newGame();
+		run();
 	}
 }
