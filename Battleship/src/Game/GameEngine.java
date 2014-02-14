@@ -26,8 +26,10 @@ public class GameEngine {
 		// Keeps track of turns of the players
 
 	}
-
-	// keeps the game running
+	/**
+	 * The main game loop
+	 * It sets the player's turn and lets players 
+	 */
 	public void run() {
 		boolean playerTurn = true;
 		
@@ -91,6 +93,9 @@ public class GameEngine {
 		ai = null;
 		gui = null;
 		System.gc();
+		gui = new GUI.Gui();
+		player = new Player();
+		ai = new AI(0);
 		run();
 	}
 }
