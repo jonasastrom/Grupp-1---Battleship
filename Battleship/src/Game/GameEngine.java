@@ -66,6 +66,7 @@ public class GameEngine {
 	 */
 	public void newGame() {
 		gameOver = false;
+		winPlayer = false;
 		player.placeShips(5);
 		ai.placeShips(5);
 	}
