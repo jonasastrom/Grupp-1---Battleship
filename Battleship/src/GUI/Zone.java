@@ -14,7 +14,7 @@ public class Zone extends JButton{
 	public final String name;
 
 	/**
-	 * constructor
+	 * Constructor
 	 */
 	public Zone(int x, int y, String name){
 		this.x = x;

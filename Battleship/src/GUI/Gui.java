@@ -19,6 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Game.GameEngine;
 import Game.Zone.ZoneState;
 
 /**
@@ -33,11 +34,13 @@ public class Gui extends JFrame implements ActionListener {
 	private JLabel informatioText;
 	private ArrayList<String> letters = new ArrayList<String>();
 	private ArrayList<Zone> zoneArray = new ArrayList<Zone>();
+	private GameEngine gameEngine;
 
 	/**
 	 *  Constructor
 	 */
-	public Gui(){
+	public Gui(GameEngine gameEngine){
+		this.gameEngine = gameEngine;
 		makeGUIFrame();
 	}
 
@@ -248,7 +251,7 @@ public class Gui extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource() == newGame){
-
+			gameEngine.run();
 		}else if(e.getSource() == quit){
 			System.exit(0);
 		}else if(e.getSource() == about){
