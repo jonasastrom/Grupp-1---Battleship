@@ -47,7 +47,8 @@ public class GameEngine {
 	}
 
 	/**
-	 *  starts the game
+	 *  Sets a new game up by saying that the game is not over
+	 *  and making the players place their ships.
 	 */
 	public void newGame() {
 		gameOver = false;
@@ -82,6 +83,6 @@ public class GameEngine {
 		ai = null;
 		gui = null;
 		System.gc();
-		newGame();
+		run();
 	}
 }
