@@ -1,8 +1,7 @@
+
 package Game;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 
@@ -11,7 +10,8 @@ import java.util.Set;
  */
 public class AI extends Player {
 	int difficulties;
-	private Set<int[]> firingSolution;
+	private HashSet firingSolution;
+	private Battlefield battlefield;
 
 	/**
 	 * the constructor of this class
@@ -25,33 +25,53 @@ public class AI extends Player {
 	/**
 	 * Placing out the ships and 
 	 * it will override the Player class method placeShips() 
-	 * it will also call the method setShip(),hasShips()
-	 * steff does this
+	 * and call the method setShip()
+	 * get an array of all the list 
+	 * 
 	 */
 	public void placeShips(Ship ship) {
-		
+
 		Random random = new Random();
 		int xNumber = random.nextInt(10) + 1;
 		int yNumber = random.nextInt(10) + 1;
-		Battlefield battlefield = null;
-		
+		int xNewNumber = random.nextInt(10) + 1;
+		int yNewNumber = random.nextInt(10) + 1;
+		battlefield = null;
+
 		System.out.println(xNumber);
 		System.out.println(yNumber);
 
-		if(battlefield.hasShip(xNumber, yNumber) && Math.abs(xNumber) == 2){
+		if (isLegal(xNumber, yNumber, yNewNumber, xNewNumber))
 			battlefield.setShip(xNumber, yNumber, ship);
-		}
-		else if(battlefield.hasShip(xNumber, yNumber) && Math.abs(xNumber) == 3){
-			battlefield.setShip(xNumber, yNumber, ship);
-		}
-		else if(battlefield.hasShip(xNumber, yNumber) && Math.abs(xNumber) == 4){
-			battlefield.setShip(xNumber, yNumber, ship);
-		}
-		else if(battlefield.hasShip(xNumber, yNumber) && Math.abs(xNumber) == 5){
-			battlefield.setShip(xNumber, yNumber, ship);
-		}
 		else
 			System.out.println("Error, please try again!");
+	}
+
+	/**
+	 * 
+	 * @param xNumber
+	 * @param yNumber
+	 * @param yNewNumber
+	 * @param xNewNumber
+	 * @return
+	 */
+	private boolean isLegal(int xNumber, int yNumber, int yNewNumber,
+			int xNewNumber) {
+
+		if (battlefield.hasShip(xNumber, yNumber)) {
+			if (Math.abs(xNumber - xNewNumber) == 2 || (Math.abs(yNumber - yNewNumber) == 2)) {
+				return true;
+			} else if (Math.abs(xNumber - xNewNumber) == 3 || (Math.abs(yNumber - yNewNumber) == 3)) {
+				return true;
+			} else if (Math.abs(xNumber - xNewNumber) == 4 || (Math.abs(yNumber - yNewNumber) == 4)) {
+				return true;
+			} else if (Math.abs(xNumber - xNewNumber) == 3 || (Math.abs(yNumber - yNewNumber) == 5))
+				return true;
+
+		} else
+			return false;
+
+		return false;
 	}
 
 	/**
@@ -66,7 +86,7 @@ public class AI extends Player {
 	 */
 	private void createFiringSolution() {
 		// In the initial, stupid iteration, only randomly attack zones.
-		// Do a loop to create random attacks, manually checking for conflicts?
+		// firingSolution = pullListofZones;
 	}
 
 }
