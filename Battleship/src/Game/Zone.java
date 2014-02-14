@@ -1,4 +1,5 @@
-package Game;
+package game;
+package gui;
 
 /**
  * Handles the zones of the Battlefield
@@ -9,9 +10,14 @@ public class Zone {
 
 	int xPos;
 	int yPos;
+	int status;
 	boolean isBombed = false;
 	boolean hasShip = false;
 	Ship ship;
+	public final static enum ZoneState
+	{
+		MISS,HIT,SUNK,SHIP;
+	}
 
 	/**
 	 * Constructor
@@ -38,7 +44,17 @@ public class Zone {
 	public boolean setBomb()
 	{
 		isBombed = true;
-		ship.hit();
+		if(ship!=null)
+		{
+			ship.hit();
+			if(ship.isSunk())
+			{
+				gui.updateZone(++x,++y,ZoneState.SUNK)
+			}
+			
+			else {gui.updateZone(++x,++y,ZoneState.HIT)}
+		}
+		else{gui.updateZone(++x,++y,ZoneState.MISS)}
 	}
 
 	/**
