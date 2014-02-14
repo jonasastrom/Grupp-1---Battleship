@@ -30,15 +30,14 @@ public class GameEngine {
 	// keeps the game running
 	public void run() {
 		boolean playerTurn = true;
-		boolean gameOver = false;
-		
+			
 		while(!gameOver){
 			if(playerTurn){
-				player.shoot();
+				//player.attack();
 				playerTurn = false;
 			}
 			else{
-				//ai.shoot();
+				//ai.attack();
 				playerTurn = true;
 			}
 		}
