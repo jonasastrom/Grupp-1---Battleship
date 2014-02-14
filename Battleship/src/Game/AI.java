@@ -8,15 +8,19 @@ import java.util.HashSet;
  * 
  */
 public class AI extends Player {
-	int difficulties;
+	
+	private Battlefield battlefield;
+	private int difficulties;
 	
 	private HashSet firingSolution;
+	
 
 	/**
 	 * the constructor of this class
 	 */
-	public AI(int difficulties) {
+	public AI(int difficulties, Battlefield givenField) {
 		this.difficulties = difficulties;
+		this.battlefield = givenField;
 		firingSolution = new HashSet<>();
 	}
 
