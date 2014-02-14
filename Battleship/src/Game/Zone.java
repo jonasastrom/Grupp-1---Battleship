@@ -13,6 +13,9 @@ public class Zone {
 	boolean hasShip = false;
 	Ship ship;
 
+	/**
+	 * Constructor
+	 */
 	public zone(int xPos, int yPos)
 	{
 		this.xPos = xPos;
