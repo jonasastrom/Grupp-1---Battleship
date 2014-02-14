@@ -45,15 +45,7 @@ public class Zone extends JButton{
 	/**
 	 *  This method change the background color of the zone.
 	 */
-	public void changeColor(int number){
-		if(number == 0){
-			setBackground(Color.GRAY);
-		}else if(number == 1){
-			setBackground(Color.GREEN);
-		}else if(number == 2){
-			setBackground(new Color(222, 49, 99));
-		}else if(number == 3){
-			setBackground(Color.BLACK);
-		}
+	public void changeColor(Color color){
+		setBackground(color);
 	}
 }

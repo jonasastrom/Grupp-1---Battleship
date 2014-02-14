@@ -1,5 +1,5 @@
 Battleship/bin
 Battleship/bin/*
 .classpath
-.class
+*.class
 .metadata

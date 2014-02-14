@@ -1,9 +1,14 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -11,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -21,6 +27,8 @@ import javax.swing.JPanel;
 public class Gui extends JFrame implements ActionListener {
 
 	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane;
+	//	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
+	private JLabel informatioText;
 	private ArrayList<String> letters = new ArrayList<String>();
 	private ArrayList<Zone> zoneArray = new ArrayList<Zone>();
 
@@ -36,13 +44,69 @@ public class Gui extends JFrame implements ActionListener {
 	 */
 	private void makeGUIFrame(){
 		setTitle("BattleShip");
-
 		setLayout(new BorderLayout(10, 10));
-		add(new JLabel("höger"), BorderLayout.EAST);
-		add(new JLabel("vänster"), BorderLayout.WEST);
-		add(new JLabel("upp"), BorderLayout.NORTH);
-		add(new JLabel("ner"), BorderLayout.SOUTH);
 
+		/**
+		 *  Add the buttons to the left in the frame
+		 */
+		//		ButtonGroup buttonGroup = new ButtonGroup();
+		//
+		//		carrier = new JRadioButton("Carrier 5 Rutor");
+		//		battleship = new JRadioButton("Battleship 4 Rutor");
+		//		submarine = new JRadioButton("Submarine 3 Rutor");
+		//		cruiser = new JRadioButton("Cruiser 3 Rutor");
+		//		destroyer = new JRadioButton("Destroyer 2 Rutor ");
+		//
+		//		buttonGroup.add(carrier);
+		//		buttonGroup.add(battleship);
+		//		buttonGroup.add(submarine);
+		//		buttonGroup.add(cruiser);
+		//		buttonGroup.add(destroyer);
+		//		
+		//		JPanel radioButtonPanel = new JPanel(new GridLayout(0, 1));
+		//		radioButtonPanel.add(carrier);
+		//		radioButtonPanel.add(battleship);
+		//		radioButtonPanel.add(submarine);
+		//		radioButtonPanel.add(cruiser);
+		//		radioButtonPanel.add(destroyer);
+		//
+		//		add(radioButtonPanel, BorderLayout.WEST);
+
+		/**
+		 * Add the color-description to the top of the frame
+		 */
+		JPanel colorPanel = new JPanel(new GridLayout(1, 0));
+		JLabel green = new JLabel("Green - Hit");
+		JLabel black = new JLabel("Black - Ship");
+		JLabel cerise = new JLabel("Cerise - Sunk");
+		JLabel gray = new JLabel("Gray - Miss");
+
+		green.setForeground(Color.GREEN);
+		black.setForeground(Color.BLACK);
+		cerise.setForeground(new Color(222, 49, 99));
+		gray.setForeground(Color.GRAY);
+
+		colorPanel.add(green);
+		colorPanel.add(black);
+		colorPanel.add(cerise);
+		colorPanel.add(gray);
+
+		add(colorPanel, BorderLayout.NORTH);
+
+		/**
+		 * Add something to the bottom of the frame
+		 */
+		informatioText = new JLabel(" ");
+		add(informatioText, BorderLayout.SOUTH);
+
+		/**
+		 * Add a text to the right of the frame
+		 */
+		add(new JLabel("   "), BorderLayout.EAST);
+
+		/**
+		 * Add the zones in the middle of the frame
+		 */
 		JPanel gamePanel = new JPanel(new GridLayout(11, 11, 2, 2));
 		add(gamePanel, BorderLayout.CENTER);
 
@@ -65,7 +129,9 @@ public class Gui extends JFrame implements ActionListener {
 				zone = new Zone(j, i, name + i);
 				gamePanel.add(zone);
 				zone.addActionListener(this);
-				zoneArray.add(zone);
+				if((i * j) != 0 ){
+					zoneArray.add(zone);
+				}
 			}
 		}
 
@@ -137,29 +203,60 @@ public class Gui extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * 
+	 * When this method gets called, set the string to the buttom of the frame
 	 */
-	public void updateZone(int x, int y, int color){
-		int zoneNumber = ((y - 1) * 10) + x;
-		System.out.println("nummer:" + zoneNumber);
-		Zone zone = zoneArray.get(zoneNumber - 1);
-		
+	public void changeInformatioText(String string){
+		informatioText.setText(string);
 	}
 
+	/**
+	 * This method get coordinates of a specific zone, and call a method to change to a color
+	 */
+	public void updateZone(int x, int y, Zone.ZoneState zoneState){
+		int zoneNumber = ((y - 1) * 10) + x;
+		Zone zone = zoneArray.get(zoneNumber - 1);
+		if(zoneState == ZoneState.MISS){
+			zone.changeColor(Color.GRAY);
+		}else if(zoneState == ZoneState.HIT){
+			zone.changeColor(Color.GREEN);
+		}else if(zoneState == ZoneState.SUNK){
+			zone.changeColor(new Color(222, 49, 99));
+		}else if(zoneState == ZoneState.SHIP){
+			zone.changeColor(Color.BLACK);
+		}
+	}
+
+	/**
+	 * This method gets called when a user click on the menu-bar on the button "Rules". 
+	 * Then the wiki-page about the game Battleship will open.
+	 * @throws URISyntaxException
+	 */
+	private void openURIForRules() throws URISyntaxException{
+		final URI uri = new URI("http://battleship.wikia.com/wiki/Battleship_(game)");
+		try {
+			Desktop.getDesktop().browse(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 *  This method listen to the players actions.
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e){
 		if(e.getSource() == newGame){
-			System.out.println("newGame");
+
 		}else if(e.getSource() == quit){
 			System.exit(0);
 		}else if(e.getSource() == about){
-			System.out.println("about");
+			JOptionPane.showMessageDialog(null, "Hej! \nVi är 7 coola kids från DAT055 och vi gör ett spel.", "About", JOptionPane.INFORMATION_MESSAGE);
 		}else if(e.getSource() == rules){
-			System.out.println("rules");
+			try {
+				openURIForRules();
+			} catch (URISyntaxException e1) {
+				e1.printStackTrace();
+			}		
 		}else if(e.getSource() == training){
 			System.out.println("training");
 		}else if(e.getSource() == easy){
@@ -171,12 +268,14 @@ public class Gui extends JFrame implements ActionListener {
 		}else if(e.getSource() == insane){
 			System.out.println("insane");
 		}else if(e.getSource() instanceof Zone){
-			Zone temp = (Zone) e.getSource();
-			System.out.println("x:" + temp.x + " y:" + temp.y + " name:" + temp.name);
-			int i = ((temp.y - 1) * 10 ) + temp.x;
-			System.out.println("nummer:" + i);
-			temp.changeColor(0);
-			temp.setEnabled(false);
+//			if( KOLLA OM DET ÄR SPELARENS TUR){
+				Zone temp = (Zone) e.getSource();
+				System.out.println("x:" + temp.x + " y:" + temp.y + " name:" + temp.name);
+				int i = ((temp.y - 1) * 10 ) + temp.x;
+				System.out.println("nummer:" + i);
+				updateZone(temp.x, temp.y, );
+				temp.setEnabled(false);
+//			}
 		}
 	}
 }
