@@ -83,7 +83,7 @@ public class GameEngine {
 	 *  between games. This also starts a new game if the player has prompted it
 	 *  whether through the prompt or from being called before the game is over.
 	 */
-	private void gameOver() {
+	public void gameOver() {
 		
 		String winText;
 		if(gameOver){	
@@ -100,6 +100,24 @@ public class GameEngine {
 		}
 		resetGame();	// Om Spelet inte är vunnet/förlorat, men New Game har valts som alternativ i menyraden skall spelet baraåterställas
 	}
+	public void testGameOver(int gameOverState) {
+		if(gameOverState == 0) {
+			gameOver = true;
+			winPlayer = false;
+			gameOver();
+		}
+		else if(gameOverState == 1) {
+			gameOver = true;
+			winPlayer = true;
+			gameOver();
+		}
+		else if(gameOverState == 2) {
+			gameOver = false;
+			winPlayer = false;
+			gameOver();
+		}
+	}
+	
 	private void resetGame() {
 		player = null;
 		ai = null;
