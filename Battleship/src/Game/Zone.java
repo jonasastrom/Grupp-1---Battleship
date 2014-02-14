@@ -30,11 +30,12 @@ public class Zone {
 
 	/**
 	 * Set true if the zone has already been bombed
-	 * False otherwise
+	 * 
 	 */
 	public boolean setBomb()
 	{
 		isBombed = true;
+		ship.hit();
 	}
 
 	/**
