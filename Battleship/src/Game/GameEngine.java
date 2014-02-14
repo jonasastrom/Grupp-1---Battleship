@@ -5,11 +5,11 @@ import GUI.Gui;
 
 @SuppressWarnings("unused")		// För att gula streck är irriterande
 public class GameEngine {
-	Gui gui;
-	Player player;
-	AI ai;
-	Boolean winPlayer;
-	Boolean gameOver;
+	private Gui gui;
+	private Player player;
+	private AI ai;
+	private Boolean winPlayer;
+	private Boolean gameOver;
 	
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
