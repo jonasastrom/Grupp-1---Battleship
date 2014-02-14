@@ -1,8 +1,6 @@
 package Game;
 
-import java.lang.*;
-import java.awt.*;
-import java.util.Random;
+import java.util.HashSet;
 
 /**
  * 
@@ -11,12 +9,15 @@ import java.util.Random;
  */
 public class AI extends Player {
 	int difficulties;
+	
+	private HashSet firingSolution;
 
 	/**
 	 * the constructor of this class
 	 */
 	public AI(int difficulties) {
 		this.difficulties = difficulties;
+		firingSolution = new HashSet<>();
 	}
 
 	@Override
@@ -46,7 +47,8 @@ public class AI extends Player {
 	 * Create the AI-players firing solution based on the set difficulty.
 	 */
 	private void createFiringSolution() {
-		
+		// In the initial, stupid iteration, only randomly attack zones.
+//		firingSolution = pullListofZones;
 	}
 	
 }
