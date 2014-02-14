@@ -17,6 +17,12 @@ public class GameEngine {
 		player = new Player();
 		ai = new AI(0);	//0 för att milstolpe 1 inte har något val av svårighet
 	}
+	
+	/**
+	 * This is a main method.
+	 * It methods mains.
+	 * @param args Gör absolut ingenting i detta program
+	 */
 	public static void main(String[] args) {
 		GameEngine gamE = new GameEngine();
 		
@@ -29,7 +35,8 @@ public class GameEngine {
 	
 	/**
 	 * The main game loop
-	 * It sets the player's turn and lets players 
+	 * It sets the player's turn and lets players have their turns in
+	 * destroying each other's fleets
 	 */
 	public void run() {
 		boolean playerTurn = true;
