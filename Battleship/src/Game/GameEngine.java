@@ -23,17 +23,9 @@ public class GameEngine {
 	}
 	
 	public void main(String[] args) {
-		
-		
 		run();
-		//TODO:
-		
-		// GameEngine kontrollerar players hasShip och anropar gameOver n�r en
-		// av spelarna inte har n�gra skepp kvar
-
-		// Keeps track of turns of the players
-
 	}
+	
 	/**
 	 * The main game loop
 	 * It sets the player's turn and lets players 
