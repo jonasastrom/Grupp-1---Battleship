@@ -60,6 +60,7 @@ public class Battlefield {
 
 	/**
 	 * Gets the ship from the zone of with the specified coordinates
+	 * Returns null is there is no ship
 	 * @param int x The x coordinates of the zone to get ship from
 	 * @param int y The y coordinate of the zone to get ship from
 	 */
