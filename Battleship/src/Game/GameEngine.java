@@ -17,6 +17,11 @@ public class GameEngine {
 		player = new Player();
 		ai = new AI(0);	//0 för att milstolpe 1 inte har något val av svårighet
 	}
+	
+	public enum Status{
+		MISS,HIT,SUNK,SHIP
+	}
+	
 	public void main(String[] args) {
 		
 		
