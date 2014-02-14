@@ -3,17 +3,19 @@ import javax.swing.JOptionPane;
 
 import GUI.Gui;
 
+@SuppressWarnings("unused")		// För att gula streck är irriterande
 public class GameEngine {
 	Gui gui;
 	Player player;
 	AI ai;
 	Boolean winPlayer;
+	Boolean gameOver;
 	
 	public static void main(String[] args) {
 		// Creates a new object of GUI (for creating a frame)
 		Gui gui = new GUI.Gui();
 		Player player = new Player();
-		AI ai = new AI();
+		AI ai = new AI(0);	//0 för att milstolpe 1 inte har något val av svårighet
 		
 
 		//TODO:
@@ -28,8 +30,9 @@ public class GameEngine {
 	// keeps the game running
 	public void run() {
 		boolean playerTurn = true;
+		boolean gameOver = false;
 		
-		while(!winPlayer){
+		while(!gameOver){
 			if(playerTurn){
 				player.shoot();
 				playerTurn = false;
