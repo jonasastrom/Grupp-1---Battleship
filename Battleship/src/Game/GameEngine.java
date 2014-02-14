@@ -36,21 +36,24 @@ public class GameEngine {
 		while(!gameOver){
 			if(playerTurn){
 				//player.attack();
-				playerTurn = false;
 				if(!ai.hasShips()){
 					winPlayer = true;
 					gameOver = true;
+					break;
 				}
+				playerTurn = false;
 			}
 			else{
 				//ai.attack();
-				playerTurn = true;
+				
 				if(!player.hasShips()){
 					winPlayer = false;
 					gameOver = true;
+					break;
 				}
 			}
 		}
+		gameOver();
 
 	}
 
