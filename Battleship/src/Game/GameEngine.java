@@ -1,7 +1,13 @@
 package Game;
+import javax.swing.JOptionPane;
+
 import GUI.Gui;
 
 public class GameEngine {
+	Gui gui;
+	Player player;
+	AI ai;
+	Boolean winPlayer;
 	
 	public static void main(String[] args) {
 		// Creates a new object of GUI (for creating a frame)
@@ -12,8 +18,8 @@ public class GameEngine {
 
 		//TODO:
 		
-		// GameEngine kontrollerar players hasShip och anropar gameOver när en
-		// av spelarna inte har några skepp kvar
+		// GameEngine kontrollerar players hasShip och anropar gameOver nï¿½r en
+		// av spelarna inte har nï¿½gra skepp kvar
 
 		// Keeps track of turns of the players
 
@@ -21,6 +27,19 @@ public class GameEngine {
 
 	// keeps the game running
 	public void run() {
+		boolean playerTurn = true;
+		
+		while(!winPlayer){
+			if(playerTurn){
+				player.shoot();
+				playerTurn = false;
+			}
+			else{
+				//ai.shoot();
+				playerTurn = true;
+			}
+		}
+
 	}
 
 	// starts the game
@@ -30,6 +49,21 @@ public class GameEngine {
 	// ends the game and pops a prompt to the player
 	private void gameOver() {
 		
+		String winText;
+		if(winPlayer)
+			winText = "You have won!\n";
+		else
+			winText = "You have lost!\n";
+		if(JOptionPane.showConfirmDialog(null, winText + "Do you want to play again?", "GAME OVER", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			player = null;
+			ai = null;
+			gui = null;
+			winText = null;
+			System.gc();
+			newGame();
+		}
+		else
+			System.exit(0);
 	}
 
 }
