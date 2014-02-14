@@ -1,8 +1,14 @@
 package Game;
 
+/**
+ * Handles the ships
+ * @author grupp1
+ *
+ */
 public class Ship {
 	String name;
 	int lenght;
+	int hit;
 	boolean isVertical;
 	boolean isSunk = false;
 	
@@ -15,24 +21,25 @@ public class Ship {
 	{
 		this.name = name;
 		this.lenght = lenght;
+		hit = 0;
 	}
 	
 	/**
 	 * Returns true if the ship is vertical
 	 * false otherwise
 	 */
-	public boolean isVertical()
+	/*public boolean isVertical()
 	{
 		return true;
-	}
+	}*/
 	
 	/**
 	 * Rotates the ship 90 degrees
 	 */
-	public void rotate()
+	/*public void rotate()
 	{
 
-	}
+	}*/
 
 	/**
 	 * Returns true if the ship has been sun
@@ -41,6 +48,11 @@ public class Ship {
 	public boolean isSunk()
 	{
 		return isSunk;
+	}
+	
+	private void hit()
+	{
+		if(++hit = lenght) {isSunk = true;}
 	}
 	
 }

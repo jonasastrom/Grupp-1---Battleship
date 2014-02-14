@@ -28,18 +28,30 @@ public class AI extends Player {
 	 * it will also call the method setShip(),hasShips()
 	 * steff does this
 	 */
-	public void placeShips(int ship) {
+	public void placeShips(Ship ship) {
+		
 		Random random = new Random();
 		int xNumber = random.nextInt(10) + 1;
 		int yNumber = random.nextInt(10) + 1;
-
+		Battlefield battlefield = null;
+		
 		System.out.println(xNumber);
 		System.out.println(yNumber);
 
-		//if(battlefield.hasShip(xNumber, yNumber) && Math.abs() == 3){
-			// battlefield.hasShip(xNumber, yNumber);
-			// battlefield.setShip(xNumber, yNumber);
-		//}
+		if(battlefield.hasShip(xNumber, yNumber) && Math.abs(xNumber) == 2){
+			battlefield.setShip(xNumber, yNumber, ship);
+		}
+		else if(battlefield.hasShip(xNumber, yNumber) && Math.abs(xNumber) == 3){
+			battlefield.setShip(xNumber, yNumber, ship);
+		}
+		else if(battlefield.hasShip(xNumber, yNumber) && Math.abs(xNumber) == 4){
+			battlefield.setShip(xNumber, yNumber, ship);
+		}
+		else if(battlefield.hasShip(xNumber, yNumber) && Math.abs(xNumber) == 5){
+			battlefield.setShip(xNumber, yNumber, ship);
+		}
+		else
+			System.out.println("Error, please try again!");
 	}
 
 	/**

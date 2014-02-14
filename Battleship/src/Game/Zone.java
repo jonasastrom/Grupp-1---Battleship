@@ -13,6 +13,9 @@ public class Zone {
 	boolean hasShip = false;
 	Ship ship;
 
+	/**
+	 * Constructor
+	 */
 	public zone(int xPos, int yPos)
 	{
 		this.xPos = xPos;
@@ -30,11 +33,12 @@ public class Zone {
 
 	/**
 	 * Set true if the zone has already been bombed
-	 * False otherwise
+	 * 
 	 */
 	public boolean setBomb()
 	{
 		isBombed = true;
+		ship.hit();
 	}
 
 	/**

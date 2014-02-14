@@ -17,13 +17,14 @@ public class GameEngine {
 		player = new Player();
 		ai = new AI(0);	//0 för att milstolpe 1 inte har något val av svårighet
 	}
+	public static void main(String[] args) {
+		GameEngine gamE = new GameEngine();
+		
+		gamE.run();
+	}
 	
 	public enum Status{
 		MISS,HIT,SUNK,SHIP
-	}
-	
-	public void main(String[] args) {
-		run();
 	}
 	
 	/**
@@ -94,8 +95,8 @@ public class GameEngine {
 	private void resetGame() {
 		player = null;
 		ai = null;
-		gui = null;
-		System.gc();
+		gui = null;		// Kallar GC här för att den ska göra sitt jobb lite tidigare
+		System.gc();	// Så kan programmet omöjligtvis ta upp för mycket minne
 		gui = new GUI.Gui();
 		player = new Player();
 		ai = new AI(0);
