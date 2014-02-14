@@ -30,13 +30,10 @@ public class GameEngine {
 	// keeps the game running
 	public void run() {
 		boolean playerTurn = true;
-<<<<<<< HEAD
-		boolean gameOver = false;
+		gameOver = false;
 		
 		newGame();
-=======
-			
->>>>>>> 153f515fd037f7bec027561a95d3d510bacc80f3
+
 		while(!gameOver){
 			if(playerTurn){
 				//player.attack();
