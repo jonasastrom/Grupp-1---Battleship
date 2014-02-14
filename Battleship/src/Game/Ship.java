@@ -50,9 +50,9 @@ public class Ship {
 		return isSunk;
 	}
 	
-	private void hit()
+	public void hit()
 	{
-		if(++hit = lenght) {isSunk = true;}
+		if(++hit == lenght) {isSunk = true;}
 	}
 	
 }
