@@ -30,8 +30,12 @@ public class GameEngine {
 	// keeps the game running
 	public void run() {
 		boolean playerTurn = true;
+<<<<<<< HEAD
 
 		boolean gameOver = false;
+=======
+		gameOver = false;
+>>>>>>> 6ee60022b778829ad1b465c4ea4afa9011a2ab3d
 		
 		newGame();
 
