@@ -19,6 +19,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Game.Zone.ZoneState;
+
 /**
  * This class creates the GUI.
  * @author Grupp 1
@@ -212,7 +214,7 @@ public class Gui extends JFrame implements ActionListener {
 	/**
 	 * This method get coordinates of a specific zone, and call a method to change to a color
 	 */
-	public void updateZone(int x, int y, Zone.ZoneState zoneState){
+	public void updateZone(int x, int y, ZoneState zoneState){
 		int zoneNumber = ((y - 1) * 10) + x;
 		Zone zone = zoneArray.get(zoneNumber - 1);
 		if(zoneState == ZoneState.MISS){
@@ -273,7 +275,7 @@ public class Gui extends JFrame implements ActionListener {
 				System.out.println("x:" + temp.x + " y:" + temp.y + " name:" + temp.name);
 				int i = ((temp.y - 1) * 10 ) + temp.x;
 				System.out.println("nummer:" + i);
-				updateZone(temp.x, temp.y, );
+				updateZone(temp.x, temp.y, ZoneState.MISS);
 				temp.setEnabled(false);
 //			}
 		}
