@@ -7,6 +7,21 @@ package Game;
  */
 public class Battlefield {
 
+	int [10] [10] zones;
+	/**
+	 * Constructor
+	 */
+	public Battlefield()
+	{
+		for (int y = 1; y < 5; y++)
+		{	
+			for (int x = 1; x < 5; x++)
+			{
+				zones [x] [y] = new zone(x,y);
+			}
+		}
+	}
+
 	/**
 	 * Returns true if the zone with the specified coordinates has been bombed
 	 * False otherwise
@@ -15,7 +30,8 @@ public class Battlefield {
 	 */
 	public boolean isBombed(int x, int y)
 	{
-		return false;
+		zones[x][y] = Zone zone;
+		return zone.isBombed();
 	}
 
 	/**
@@ -25,7 +41,8 @@ public class Battlefield {
 	 */
 	public boolean setBomb(int x, int y)
 	{
-		return false;
+		zones[x][y] = Zone zone;
+		zone.setBomb();
 	}
 
 	/**
@@ -36,7 +53,8 @@ public class Battlefield {
 	 */
 	public boolean hasShip(int x, int y)
 	{
-		return true;
+		zones[x][y] = Zone zone;
+		return zone.hasShip();
 	}
 
 	/**
@@ -46,6 +64,8 @@ public class Battlefield {
 	 */
 	public Ship getShip(int x, int y)
 	{
+		zones[x][y] = Zone zone;
+		zone.getShip();
 
 	}
 
@@ -56,7 +76,8 @@ public class Battlefield {
 	 */
 	Public void  setShip(int x, int y, Ship ship)
 	{
-
+		zones[x][y] = Zone zone;
+		zone.setShip(ship);
 	}
 
 
