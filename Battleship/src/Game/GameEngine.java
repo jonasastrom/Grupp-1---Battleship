@@ -3,7 +3,7 @@ import javax.swing.JOptionPane;
 
 import GUI.Gui;
 
-@SuppressWarnings("unused")		// För att gula streck är irriterande
+@SuppressWarnings("unused")		// Because yellow lines are annoying
 public class GameEngine {
 	private Gui gui;
 	private Player player;
@@ -13,15 +13,15 @@ public class GameEngine {
 	
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
-		gui = new GUI.Gui();
+		gui = new GUI.Gui(this);
 		player = new Player();
-		ai = new AI(0);	//0 för att milstolpe 1 inte har något val av svårighet
+		ai = new AI(0);	//0 because we don't need more difficulties for now
 	}
 	
 	/**
 	 * This is a main method.
 	 * It methods mains.
-	 * @param args Gör absolut ingenting i detta program
+	 * @param args Does absolutely nothing in this program
 	 */
 	public static void main(String[] args) {
 		GameEngine gamE = new GameEngine();
@@ -98,7 +98,7 @@ public class GameEngine {
 			else
 				System.exit(0);
 		}
-		resetGame();	// Om Spelet inte är vunnet/förlorat, men New Game har valts som alternativ i menyraden skall spelet baraåterställas
+		resetGame();	// If the game is not over but the menu option for a New Game has been chosen, then the win/lose messages won't be displayed.
 	}
 	public void testGameOver(int gameOverState) {
 		if(gameOverState == 0) {
@@ -121,8 +121,8 @@ public class GameEngine {
 	private void resetGame() {
 		player = null;
 		ai = null;
-		gui = null;		// Kallar GC här för att den ska göra sitt jobb lite tidigare
-		System.gc();	// Så kan programmet omöjligtvis ta upp för mycket minne
+		gui = null;		// Calls GC here to make sure it does its job
+		System.gc();	// This keeps the program from ever taking up too much memory
 		gui = new GUI.Gui();
 		player = new Player();
 		ai = new AI(0);
