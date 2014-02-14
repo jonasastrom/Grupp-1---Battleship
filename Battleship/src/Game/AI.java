@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -12,7 +13,7 @@ public class AI extends Player {
 	private Battlefield battlefield;
 	private int difficulties;
 	
-	private HashSet firingSolution;
+	private ArrayList<int[]> firingSolution;
 	
 
 	/**
@@ -21,7 +22,7 @@ public class AI extends Player {
 	public AI(int difficulties, Battlefield givenField) {
 		this.difficulties = difficulties;
 		this.battlefield = givenField;
-		firingSolution = new HashSet<>();
+		firingSolution = new ArrayList<>();
 	}
 
 	@Override
