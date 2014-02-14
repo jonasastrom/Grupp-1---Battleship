@@ -32,6 +32,7 @@ public class GameEngine {
 		boolean playerTurn = true;
 		boolean gameOver = false;
 		
+		newGame();
 		while(!gameOver){
 			if(playerTurn){
 				player.shoot();
@@ -47,26 +48,32 @@ public class GameEngine {
 
 	// starts the game
 	public void newGame() {
+		
 	}
 
 	// ends the game and pops a prompt to the player
 	private void gameOver() {
 		
 		String winText;
-		if(winPlayer)
-			winText = "You have won!\n";
-		else
-			winText = "You have lost!\n";
-		if(JOptionPane.showConfirmDialog(null, winText + "Do you want to play again?", "GAME OVER", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-			player = null;
-			ai = null;
-			gui = null;
-			winText = null;
-			System.gc();
-			newGame();
+		if(gameOver){	
+			if(winPlayer)
+				winText = "You have won!\n";
+			else
+				winText = "You have lost!\n";
+			if(JOptionPane.showConfirmDialog(null, winText + "Do you want to play again?", "GAME OVER", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				winText = null;
+				resetGame();
+			}
+			else
+				System.exit(0);
 		}
-		else
-			System.exit(0);
+		resetGame();	// Om Spelet inte är vunnet/förlorat, men New Game har valts som alternativ i menyraden skall spelet baraåterställas
 	}
-
+	private void resetGame() {
+		player = null;
+		ai = null;
+		gui = null;
+		System.gc();
+		newGame();
+	}
 }
