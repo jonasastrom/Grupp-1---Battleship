@@ -11,11 +11,19 @@ public class GameEngine {
 	Boolean winPlayer;
 	Boolean gameOver;
 	
-	public void main(String[] args) {
+	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
 		Gui gui = new GUI.Gui();
-		Player player = new Player();
-		AI ai = new AI(0);	//0 för att milstolpe 1 inte har något val av svårighet
+		player = new Player();
+		ai = new AI(0);	//0 för att milstolpe 1 inte har något val av svårighet
+	}
+	
+	public enum Status{
+		MISS,HIT,SUNK,SHIP
+	}
+	
+	public void main(String[] args) {
+		
 		
 		run();
 		//TODO:
@@ -26,8 +34,10 @@ public class GameEngine {
 		// Keeps track of turns of the players
 
 	}
-
-	// keeps the game running
+	/**
+	 * The main game loop
+	 * It sets the player's turn and lets players 
+	 */
 	public void run() {
 		boolean playerTurn = true;
 		
@@ -94,6 +104,9 @@ public class GameEngine {
 		ai = null;
 		gui = null;
 		System.gc();
+		gui = new GUI.Gui();
+		player = new Player();
+		ai = new AI(0);
 		run();
 	}
 }
