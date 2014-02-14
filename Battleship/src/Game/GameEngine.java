@@ -123,7 +123,7 @@ public class GameEngine {
 		ai = null;
 		gui = null;		// Calls GC here to make sure it does its job
 		System.gc();	// This keeps the program from ever taking up too much memory
-		gui = new GUI.Gui();
+		gui = new GUI.Gui(this);
 		player = new Player();
 		ai = new AI(0);
 		run();
