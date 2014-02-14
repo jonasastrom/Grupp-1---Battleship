@@ -30,10 +30,6 @@ public class GameEngine {
 	// keeps the game running
 	public void run() {
 		boolean playerTurn = true;
-
-		boolean gameOver = false;
-
-		gameOver = false;
 		
 		newGame();
 
@@ -41,18 +37,31 @@ public class GameEngine {
 			if(playerTurn){
 				//player.attack();
 				playerTurn = false;
+				if(!ai.hasShips()){
+					winPlayer = true;
+					gameOver = true;
+				}
 			}
 			else{
 				//ai.attack();
 				playerTurn = true;
+				if(!player.hasShips()){
+					winPlayer = false;
+					gameOver = true;
+				}
 			}
 		}
 
 	}
 
-	// starts the game
+	/**
+	 *  Sets a new game up by saying that the game is not over
+	 *  and making the players place their ships.
+	 */
 	public void newGame() {
-		
+		gameOver = false;
+		player.placeShips(5);
+		ai.placeShips(5);
 	}
 
 	/**
@@ -82,6 +91,6 @@ public class GameEngine {
 		ai = null;
 		gui = null;
 		System.gc();
-		newGame();
+		run();
 	}
 }
