@@ -30,10 +30,6 @@ public class GameEngine {
 	// keeps the game running
 	public void run() {
 		boolean playerTurn = true;
-
-		boolean gameOver = false;
-
-		gameOver = false;
 		
 		newGame();
 
@@ -58,9 +54,13 @@ public class GameEngine {
 
 	}
 
-	// starts the game
+	/**
+	 *  starts the game
+	 */
 	public void newGame() {
-		
+		gameOver = false;
+		player.placeShips(5);
+		ai.placeShips(5);
 	}
 
 	/**
