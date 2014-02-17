@@ -1,4 +1,4 @@
-package game;
+package Game;
 
 /**
  * class Player
@@ -9,6 +9,7 @@ package game;
 public class Player
 {
 	private Battlefield battlefield;
+	private Fleet fleet;
 
 	/**
 	 * constructor
@@ -16,15 +17,26 @@ public class Player
 	public Player()
 	{
 		battlefield = new Battlefield();
+		fleet = new Fleet();
 	}
 
 	/**
 	 * method
 	 */
-	public void placeShips()
+	public boolean hasShips()
 	{
-		;		
+		return fleet.hasShips();
 	}
+
+	/**
+	 * method for 2.0
+	 */
+	/*public void placeShips()
+	{
+		while (!fleet.isPlaced()) {
+			//wait
+		}
+	}*/
 
 	/**
 	 * method
@@ -35,19 +47,19 @@ public class Player
 	}
 
 	/**
-	 * method
-	 */
-	public boolean hasShips()
-	{
-		return true;
-	}
-
-	/**
-	 * method
+	 * Return this player's battlefield
 	 */
 	public Battlefield getBattlefield()
 	{
 		return battlefield;
+	}
+	
+	/**
+	 * Return this player's fleet
+	 */
+	public Fleet getFleet()
+	{
+		return fleet;
 	}
 
 	/**

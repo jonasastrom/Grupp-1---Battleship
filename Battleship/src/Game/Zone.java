@@ -1,5 +1,5 @@
-package game;
-package gui;
+package Game;
+import GUI.Gui;
 
 /**
  * Handles the zones of the Battlefield
@@ -14,7 +14,7 @@ public class Zone {
 	boolean isBombed = false;
 	boolean hasShip = false;
 	Ship ship;
-	public final static enum ZoneState
+	public static enum ZoneState
 	{
 		MISS,HIT,SUNK,SHIP;
 	}
@@ -22,7 +22,7 @@ public class Zone {
 	/**
 	 * Constructor
 	 */
-	public zone(int xPos, int yPos)
+	public Zone(int xPos, int yPos)
 	{
 		this.xPos = xPos;
 		this.yPos = yPos;
@@ -41,7 +41,8 @@ public class Zone {
 	 * Set true if the zone has already been bombed
 	 * 
 	 */
-	public boolean setBomb()
+	//Kompilatorn vill att updateZone skall vara static
+	/*public boolean setBomb()
 	{
 		isBombed = true;
 		if(ship!=null)
@@ -49,13 +50,13 @@ public class Zone {
 			ship.hit();
 			if(ship.isSunk())
 			{
-				gui.updateZone(++x,++y,ZoneState.SUNK)
+				Gui.updateZone(++xPos,++yPos,ZoneState.SUNK);
 			}
 			
-			else {gui.updateZone(++x,++y,ZoneState.HIT)}
+			else {GUI.Gui.updateZone(++xPos,++yPos,ZoneState.HIT);}
 		}
-		else{gui.updateZone(++x,++y,ZoneState.MISS)}
-	}
+		else{GUI.Gui.updateZone(++xPos,++yPos,ZoneState.MISS);}
+	}*/
 
 	/**
 	 * Returns true if the zone has a ship
@@ -74,7 +75,7 @@ public class Zone {
 	 */
 	public Ship getShip()
 	{
-		if(ship! = null)
+		if(ship!= null)
 		{
 			return ship;
 		}
