@@ -74,8 +74,8 @@ public class GameEngine {
 	public void newGame() {
 		gameOver = false;
 		winPlayer = false;
-		player.placeShips();
-		ai.placeShips();
+		//player.placeShips();
+		//ai.placeShips();
 	}
 
 	/**
@@ -88,10 +88,10 @@ public class GameEngine {
 		String winText;
 		if(gameOver){	
 			if(winPlayer)
-				winText = "You have won!\n";
+				winText = "won";
 			else
-				winText = "You have lost!\n";
-			if(JOptionPane.showConfirmDialog(null, winText + "Do you want to play again?", "GAME OVER", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				winText = "lost";
+			if(gui.gameOverText(winText)) {
 				winText = null;
 				resetGame();
 			}

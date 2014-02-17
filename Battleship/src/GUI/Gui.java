@@ -244,7 +244,17 @@ public class Gui extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * This method displays a nice message where the player is asked whether
+	 * they want to play again
+	 * @param winText A string that contains either "won" or "lost". 
+	 * @return	True if yes has been answered, false if not
+	 */
+	public boolean gameOverText(String winText) {
+		return (JOptionPane.showConfirmDialog(	null, "You have " + winText + "!\n Would you like to play again?", "GAME OVER",
+												JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+	}
 	/**
 	 *  This method listen to the players actions.
 	 */
@@ -255,7 +265,7 @@ public class Gui extends JFrame implements ActionListener {
 		}else if(e.getSource() == quit){
 			System.exit(0);
 		}else if(e.getSource() == about){
-			JOptionPane.showMessageDialog(null, "Hej! \nVi är 7 coola kids från DAT055 och vi gör ett spel.", "About", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Hej! \nVi ï¿½r 7 coola kids frï¿½n DAT055 och vi gï¿½r ett spel.", "About", JOptionPane.INFORMATION_MESSAGE);
 		}else if(e.getSource() == rules){
 			try {
 				openURIForRules();
@@ -273,7 +283,7 @@ public class Gui extends JFrame implements ActionListener {
 		}else if(e.getSource() == insane){
 			System.out.println("insane");
 		}else if(e.getSource() instanceof Zone){
-//			if( KOLLA OM DET ÄR SPELARENS TUR){
+//			if( KOLLA OM DET ï¿½R SPELARENS TUR){
 				Zone temp = (Zone) e.getSource();
 				System.out.println("x:" + temp.x + " y:" + temp.y + " name:" + temp.name);
 				int i = ((temp.y - 1) * 10 ) + temp.x;
