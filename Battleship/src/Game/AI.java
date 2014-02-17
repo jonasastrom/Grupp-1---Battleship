@@ -1,8 +1,9 @@
 package Game;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 /**
  * 
@@ -11,14 +12,14 @@ import java.util.Set;
  */
 public class AI extends Player {
 	int difficulties;
-	private Set<int[]> firingSolution;
+	private List<int[]> firingSolution;
 
 	/**
 	 * the constructor of this class
 	 */
 	public AI(int difficulties) {
 		this.difficulties = difficulties;
-		firingSolution = new HashSet<>();
+		firingSolution = new ArrayList<>();
 	}
 
 	@Override
@@ -29,12 +30,12 @@ public class AI extends Player {
 	 * steff does this
 	 */
 	public void placeShips(Ship ship) {
-		
+
 		Random random = new Random();
 		int xNumber = random.nextInt(10) + 1;
 		int yNumber = random.nextInt(10) + 1;
 		Battlefield battlefield = null;
-		
+
 		System.out.println(xNumber);
 		System.out.println(yNumber);
 
@@ -67,6 +68,16 @@ public class AI extends Player {
 	private void createFiringSolution() {
 		// In the initial, stupid iteration, only randomly attack zones.
 		// Do a loop to create random attacks, manually checking for conflicts?
+		for (int x = 1; x <= 10; x++) {
+			for (int y = 1; y <= 10; y++) {
+				int pos[] = new int[2]; 
+				pos[0] = x;
+				pos[1] = y;
+				firingSolution.add(pos);
+			}
+		}
+		// Randomize the hitlist
+		Collections.shuffle(firingSolution, new Random());
 	}
 
 }
