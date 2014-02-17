@@ -16,6 +16,7 @@ public class AI extends Player {
 	 * the constructor of this class
 	 */
 	public AI(int difficulties) {
+		super();
 		this.difficulties = difficulties;
 		firingSolution = new ArrayList<>();
 	}
