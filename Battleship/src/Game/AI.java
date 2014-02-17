@@ -32,8 +32,9 @@ public class AI extends Player {
 	public void placeShips(Ship ship) {
 
 		Random random = new Random();
-		int xNumber = random.nextInt(10) + 1;
-		int yNumber = random.nextInt(10) + 1;
+		int xNumber = random.nextInt(10) + 1; // randomize a number from 1-10												// for the x-coordinate
+		int yNumber = random.nextInt(10) + 1; // randomize number for the
+												// y-coordinate
 		int xNewNumber = random.nextInt(10) + 1;
 		int yNewNumber = random.nextInt(10) + 1;
 		battlefield = null;
@@ -41,7 +42,7 @@ public class AI extends Player {
 		System.out.println(xNumber);
 		System.out.println(yNumber);
 
-		if (isLegal(xNumber, yNumber, yNewNumber, xNewNumber))
+		if (isLegal(ship))
 			battlefield.setShip(xNumber, yNumber, ship);
 		else
 			System.out.println("Error, please try again!");
@@ -54,24 +55,27 @@ public class AI extends Player {
 	 * @param yNewNumber
 	 * @param xNewNumber
 	 * @return
-	 */
-	private boolean isLegal(int xNumber, int yNumber, int yNewNumber,
-			int xNewNumber) {
-
-		if (battlefield.hasShip(xNumber, yNumber)) {
-			if (Math.abs(xNumber - xNewNumber) == 2 || (Math.abs(yNumber - yNewNumber) == 2)) {
-				return true;
-			} else if (Math.abs(xNumber - xNewNumber) == 3 || (Math.abs(yNumber - yNewNumber) == 3)) {
-				return true;
-			} else if (Math.abs(xNumber - xNewNumber) == 4 || (Math.abs(yNumber - yNewNumber) == 4)) {
-				return true;
-			} else if (Math.abs(xNumber - xNewNumber) == 3 || (Math.abs(yNumber - yNewNumber) == 5))
-				return true;
-
-		} else
-			return false;
+	 */ 
+	private boolean isLegal(Ship ship) {
+		Iterator<Fleet> it = Iterator<Fleet>;
+		int counter = 0;
+		while (it.hasNext()) {
+			
+		}
 
 		return false;
+		/**
+		 * if (battlefield.hasShip(xNumber, yNumber)) { if (Math.abs(xNumber -
+		 * xNewNumber) == 2 || (Math.abs(yNumber - yNewNumber) == 2)) { return
+		 * true; } else if (Math.abs(xNumber - xNewNumber) == 3 ||
+		 * (Math.abs(yNumber - yNewNumber) == 3)) { return true; } else if
+		 * (Math.abs(xNumber - xNewNumber) == 4 || (Math.abs(yNumber -
+		 * yNewNumber) == 4)) { return true; } else if (Math.abs(xNumber -
+		 * xNewNumber) == 3 || (Math.abs(yNumber - yNewNumber) == 5)) return
+		 * true;
+		 * 
+		 * } else return false;
+		 */
 	}
 
 	/**
