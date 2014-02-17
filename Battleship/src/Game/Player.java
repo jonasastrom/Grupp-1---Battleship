@@ -8,8 +8,8 @@ package Game;
  */
 public class Player
 {
-	private Battlefield battlefield;
-	private Fleet fleet;
+	protected Battlefield battlefield;
+	protected Fleet fleet;
 
 	/**
 	 * constructor
