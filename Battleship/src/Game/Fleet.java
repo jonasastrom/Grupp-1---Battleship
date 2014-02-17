@@ -1,9 +1,11 @@
 package Game;
 
+import java.util.ArrayList;
+
 /**
- * class Fleet
+ * Handles all ships of one player as a unit
  * 
- * @author Grupp 1 - DAT055 2014
+ * @author Group 1 - DAT055 2014
  * @version 1.0
  */
 public class Fleet
@@ -11,7 +13,7 @@ public class Fleet
 	private ArrayList<Ship> ships;
 
 	/**
-	 * constructor
+	 * Construct all ships within a list
 	 */
 	public Fleet()
 	{
@@ -24,23 +26,40 @@ public class Fleet
 	}
 
 	/**
-	 * method
-	 */
-	public boolean hasShips()
-	{
-		for (Ship ship : ships) {
-			if (!ship.isSunk()) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * method
+	 * Return the list with all ships 
 	 */
 	public ArrayList<Ship> getShips()
 	{
 		return ships;
+	}
+
+	/**
+	 * Check if the whole fleet is sunk
+	 * @return true if all ships have been sunk,
+	 *         false otherwise
+	 */
+	public boolean isSunk()
+	{
+		for (Ship ship : ships) {
+			if (!ship.isSunk()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Check if the whole fleet is placed
+	 * @return true if all ships have been placed,
+	 *         false otherwise
+	 */
+	public boolean isPlaced()
+	{
+		for (Ship ship : ships) {
+			if (!ship.isPlaced()) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
