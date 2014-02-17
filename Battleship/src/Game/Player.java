@@ -1,18 +1,18 @@
 package Game;
 
 /**
- * class Player
+ * The base class for all players
  * 
- * @author Grupp 1 - DAT055 2014
+ * @author Group 1 - DAT055 2014
  * @version 1.0
  */
 public class Player
 {
-	protected Battlefield battlefield;
-	protected Fleet fleet;
+	private Battlefield battlefield;
+	private Fleet fleet;
 
 	/**
-	 * constructor
+	 * Construct a battlefield and a fleet
 	 */
 	public Player()
 	{
@@ -21,50 +21,26 @@ public class Player
 	}
 
 	/**
-	 * method
+	 * TODO in 2.0
 	 */
-	public boolean hasShips()
-	{
-		return fleet.hasShips();
-	}
-
-	/**
-	 * method for 2.0
-	 */
-	/*public void placeShips()
+	public void placeShips()
 	{
 		while (!fleet.isPlaced()) {
 			//wait
 		}
-	}*/
+	}
 
 	/**
-	 * method
+	 * TODO in 1.0
 	 */
 	public void attack()
 	{
-		;
-	}
-
-	/**
-	 * Return this player's battlefield
-	 */
-	public Battlefield getBattlefield()
-	{
-		return battlefield;
-	}
-	
-	/**
-	 * Return this player's fleet
-	 */
-	public Fleet getFleet()
-	{
-		return fleet;
+		// TODO in 1.0
 	}
 
 	/**
 	 * Bomb this player's battlefield
-	 * @return true if a ship was hit
+	 * @return true if a ship was hit,
 	 *         false otherwise
 	 */
 	public boolean bomb(int x, int y)
@@ -74,6 +50,32 @@ public class Player
 				return true;
 			}
 		}
-		else return false;
+		return false;
+	}
+
+	/**
+	 * Check if this player has any ships left
+	 * @return true if any ships still floats,
+	 *         false if all are sunk
+	 */
+	public boolean hasShips()
+	{
+		return !fleet.isSunk();
+	}
+
+	/**
+	 * Return this player's battlefield
+	 */
+	public Battlefield getBattlefield()
+	{
+		return battlefield;
+	}
+
+	/**
+	 * Return this player's fleet
+	 */
+	public Fleet getFleet()
+	{
+		return fleet;
 	}
 }
