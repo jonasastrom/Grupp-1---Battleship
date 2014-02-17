@@ -1,22 +1,23 @@
 package Game;
 
 /**
- * Handles the Battefield
- * @author grupp1
+ * Handles the Battlefield
+ * @author grupp1  
  *
  */
 public class Battlefield {
 
 	Zone [][] zones = new Zone[10][10];
+	Zone zoneTMP;
 	
 	/**
 	 * Constructor
 	 */
 	public Battlefield()
 	{
-		for (int y = 1; y < 5; y++)
+		for (int y = 1; y < 10; y++)
 		{	
-			for (int x = 1; x < 5; x++)
+			for (int x = 1; x < 10; x++)
 			{
 				zones[x][y] = new Zone(x,y);
 			}
@@ -32,9 +33,10 @@ public class Battlefield {
 	 */
 	public boolean isBombed(int x, int y)
 	{
-	//	zones[x][y] = Zone zone;
-	//	return zone.isBombed();
-		return true;
+		
+		zoneTMP = zones[x][y];
+		return zoneTMP.isBombed();
+
 	}
 
 	/**
@@ -42,12 +44,11 @@ public class Battlefield {
 	 * @param int x The x coordinates of the zone to bomb
 	 * @param int y The y coordinate of the zone to bomb
 	 */
-	public boolean setBomb(int x, int y)
+	/*public boolean setBomb(int x, int y)
 	{
-	//	zones[x][y] = Zone zone;
-	//	zone.setBomb();
-		return false;
-	}
+		zoneTMP = zones[x][y];
+		zoneTMP.setBomb();
+	}*/
 
 	/**
 	 * Returns true if the zone with the specified coordiantes has a ship
@@ -57,9 +58,9 @@ public class Battlefield {
 	 */
 	public boolean hasShip(int x, int y)
 	{
-		//zones[x][y] = Zone zone;
-		//return zone.hasShip();
-		return false;
+		zoneTMP = zones[x][y];
+		return zoneTMP.hasShip();
+
 	}
 
 	/**
@@ -68,11 +69,11 @@ public class Battlefield {
 	 * @param int x The x coordinates of the zone to get ship from
 	 * @param int y The y coordinate of the zone to get ship from
 	 */
-	/*public Ship getShip(int x, int y)
+	public Ship getShip(int x, int y)
 	{
-		zones[x][y] = Zone zone;
-		return zone.getShip();
-	}*/
+		zoneTMP = zones[x][y];
+		return zoneTMP.getShip();
+	}
 
 	/**
 	 * Sets a ship-object to a zone
@@ -81,7 +82,7 @@ public class Battlefield {
 	 */
 	public void setShip(int x, int y, Ship ship)
 	{
-		//zones[x][y] = Zone zone;
-		//zone.setShip(ship);
+		zoneTMP = zones[x][y];
+		zoneTMP.setShip(ship);
 	}
 }

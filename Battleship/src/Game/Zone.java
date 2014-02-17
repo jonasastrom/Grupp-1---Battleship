@@ -1,5 +1,5 @@
 package Game;
-
+import GUI.Gui;
 
 /**
  * Handles the zones of the Battlefield
@@ -41,6 +41,7 @@ public class Zone {
 	 * Set true if the zone has already been bombed
 	 * 
 	 */
+	//Kompilatorn vill att updateZone skall vara static
 	/*public boolean setBomb()
 	{
 		isBombed = true;
@@ -49,7 +50,7 @@ public class Zone {
 			ship.hit();
 			if(ship.isSunk())
 			{
-				GUI.Gui.updateZone(++xPos,++yPos,ZoneState.SUNK);
+				Gui.updateZone(++xPos,++yPos,ZoneState.SUNK);
 			}
 			
 			else {GUI.Gui.updateZone(++xPos,++yPos,ZoneState.HIT);}
