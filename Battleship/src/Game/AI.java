@@ -11,7 +11,6 @@ import java.util.*;
 public class AI extends Player {
 	int difficulties;
 	private List<int[]> firingSolution;
-	private Battlefield battlefield;
 
 	/**
 	 * the constructor of this class
@@ -82,7 +81,11 @@ public class AI extends Player {
 	 * AIs turn to attack
 	 */
 	public void attack() {
-
+		/**
+		 * TODO
+		 * Attack the player using the preprepared list of random zones to hit. 
+		 * Give the AI the option of seeking out hit ships.
+		 */
 	}
 
 	/**
@@ -90,7 +93,6 @@ public class AI extends Player {
 	 */
 	private void createFiringSolution() {
 		// In the initial, stupid iteration, only randomly attack zones.
-		// Do a loop to create random attacks, manually checking for conflicts?
 		for (int x = 1; x <= 10; x++) {
 			for (int y = 1; y <= 10; y++) {
 				int pos[] = new int[2]; 
