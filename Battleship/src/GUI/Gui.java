@@ -29,7 +29,7 @@ import Game.Zone.ZoneState;
  */
 public class Gui extends JFrame implements ActionListener {
 
-	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane;
+	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane, playerWins, playerLose;
 	//	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
 	private JLabel informatioText;
 	private ArrayList<String> letters = new ArrayList<String>();
@@ -205,10 +205,23 @@ public class Gui extends JFrame implements ActionListener {
 		insane = new JMenuItem("Insane");
 		difficulty.add(insane);
 		insane.addActionListener(this);
+
+		// Add the debug button to the menuBar
+		JMenu debug = new JMenu("Debug");
+		menuBar.add(debug);
+
+		// Add the sub-buttons to the debug-button
+		playerWins = new JMenuItem("Player Wins");
+		debug.add(playerWins);
+		playerWins.addActionListener(this);
+
+		playerLose = new JMenuItem("Player Lose");
+		debug.add(playerLose);
+		playerLose.addActionListener(this);
 	}
 
 	/**
-	 * When this method gets called, set the string to the buttom of the frame
+	 * When this method gets called, set the string to the bottom of the frame
 	 */
 	public void changeInformatioText(String string){
 		informatioText.setText(string);
@@ -250,7 +263,11 @@ public class Gui extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e){
-		if(e.getSource() == newGame){
+		if(e.getSource() == playerWins){
+			
+		}else if(e.getSource() == playerLose){
+			
+		}else if(e.getSource() == newGame){
 			gameEngine.run();
 		}else if(e.getSource() == quit){
 			System.exit(0);
@@ -273,14 +290,14 @@ public class Gui extends JFrame implements ActionListener {
 		}else if(e.getSource() == insane){
 			System.out.println("insane");
 		}else if(e.getSource() instanceof Zone){
-//			if( KOLLA OM DET ÄR SPELARENS TUR){
-				Zone temp = (Zone) e.getSource();
-				System.out.println("x:" + temp.x + " y:" + temp.y + " name:" + temp.name);
-				int i = ((temp.y - 1) * 10 ) + temp.x;
-				System.out.println("nummer:" + i);
-				updateZone(temp.x, temp.y, ZoneState.MISS);
-				temp.setEnabled(false);
-//			}
+			//			if( KOLLA OM DET ÄR SPELARENS TUR){
+			Zone temp = (Zone) e.getSource();
+			System.out.println("x:" + temp.x + " y:" + temp.y + " name:" + temp.name);
+			int i = ((temp.y - 1) * 10 ) + temp.x;
+			System.out.println("nummer:" + i);
+			updateZone(temp.x, temp.y, ZoneState.MISS);
+			temp.setEnabled(false);
+			//			}
 		}
 	}
 }
