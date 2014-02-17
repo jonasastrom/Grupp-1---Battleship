@@ -3,3 +3,4 @@ Battleship/bin/*
 .classpath
 *.class
 .metadata
+*.db
