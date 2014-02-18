@@ -15,18 +15,20 @@ public class AI extends Player {
 	int difficulties;
 	private List<int[]> firingSolution;
 	private boolean shipsPlaced;
-	Battlefield battlefield = getBattlefield();
+	Battlefield battlefield;
+	Fleet fleet;
 
 	/**
 	 * the constructor of this class
 	 * @param battlefield 
 	 */
-	public AI(int difficulties, Battlefield battlefield) {
+	public AI(int difficulties) {
 		this.difficulties = difficulties;
 		firingSolution = new ArrayList<>();
 		// Ships have not been placed yet.
 		shipsPlaced = false;
-		this.battlefield = battlefield;
+		fleet = new Fleet();
+		battlefield = new Battlefield();
 	}
 
 	@Override
@@ -37,7 +39,7 @@ public class AI extends Player {
 	 * 
 	 */
 	public void placeShips() {
-		ArrayList<Ship> array = getFleet().getShips();
+		ArrayList<Ship> array = fleet.getShips();
 		Iterator<Ship> it = array.iterator();
 		Random random = new Random();
 		boolean takenSpot = true;
@@ -52,6 +54,7 @@ public class AI extends Player {
 			while (takenSpot) {
 				xValue = random.nextInt(10) + 1;
 				yValue = random.nextInt(10) + 1;
+				System.out.println(xValue +", " + yValue);
 				takenSpot = battlefield.hasShip(xValue, yValue); // if that
 			}
 
