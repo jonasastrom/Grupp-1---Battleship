@@ -5,11 +5,14 @@ import GUI.Gui;
 
 @SuppressWarnings("unused")		// Because yellow lines are annoying
 public class GameEngine {
-	private Gui gui;
+	private static Gui gui;
 	private Player player;
 	private AI ai;
-	private Boolean winPlayer;
-	private Boolean gameOver;
+	private boolean winPlayer;
+	private boolean gameOver;
+	private boolean playerTurn;
+	
+	public enum ZoneState{MISS,HIT,SUNK,SHIP}
 	
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
@@ -29,8 +32,8 @@ public class GameEngine {
 		gamE.run();
 	}
 	
-	public enum Status{
-		MISS,HIT,SUNK,SHIP
+	public static Gui getGui(){
+		return gui;
 	}
 	
 	/**
@@ -54,8 +57,10 @@ public class GameEngine {
 				playerTurn = false;
 			}
 			else{
-				//ai.attack();
-				
+			//	if(ai.isShipsPlaced()){    milstolpe 2
+			//		int[] coords = ai.attack(lastHit); milstolpe 2
+			//		lastHit = player.bomb(coords[0],coords[1]); //bomb the players field,milstolpe 2
+			//	}
 				if(!player.hasShips()){
 					winPlayer = false;
 					gameOver = true;
@@ -74,7 +79,8 @@ public class GameEngine {
 	public void newGame() {
 		gameOver = false;
 		winPlayer = false;
-		//player.placeShips();
+		playerTurn = true;
+		//player.placeShips(); milstolpe 2
 		//ai.placeShips();
 	}
 
@@ -122,5 +128,9 @@ public class GameEngine {
 		player = new Player();
 		ai = new AI(0);
 		run();
+	}
+	
+	public boolean isPlayerTurn(){
+		return playerTurn;
 	}
 }

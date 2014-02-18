@@ -46,7 +46,7 @@ public class Battlefield
 	 */
 	public boolean setBomb(int x, int y)
 	{
-		zones[x][y].setBomb();
+		return zones[x][y].setBomb();
 	}
 
 	/**

@@ -1,4 +1,3 @@
-
 package Game;
 
 import java.util.ArrayList;
@@ -15,13 +14,16 @@ import java.util.Random;
 public class AI extends Player {
 	int difficulties;
 	private List<int[]> firingSolution;
+<<<<<<< HEAD
 	private boolean shipsPlaced;
+=======
+	private Battlefield battlefield;
+>>>>>>> 978781cbb10491af3aeb5b7257daa821994ec534
 
 	/**
 	 * the constructor of this class
 	 */
 	public AI(int difficulties) {
-		super();
 		this.difficulties = difficulties;
 		firingSolution = new ArrayList<>();
 		// Ships have not been placed yet.
@@ -33,56 +35,62 @@ public class AI extends Player {
 	 * Placing out the ships and 
 	 * it will override the Player class method placeShips() 
 	 * and call the method setShip()
-	 * get an array of all the list 
 	 * 
 	 */
-	public void placeShips(Ship ship) {
-
+	public void placeShips() {
+		Battlefield battlefield = getBattlefield();
+		ArrayList<Ship> array = getFleet().getShips();
 		Random random = new Random();
-		int xNumber = random.nextInt(10) + 1; // randomize a number from 1-10												// for the x-coordinate
-		int yNumber = random.nextInt(10) + 1; // randomize number for the
-												// y-coordinate
-		int xNewNumber = random.nextInt(10) + 1;
-		int yNewNumber = random.nextInt(10) + 1;
-		battlefield = null;
+		int counter = 0;
+		int xValue;
+		int yValue;
 
-		System.out.println(xNumber);
-		System.out.println(yNumber);
+		while (counter <= 5) {
+			while (true) {
+				xValue = random.nextInt(10) + 1;
+				yValue = random.nextInt(10) + 1;
+				battlefield.hasShip(xValue, yValue); // if that
 
-		if (isLegal(ship))
-			battlefield.setShip(xNumber, yNumber, ship);
-		else
-			System.out.println("Error, please try again!");
+			}
+
+			if (enoughSpace(xValue, yValue) == true) {
+				battlefield.setShip(xValue, yValue, ship.getNext());
+				counter++;
+			}
+		}
 	}
 
 	/**
+	 * if the boat fits to the chosen coordinates
 	 * 
-	 * @param xNumber
-	 * @param yNumber
-	 * @param yNewNumber
-	 * @param xNewNumber
-	 * @return
-	 */ 
-	private boolean isLegal(Ship ship) {
-		Iterator<Fleet> it = Iterator<Fleet>;
-		int counter = 0;
-		while (it.hasNext()) {
-			
-		}
+	 * @param yValue
+	 * @param xValue
+	 * @return true else
+	 * @return false
+	 */
+	private boolean enoughSpace(int xValue, int yValue) {
 
+		int countSquare;
+
+		for(countSquare = 0; countSquare < 6; countSquare++){
+			if(battlefield.hasShip(xValue, yValue) == true){
+				xValue++;
+			}
+			else if(battlefield.hasShip(xValue, yValue) == true){
+				xValue--;
+			}
+			else if(battlefield.hasShip(xValue, yValue) == true){
+				yValue++;
+			}
+			else if(battlefield.hasShip(xValue, yValue) == true){
+				yValue--;
+			}
+			else
+				break;
+			
+			return true;
+		}
 		return false;
-		/**
-		 * if (battlefield.hasShip(xNumber, yNumber)) { if (Math.abs(xNumber -
-		 * xNewNumber) == 2 || (Math.abs(yNumber - yNewNumber) == 2)) { return
-		 * true; } else if (Math.abs(xNumber - xNewNumber) == 3 ||
-		 * (Math.abs(yNumber - yNewNumber) == 3)) { return true; } else if
-		 * (Math.abs(xNumber - xNewNumber) == 4 || (Math.abs(yNumber -
-		 * yNewNumber) == 4)) { return true; } else if (Math.abs(xNumber -
-		 * xNewNumber) == 3 || (Math.abs(yNumber - yNewNumber) == 5)) return
-		 * true;
-		 * 
-		 * } else return false;
-		 */
 	}
 
 	/**
@@ -90,6 +98,7 @@ public class AI extends Player {
 	 * @param lastHit Wether the last attack was a hit or a miss
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
+<<<<<<< HEAD
 	public int[] attack(boolean lastHit) {
 		/**
 		 * TODO
@@ -100,6 +109,10 @@ public class AI extends Player {
 		if (difficulties == 1)
 			
 		return null;
+=======
+	public void attack() {
+
+>>>>>>> 978781cbb10491af3aeb5b7257daa821994ec534
 	}
 
 	/**
@@ -107,9 +120,10 @@ public class AI extends Player {
 	 */
 	private void createFiringSolution() {
 		// In the initial, stupid iteration, only randomly attack zones.
+		// Do a loop to create random attacks, manually checking for conflicts?
 		for (int x = 1; x <= 10; x++) {
 			for (int y = 1; y <= 10; y++) {
-				int pos[] = new int[2]; 
+				int pos[] = new int[2];
 				pos[0] = x;
 				pos[1] = y;
 				firingSolution.add(pos);
@@ -118,6 +132,7 @@ public class AI extends Player {
 		// Randomize the hitlist
 		Collections.shuffle(firingSolution, new Random());
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * @return Wether the AI has placed its ships or not.
@@ -126,4 +141,6 @@ public class AI extends Player {
 		return shipsPlaced;
 	}
 
+=======
+>>>>>>> 978781cbb10491af3aeb5b7257daa821994ec534
 }

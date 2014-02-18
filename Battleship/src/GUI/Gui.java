@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Game.GameEngine;
-import Game.Zone.ZoneState;
+import Game.GameEngine.ZoneState;
 
 /**
  * This class creates the GUI.

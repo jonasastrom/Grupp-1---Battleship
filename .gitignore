@@ -7,3 +7,4 @@ Battleship/.settings/*
 .project
 *.class
 *.db
+/bin
