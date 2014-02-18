@@ -15,15 +15,18 @@ public class AI extends Player {
 	int difficulties;
 	private List<int[]> firingSolution;
 	private boolean shipsPlaced;
+	Battlefield battlefield = getBattlefield();
 
 	/**
 	 * the constructor of this class
+	 * @param battlefield 
 	 */
-	public AI(int difficulties) {
+	public AI(int difficulties, Battlefield battlefield) {
 		this.difficulties = difficulties;
 		firingSolution = new ArrayList<>();
 		// Ships have not been placed yet.
 		shipsPlaced = false;
+		this.battlefield = battlefield;
 	}
 
 	@Override
@@ -34,77 +37,120 @@ public class AI extends Player {
 	 * 
 	 */
 	public void placeShips() {
-		Battlefield battlefield = getBattlefield();
 		ArrayList<Ship> array = getFleet().getShips();
+		Iterator<Ship> it = array.iterator();
 		Random random = new Random();
-		int counter = 0;
-		int xValue;
-		int yValue;
+		boolean takenSpot = true;
+		int xValue = 0;
+		int yValue = 0;
 
-		while (counter <= 5) {
-			while (true) {
+
+		while (it.hasNext()) {
+			Ship tempShip = (Ship)it.next();
+
+
+			while (takenSpot) {
 				xValue = random.nextInt(10) + 1;
 				yValue = random.nextInt(10) + 1;
-				battlefield.hasShip(xValue, yValue); // if that
-
+				takenSpot = battlefield.hasShip(xValue, yValue); // if that
 			}
 
-			if (enoughSpace(xValue, yValue) == true) {
-				battlefield.setShip(xValue, yValue, ship.getNext());
-				counter++;
+
+			if (eastSpace(xValue+1, yValue, tempShip)) {
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue+i, yValue, tempShip);
+			}
+			else if(westSpace(xValue-1, yValue, tempShip)){
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue-1, yValue, tempShip);
+			}
+			else if(southSpace(xValue, yValue+1, tempShip)){
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue, yValue+1, tempShip);
+			}
+			else if(northSpace(xValue, yValue-1, tempShip)){
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue, yValue-1, tempShip);
 			}
 		}
 	}
 
-	/**
-	 * if the boat fits to the chosen coordinates
-	 * 
-	 * @param yValue
-	 * @param xValue
-	 * @return true else
-	 * @return false
-	 */
-	private boolean enoughSpace(int xValue, int yValue) {
 
-		int countSquare;
-
-		for(countSquare = 0; countSquare < 6; countSquare++){
-			if(battlefield.hasShip(xValue, yValue) == true){
-				xValue++;
-			}
-			else if(battlefield.hasShip(xValue, yValue) == true){
-				xValue--;
-			}
-			else if(battlefield.hasShip(xValue, yValue) == true){
-				yValue++;
-			}
-			else if(battlefield.hasShip(xValue, yValue) == true){
-				yValue--;
-			}
-			else
-				break;
-			
-			return true;
-		}
-		return false;
+/**
+ * if the boat fits to the chosen coordinates
+ * 
+ * @param yValue
+ * @param xValue
+ * @return true else
+ * @return false
+ */
+private boolean eastSpace(int xValue, int yValue, Ship ship) {
+	boolean takenNeighbour = false;
+	int counter = 0;
+	//ships length
+	while(!takenNeighbour && counter < ship.getLenght()){
+		takenNeighbour = battlefield.hasShip(xValue, yValue);
+		xValue++;
+		counter++;
 	}
+	return !takenNeighbour;
 
+}
+
+private boolean southSpace(int xValue, int yValue, Ship ship){
+	boolean takenNeighbour = false;
+	int counter =0;
+	while(!takenNeighbour && counter < ship.getLenght() ){
+		takenNeighbour = battlefield.hasShip(xValue, yValue);
+		yValue++;
+		counter++;
+	}
+	return !takenNeighbour;
+}
+
+private boolean westSpace(int xValue, int yValue, Ship ship){
+	boolean takenNeighbour = false;
+	int counter = 0;
+	while(!takenNeighbour && counter < ship.getLenght() ){
+		takenNeighbour = battlefield.hasShip(xValue, yValue);
+		xValue--;
+		counter++;
+	}
+	return !takenNeighbour;
+}
+
+private boolean northSpace (int xValue, int yValue, Ship ship){
+	boolean takenNeighbour = false;
+	int counter = 0;
+	while(!takenNeighbour && counter < ship.getLenght() ){
+		takenNeighbour = battlefield.hasShip(xValue, yValue);
+		yValue--;
+		counter ++;
+	}
+	return !takenNeighbour;
+}
+
+
+
+
+
+/**
+ * AIs turn to attack
+ * @param lastHit Wether the last attack was a hit or a miss
+ * @return a two-position int containing X- and Y-coordinates to hit
+ */
+public int[] attack(boolean lastHit) {
 	/**
-	 * AIs turn to attack
-	 * @param lastHit Wether the last attack was a hit or a miss
-	 * @return a two-position int containing X- and Y-coordinates to hit
+	 * TODO
+	 * Attack the player using the prepared list of random zones to hit. 
+	 * Give the AI the option of seeking out hit ships.
 	 */
-	public int[] attack(boolean lastHit) {
-		/**
-		 * TODO
-		 * Attack the player using the prepared list of random zones to hit. 
-		 * Give the AI the option of seeking out hit ships.
-		 */
-		// For 1.0
-		if (difficulties == 1)
-			
+	// For 1.0
+	if (difficulties == 1)
+
 		return null;
-
+	return null;
+}
 	/**
 	 * Create the AI-players firing solution based on the set difficulty.
 	 */
@@ -122,7 +168,7 @@ public class AI extends Player {
 		// Randomize the hitlist
 		Collections.shuffle(firingSolution, new Random());
 	}
-	
+
 	/**
 	 * @return Wether the AI has placed its ships or not.
 	 */
