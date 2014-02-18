@@ -65,10 +65,12 @@ public class AI extends Player {
 					battlefield.setShip(xValue-1, yValue, tempShip);
 			}
 			else if(southSpace(xValue, yValue+1, tempShip)){
+				tempShip.rotate();
 				for (int i = 0; i < tempShip.getLenght(); i++)
 					battlefield.setShip(xValue, yValue+1, tempShip);
 			}
 			else if(northSpace(xValue, yValue-1, tempShip)){
+				tempShip.rotate();
 				for (int i = 0; i < tempShip.getLenght(); i++)
 					battlefield.setShip(xValue, yValue-1, tempShip);
 			}
