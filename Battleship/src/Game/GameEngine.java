@@ -11,7 +11,7 @@ public class GameEngine {
 	private Boolean winPlayer;
 	private Boolean gameOver;
 	
-	public enum Status{	MISS,HIT,SUNK,SHIP}
+	public enum ZoneState{MISS,HIT,SUNK,SHIP}
 	
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
@@ -54,9 +54,10 @@ public class GameEngine {
 				playerTurn = false;
 			}
 			else{
-				if(ai.isShipsPlaced())
-					//ai.attack();
-				
+				if(ai.isShipsPlaced()){
+					int[] coords = ai.attack(lastHit);
+					lastHit = player.bomb(coords[0],coords[1]); //bomb the players field
+				}
 				if(!player.hasShips()){
 					winPlayer = false;
 					gameOver = true;
