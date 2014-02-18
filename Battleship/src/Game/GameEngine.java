@@ -8,8 +8,9 @@ public class GameEngine {
 	private Gui gui;
 	private Player player;
 	private AI ai;
-	private Boolean winPlayer;
-	private Boolean gameOver;
+	private boolean winPlayer;
+	private boolean gameOver;
+	private boolean playerTurn;
 	
 	public enum ZoneState{MISS,HIT,SUNK,SHIP}
 	
@@ -57,7 +58,7 @@ public class GameEngine {
 			//	if(ai.isShipsPlaced()){    milstolpe 2
 			//		int[] coords = ai.attack(lastHit); milstolpe 2
 			//		lastHit = player.bomb(coords[0],coords[1]); //bomb the players field,milstolpe 2
-				}
+			//	}
 				if(!player.hasShips()){
 					winPlayer = false;
 					gameOver = true;
@@ -76,6 +77,7 @@ public class GameEngine {
 	public void newGame() {
 		gameOver = false;
 		winPlayer = false;
+		playerTurn = true;
 		//player.placeShips(); milstolpe 2
 		//ai.placeShips();
 	}
@@ -126,7 +128,7 @@ public class GameEngine {
 		run();
 	}
 	
-	public isPlayerTurn(){
+	public boolean isPlayerTurn(){
 		return playerTurn;
 	}
 }
