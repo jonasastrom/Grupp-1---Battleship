@@ -31,11 +31,13 @@ public class Player
 	}
 
 	/**
-	 * TODO in 1.0
+	 * Perform an attack by fetching input from
+	 * the GUI and returning the coordinates
+	 * @return The coordinates to be bombed
 	 */
-	public void attack()
+	public int[] attack()
 	{
-		// TODO in 1.0
+		return GameEngine.getGui().getInput();
 	}
 
 	/**
