@@ -13,10 +13,10 @@ public class Zone
 {
 	private int xPos;
 	private int yPos;
-	private int status;
 	private boolean isBombed = false;
 	private boolean hasShip = false;
 	private Ship ship;
+	private Gui ZoneGui;
 
 	/**
 	 * Constructor
@@ -42,20 +42,22 @@ public class Zone
 	 */
 	public boolean setBomb()
 	{
+		ZoneGui = GameEngine.getGui();
+		
 		isBombed = true;
 		if (ship != null) {
 			ship.hit();
 			if (ship.isSunk()) {
-				Gui.updateZone(++xPos,++yPos,);
+				ZoneGui.updateZone(++xPos,++yPos,ZoneState.SUNK);
 				return true;
 			}
 			else {
-				GUI.Gui.updateZone(++xPos,++yPos,ZoneState.HIT);
+				ZoneGui.updateZone(++xPos,++yPos,ZoneState.HIT);
 				return true;
 			}
 		}
 		else {
-			GUI.Gui.updateZone(++xPos,++yPos,ZoneState.MISS);
+			ZoneGui.updateZone(++xPos,++yPos,ZoneState.MISS);
 			return false;
 		}
 	}
