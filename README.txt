@@ -1,3 +1,5 @@
-H�r kan det st� roliga saker, te.x hur m�nga laxar en braxlax har.
+﻿. . : : BATTLESHIP : : . .
 
-Tre laxar i en laxask // steff
+Group 1 - DAT055 2014
+
+http://en.wikipedia.org/wiki/Battleship_(game)
