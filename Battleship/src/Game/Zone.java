@@ -16,6 +16,7 @@ public class Zone
 	private boolean isBombed = false;
 	private boolean hasShip = false;
 	private Ship ship;
+	
 	public static enum ZoneState
 	{
 		MISS,HIT,SUNK,SHIP;
