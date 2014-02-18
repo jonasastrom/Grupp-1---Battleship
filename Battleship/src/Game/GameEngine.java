@@ -86,7 +86,7 @@ public class GameEngine {
 		winPlayer = false;
 		playerTurn = false; //before the ships are placed the playerturn is false
 		//player.placeShips(); milstolpe 2
-		//ai.placeShips();
+		ai.placeShips();
 	}
 
 	/**
