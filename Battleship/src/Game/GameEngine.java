@@ -10,7 +10,7 @@ public class GameEngine {
 	private AI ai;
 	private boolean winPlayer;
 	private boolean gameOver;
-	private boolean playerTurn;
+	private static boolean playerTurn;
 	
 	public enum ZoneState{MISS,HIT,SUNK,SHIP}
 	
@@ -42,13 +42,13 @@ public class GameEngine {
 	 * destroying each other's fleets
 	 */
 	public void run() {
-		boolean playerTurn = true;
 		
+		//boolean lastHit = false; to be used for milstolpe 2
 		newGame();
-
+		playerTurn = true;
 		while(!gameOver){
 			if(playerTurn){
-				//player.attack();
+				player.attack(); //the player attacks the enemy 
 				if(!ai.hasShips()){
 					winPlayer = true;
 					gameOver = true;
@@ -57,6 +57,9 @@ public class GameEngine {
 				playerTurn = false;
 			}
 			else{
+			//first checks if the AI has placed the ships 
+			// if yes then get the coordinates the ai wants to attack while telling the ai if the last hit succeeded or not
+			// player.bomb, attacks the players field with the coordinates as parameters, returns if the hit succeeded or not
 			//	if(ai.isShipsPlaced()){    milstolpe 2
 			//		int[] coords = ai.attack(lastHit); milstolpe 2
 			//		lastHit = player.bomb(coords[0],coords[1]); //bomb the players field,milstolpe 2
@@ -79,7 +82,7 @@ public class GameEngine {
 	public void newGame() {
 		gameOver = false;
 		winPlayer = false;
-		playerTurn = true;
+		playerTurn = false; //before the ships are placed the playerturn is false
 		//player.placeShips(); milstolpe 2
 		//ai.placeShips();
 	}
@@ -106,6 +109,7 @@ public class GameEngine {
 		}
 		resetGame();	// If the game is not over but the menu option for a New Game has been chosen, then the win/lose messages won't be displayed.
 	}
+	
 	public void testGameOver(boolean gameOverState) {
 		if(!gameOverState) {
 			gameOver = true;
@@ -119,6 +123,9 @@ public class GameEngine {
 		}
 	}
 	
+	/**
+	 *	Empties the objects and recreates them for a new game 
+	 */
 	private void resetGame() {
 		player = null;
 		ai = null;
@@ -130,7 +137,12 @@ public class GameEngine {
 		run();
 	}
 	
-	public boolean isPlayerTurn(){
+	/**
+	 * Returns if it's the players turn
+	 * @return returns true if it's the players turn
+	 * 			else false
+	 */
+	public static boolean isPlayerTurn(){
 		return playerTurn;
 	}
 }
