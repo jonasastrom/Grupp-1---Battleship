@@ -14,11 +14,7 @@ import java.util.Random;
 public class AI extends Player {
 	int difficulties;
 	private List<int[]> firingSolution;
-<<<<<<< HEAD
 	private boolean shipsPlaced;
-=======
-	private Battlefield battlefield;
->>>>>>> 978781cbb10491af3aeb5b7257daa821994ec534
 
 	/**
 	 * the constructor of this class
@@ -98,7 +94,6 @@ public class AI extends Player {
 	 * @param lastHit Wether the last attack was a hit or a miss
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
-<<<<<<< HEAD
 	public int[] attack(boolean lastHit) {
 		/**
 		 * TODO
@@ -109,11 +104,6 @@ public class AI extends Player {
 		if (difficulties == 1)
 			
 		return null;
-=======
-	public void attack() {
-
->>>>>>> 978781cbb10491af3aeb5b7257daa821994ec534
-	}
 
 	/**
 	 * Create the AI-players firing solution based on the set difficulty.
@@ -132,7 +122,6 @@ public class AI extends Player {
 		// Randomize the hitlist
 		Collections.shuffle(firingSolution, new Random());
 	}
-<<<<<<< HEAD
 	
 	/**
 	 * @return Wether the AI has placed its ships or not.
@@ -141,6 +130,4 @@ public class AI extends Player {
 		return shipsPlaced;
 	}
 
-=======
->>>>>>> 978781cbb10491af3aeb5b7257daa821994ec534
 }
