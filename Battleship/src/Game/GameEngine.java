@@ -5,7 +5,7 @@ import GUI.Gui;
 
 @SuppressWarnings("unused")		// Because yellow lines are annoying
 public class GameEngine {
-	private Gui gui;
+	private static Gui gui;
 	private Player player;
 	private AI ai;
 	private boolean winPlayer;
@@ -32,7 +32,9 @@ public class GameEngine {
 		gamE.run();
 	}
 	
-	
+	public static Gui getGui(){
+		return gui;
+	}
 	
 	/**
 	 * The main game loop
