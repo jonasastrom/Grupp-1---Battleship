@@ -34,21 +34,6 @@ public class Fleet
 	}
 
 	/**
-	 * Check if the whole fleet is sunk
-	 * @return true if all ships have been sunk,
-	 *         false otherwise
-	 */
-	public boolean isSunk()
-	{
-		for (Ship ship : ships) {
-			if (!ship.isSunk()) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * Check if the whole fleet is placed
 	 * @return true if all ships have been placed,
 	 *         false otherwise
@@ -56,9 +41,20 @@ public class Fleet
 	public boolean isPlaced()
 	{
 		for (Ship ship : ships) {
-			if (!ship.isPlaced()) {
-				return false;
-			}
+			if (!ship.isPlaced()) return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Check if the whole fleet is sunk
+	 * @return true if all ships have been sunk,
+	 *         false otherwise
+	 */
+	public boolean isSunk()
+	{
+		for (Ship ship : ships) {
+			if (!ship.isSunk()) return false;
 		}
 		return true;
 	}
