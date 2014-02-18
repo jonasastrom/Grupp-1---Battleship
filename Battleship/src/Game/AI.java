@@ -1,7 +1,10 @@
-
 package Game;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 /**
  * 
@@ -11,12 +14,12 @@ import java.util.*;
 public class AI extends Player {
 	int difficulties;
 	private List<int[]> firingSolution;
+	private Battlefield battlefield;
 
 	/**
 	 * the constructor of this class
 	 */
 	public AI(int difficulties) {
-		super();
 		this.difficulties = difficulties;
 		firingSolution = new ArrayList<>();
 	}
@@ -26,67 +29,69 @@ public class AI extends Player {
 	 * Placing out the ships and 
 	 * it will override the Player class method placeShips() 
 	 * and call the method setShip()
-	 * get an array of all the list 
 	 * 
 	 */
-	public void placeShips(Ship ship) {
-
+	public void placeShips() {
+		Battlefield battlefield = getBattlefield();
+		ArrayList<Ship> array = getFleet().getShips();
 		Random random = new Random();
-		int xNumber = random.nextInt(10) + 1; // randomize a number from 1-10												// for the x-coordinate
-		int yNumber = random.nextInt(10) + 1; // randomize number for the
-												// y-coordinate
-		int xNewNumber = random.nextInt(10) + 1;
-		int yNewNumber = random.nextInt(10) + 1;
-		battlefield = null;
+		int counter = 0;
+		int xValue;
+		int yValue;
 
-		System.out.println(xNumber);
-		System.out.println(yNumber);
+		while (counter <= 5) {
+			while (true) {
+				xValue = random.nextInt(10) + 1;
+				yValue = random.nextInt(10) + 1;
+				battlefield.hasShip(xValue, yValue); // if that
 
-		if (isLegal(ship))
-			battlefield.setShip(xNumber, yNumber, ship);
-		else
-			System.out.println("Error, please try again!");
+			}
+
+			if (enoughSpace(xValue, yValue) == true) {
+				battlefield.setShip(xValue, yValue, ship.getNext());
+				counter++;
+			}
+		}
 	}
 
 	/**
+	 * if the boat fits to the chosen coordinates
 	 * 
-	 * @param xNumber
-	 * @param yNumber
-	 * @param yNewNumber
-	 * @param xNewNumber
-	 * @return
-	 */ 
-	private boolean isLegal(Ship ship) {
-		Iterator<Fleet> it = Iterator<Fleet>;
-		int counter = 0;
-		while (it.hasNext()) {
-			
-		}
+	 * @param yValue
+	 * @param xValue
+	 * @return true else
+	 * @return false
+	 */
+	private boolean enoughSpace(int xValue, int yValue) {
 
+		int countSquare;
+
+		for(countSquare = 0; countSquare < 6; countSquare++){
+			if(battlefield.hasShip(xValue, yValue) == true){
+				xValue++;
+			}
+			else if(battlefield.hasShip(xValue, yValue) == true){
+				xValue--;
+			}
+			else if(battlefield.hasShip(xValue, yValue) == true){
+				yValue++;
+			}
+			else if(battlefield.hasShip(xValue, yValue) == true){
+				yValue--;
+			}
+			else
+				break;
+			
+			return true;
+		}
 		return false;
-		/**
-		 * if (battlefield.hasShip(xNumber, yNumber)) { if (Math.abs(xNumber -
-		 * xNewNumber) == 2 || (Math.abs(yNumber - yNewNumber) == 2)) { return
-		 * true; } else if (Math.abs(xNumber - xNewNumber) == 3 ||
-		 * (Math.abs(yNumber - yNewNumber) == 3)) { return true; } else if
-		 * (Math.abs(xNumber - xNewNumber) == 4 || (Math.abs(yNumber -
-		 * yNewNumber) == 4)) { return true; } else if (Math.abs(xNumber -
-		 * xNewNumber) == 3 || (Math.abs(yNumber - yNewNumber) == 5)) return
-		 * true;
-		 * 
-		 * } else return false;
-		 */
 	}
 
 	/**
 	 * AIs turn to attack
 	 */
 	public void attack() {
-		/**
-		 * TODO
-		 * Attack the player using the preprepared list of random zones to hit. 
-		 * Give the AI the option of seeking out hit ships.
-		 */
+
 	}
 
 	/**
@@ -94,9 +99,10 @@ public class AI extends Player {
 	 */
 	private void createFiringSolution() {
 		// In the initial, stupid iteration, only randomly attack zones.
+		// Do a loop to create random attacks, manually checking for conflicts?
 		for (int x = 1; x <= 10; x++) {
 			for (int y = 1; y <= 10; y++) {
-				int pos[] = new int[2]; 
+				int pos[] = new int[2];
 				pos[0] = x;
 				pos[1] = y;
 				firingSolution.add(pos);
@@ -105,5 +111,4 @@ public class AI extends Player {
 		// Randomize the hitlist
 		Collections.shuffle(firingSolution, new Random());
 	}
-
 }
