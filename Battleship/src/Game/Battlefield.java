@@ -1,88 +1,86 @@
 package Game;
 
 /**
- * Handles the Battlefield
- * @author grupp1  
- *
+ * Handles the battlefield for a player
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 1.0
  */
-public class Battlefield {
+public class Battlefield
+{
+	private Zone[][] zones;
 
-	Zone [][] zones = new Zone[10][10];
-	Zone zoneTMP;
-	
 	/**
-	 * Constructor
+	 * Construct the battlefield with 100 zones
 	 */
 	public Battlefield()
 	{
-		for (int y = 1; y < 10; y++)
-		{	
-			for (int x = 1; x < 10; x++)
-			{
+		zones = new Zone[10][10];
+
+		for (int y = 1; y < 10; y++) {	
+			for (int x = 1; x < 10; x++) {
 				zones[x][y] = new Zone(x,y);
 			}
 		}
 	}
-	
 
 	/**
-	 * Returns true if the zone with the specified coordinates has been bombed
-	 * False otherwise
-	 * @param int x The x coordinate of the zone to check
-	 * @param int y The y coordinate of the zone to check
+	 * Check if the zone with the specified
+	 * coordinates has been bombed
+	 * @param x The x-coordinate of the zone
+	 * @param y The y-coordinate of the zone
+	 * @return true if the zone has been bombed,
+	 *         false otherwise
 	 */
 	public boolean isBombed(int x, int y)
 	{
-		
-		zoneTMP = zones[x][y];
-		return zoneTMP.isBombed();
-
+		return zones[x][y].isBombed();
 	}
 
 	/**
-	 * Sets the zone with the specified coordinates to bombed.
-	 * @param int x The x coordinates of the zone to bomb
-	 * @param int y The y coordinate of the zone to bomb
+	 * Bomb the zone with the specified coordinates
+	 * @param x The x-coordinate of the zone
+	 * @param y The y-coordinate of the zone
+	 * @return true if a ship was hit,
+	 *         false otherwise
 	 */
-	/*public boolean setBomb(int x, int y)
+	public boolean setBomb(int x, int y)
 	{
-		zoneTMP = zones[x][y];
-		zoneTMP.setBomb();
-	}*/
+		zones[x][y].setBomb();
+	}
 
 	/**
-	 * Returns true if the zone with the specified coordiantes has a ship
-	 * False otherwise
-	 * @param int x The x coordinates of the zone to check
-	 * @param int y The y coordinate of the zone to check
+	 * Check if the zone with the specified
+	 * coordinates is occupied by a ship
+	 * @param x The x-coordinate of the zone
+	 * @param y The y-coordinate of the zone
+	 * @return true if a ship occupies the zone
+	 *         false if the zone is free
 	 */
 	public boolean hasShip(int x, int y)
 	{
-		zoneTMP = zones[x][y];
-		return zoneTMP.hasShip();
-
+		return zones[x][y].hasShip();
 	}
 
 	/**
-	 * Gets the ship from the zone of with the specified coordinates
-	 * Returns null is there is no ship
-	 * @param int x The x coordinates of the zone to get ship from
-	 * @param int y The y coordinate of the zone to get ship from
+	 * Return the ship at the specified coordinates
+	 * @param x The x-coordinate of the zone
+	 * @param y The y-coordinate of the zone
+	 * @return Ship or null if there is no ship
 	 */
 	public Ship getShip(int x, int y)
 	{
-		zoneTMP = zones[x][y];
-		return zoneTMP.getShip();
+		return zones[x][y].getShip();
 	}
 
 	/**
-	 * Sets a ship-object to a zone
-	 * @param int x The x coordinates of the zone to set ship
-	 * @param int y The y coordinate of the zone to set ship
+	 * Place a ship at the specified coordinates
+	 * @param x The x-coordinate of the zone
+	 * @param y The y-coordinate of the zone
+	 * @param ship The ship occupying the zone
 	 */
 	public void setShip(int x, int y, Ship ship)
 	{
-		zoneTMP = zones[x][y];
-		zoneTMP.setShip(ship);
+		zones[x][y].setShip(ship);
 	}
 }
