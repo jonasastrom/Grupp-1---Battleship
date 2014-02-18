@@ -19,7 +19,7 @@ public class GameEngine {
 		// Creates a new object of GUI (for creating a frame)
 		gui = new GUI.Gui(this);
 		player = new Player(); 
-		ai = new AI(0, new Battlefield());	//0 because we don't need more difficulties for now
+		ai = new AI(0);	//0 because we don't need more difficulties for now
 										//and ai wants a battlefield in the construktor
 	}
 	
@@ -135,7 +135,7 @@ public class GameEngine {
 		System.gc();	// This keeps the program from ever taking up too much memory
 		gui = new GUI.Gui(this);
 		player = new Player();
-		ai = new AI(0 , new Battlefield());
+		ai = new AI(0);
 		run();
 	}
 	
