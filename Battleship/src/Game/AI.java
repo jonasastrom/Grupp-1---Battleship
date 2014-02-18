@@ -1,7 +1,11 @@
 
 package Game;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 /**
  * 
@@ -11,6 +15,7 @@ import java.util.*;
 public class AI extends Player {
 	int difficulties;
 	private List<int[]> firingSolution;
+	private boolean shipsPlaced;
 
 	/**
 	 * the constructor of this class
@@ -19,6 +24,8 @@ public class AI extends Player {
 		super();
 		this.difficulties = difficulties;
 		firingSolution = new ArrayList<>();
+		// Ships have not been placed yet.
+		shipsPlaced = false;
 	}
 
 	@Override
@@ -80,13 +87,19 @@ public class AI extends Player {
 
 	/**
 	 * AIs turn to attack
+	 * @param lastHit Wether the last attack was a hit or a miss
+	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
-	public void attack() {
+	public int[] attack(boolean lastHit) {
 		/**
 		 * TODO
-		 * Attack the player using the preprepared list of random zones to hit. 
+		 * Attack the player using the prepared list of random zones to hit. 
 		 * Give the AI the option of seeking out hit ships.
 		 */
+		// For 1.0
+		if (difficulties == 1)
+			
+		return null;
 	}
 
 	/**
@@ -104,6 +117,13 @@ public class AI extends Player {
 		}
 		// Randomize the hitlist
 		Collections.shuffle(firingSolution, new Random());
+	}
+	
+	/**
+	 * @return Wether the AI has placed its ships or not.
+	 */
+	public boolean isShipsPlaced() {
+		return shipsPlaced;
 	}
 
 }
