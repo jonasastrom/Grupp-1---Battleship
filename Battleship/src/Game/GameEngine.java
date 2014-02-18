@@ -11,6 +11,8 @@ public class GameEngine {
 	private Boolean winPlayer;
 	private Boolean gameOver;
 	
+	public enum Status{	MISS,HIT,SUNK,SHIP}
+	
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
 		gui = new GUI.Gui(this);
@@ -29,9 +31,7 @@ public class GameEngine {
 		gamE.run();
 	}
 	
-	public enum Status{
-		MISS,HIT,SUNK,SHIP
-	}
+	
 	
 	/**
 	 * The main game loop
@@ -54,7 +54,8 @@ public class GameEngine {
 				playerTurn = false;
 			}
 			else{
-				//ai.attack();
+				if(ai.isShipsPlaced())
+					//ai.attack();
 				
 				if(!player.hasShips()){
 					winPlayer = false;
@@ -122,5 +123,9 @@ public class GameEngine {
 		player = new Player();
 		ai = new AI(0);
 		run();
+	}
+	
+	public isPlayerTurn(){
+		return playerTurn;
 	}
 }
