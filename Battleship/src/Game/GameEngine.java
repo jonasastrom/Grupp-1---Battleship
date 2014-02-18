@@ -54,9 +54,9 @@ public class GameEngine {
 				playerTurn = false;
 			}
 			else{
-				if(ai.isShipsPlaced()){
-					int[] coords = ai.attack(lastHit);
-					lastHit = player.bomb(coords[0],coords[1]); //bomb the players field
+			//	if(ai.isShipsPlaced()){    milstolpe 2
+			//		int[] coords = ai.attack(lastHit); milstolpe 2
+			//		lastHit = player.bomb(coords[0],coords[1]); //bomb the players field,milstolpe 2
 				}
 				if(!player.hasShips()){
 					winPlayer = false;
@@ -76,7 +76,7 @@ public class GameEngine {
 	public void newGame() {
 		gameOver = false;
 		winPlayer = false;
-		//player.placeShips();
+		//player.placeShips(); milstolpe 2
 		//ai.placeShips();
 	}
 
