@@ -1,19 +1,21 @@
 package Game;
+
 import GUI.Gui;
 
 /**
- * Handles the zones of the Battlefield
- * @author grupp1
- *
+ * Handles a zone
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 1.0
  */
-public class Zone {
-
-	int xPos;
-	int yPos;
-	int status;
-	boolean isBombed = false;
-	boolean hasShip = false;
-	Ship ship;
+public class Zone
+{
+	private int xPos;
+	private int yPos;
+	private int status;
+	private boolean isBombed = false;
+	private boolean hasShip = false;
+	private Ship ship;
 	public static enum ZoneState
 	{
 		MISS,HIT,SUNK,SHIP;
