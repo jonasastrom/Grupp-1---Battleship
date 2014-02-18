@@ -1,6 +1,7 @@
 package Game;
 
 import GUI.Gui;
+import Game.GameEngine.ZoneState;
 
 /**
  * Handles a zone
@@ -16,11 +17,6 @@ public class Zone
 	private boolean isBombed = false;
 	private boolean hasShip = false;
 	private Ship ship;
-	
-	public static enum ZoneState
-	{
-		MISS,HIT,SUNK,SHIP;
-	}
 
 	/**
 	 * Constructor
@@ -44,22 +40,25 @@ public class Zone
 	 * Set true if the zone has already been bombed
 	 * 
 	 */
-	//Kompilatorn vill att updateZone skall vara static
-	/*public boolean setBomb()
+	public boolean setBomb()
 	{
 		isBombed = true;
-		if(ship!=null)
-		{
+		if (ship != null) {
 			ship.hit();
-			if(ship.isSunk())
-			{
-				Gui.updateZone(++xPos,++yPos,ZoneState.SUNK);
+			if (ship.isSunk()) {
+				Gui.updateZone(++xPos,++yPos,);
+				return true;
 			}
-			
-			else {GUI.Gui.updateZone(++xPos,++yPos,ZoneState.HIT);}
+			else {
+				GUI.Gui.updateZone(++xPos,++yPos,ZoneState.HIT);
+				return true;
+			}
 		}
-		else{GUI.Gui.updateZone(++xPos,++yPos,ZoneState.MISS);}
-	}*/
+		else {
+			GUI.Gui.updateZone(++xPos,++yPos,ZoneState.MISS);
+			return false;
+		}
+	}
 
 	/**
 	 * Returns true if the zone has a ship
@@ -78,12 +77,7 @@ public class Zone
 	 */
 	public Ship getShip()
 	{
-		if(ship!= null)
-		{
-			return ship;
-		}
-		
-		else return null;
+		return ship;
 	}
 
 	/**
