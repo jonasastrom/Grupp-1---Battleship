@@ -312,14 +312,12 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			System.out.println("insane");
 		}else if(e.getSource() instanceof Zone){
 
-			//			if(KOLLA OM DET ÄR SPELARENS TUR){
 			Zone tempZone = (Zone) e.getSource();
 			System.out.println("x:" + tempZone.x + " y:" + tempZone.y + " name:" + tempZone.name);
 			int i = ((tempZone.y - 1) * 10 ) + tempZone.x;
 			System.out.println("nummer:" + i);
 			tempZone.setEnabled(false);
 			gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
-			//		}
 
 		}
 	}
