@@ -1,5 +1,7 @@
 package Game;
 
+import java.util.Observable;
+
 /**
  * The base class for all players
  * 

@@ -1,5 +1,8 @@
 package Game;
 
+import java.util.ArrayList;
+import java.util.Observable;
+
 import GUI.Gui;
 import Game.GameEngine.ZoneState;
 
@@ -9,7 +12,7 @@ import Game.GameEngine.ZoneState;
  * @author Group 1 - DAT055 2014
  * @version 1.0
  */
-public class Zone
+public class Zone extends Observable
 {
 	private int xPos;
 	private int yPos;
@@ -44,7 +47,14 @@ public class Zone
 	 */
 	public boolean setBomb()
 	{
-		String whatBattlefield;
+		ArrayList<String> stringList = new ArrayList<String>();
+		stringList.add("hej");
+		setChanged();
+		notifyObservers();
+		return true;
+		
+		
+		/*String whatBattlefield;
 		if(id.equals("ai")){whatBattlefield = "left";}
 		else{
 			whatBattlefield = "right";}
@@ -65,7 +75,7 @@ public class Zone
 		else {
 			ZoneGui.updateZone(++xPos,++yPos,ZoneState.MISS,id);
 			return false;
-		}
+		}*/
 	}
 
 	/**
