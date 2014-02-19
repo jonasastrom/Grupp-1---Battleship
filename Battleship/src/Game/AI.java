@@ -2,9 +2,9 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.ListIterator;
 
 /**
  * 
@@ -100,11 +100,18 @@ public class AI extends Player {
 		 * Attack the player using the prepared list of random zones to hit. 
 		 * Give the AI the option of seeking out hit ships.
 		 */
+		int[] target = new int[2];
 		// For 1.0
-		if (difficulties == 1)
+		ListIterator<int[]> hits = firingSolution.listIterator();
+		if (difficulties < 4) {
 			
-		return null;
-
+			if (difficulties == 1)
+				target = hits.next();
+			// Remove the last square to be hit from the list permanently
+			hits.remove();
+		}
+		return target;
+	}
 	/**
 	 * Create the AI-players firing solution based on the set difficulty.
 	 */
