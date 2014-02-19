@@ -14,8 +14,8 @@ public class GameEngine {
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
 		gui = new GUI.Gui(this);
-		player = new Player();
-		ai = new AI(0);	//0 because we don't need more difficulties for now
+		//player = new Player();
+		//ai = new AI(0);	//0 because we don't need more difficulties for now
 	}
 	
 	/**
@@ -42,8 +42,10 @@ public class GameEngine {
 		boolean playerTurn = true;
 		
 		newGame();
-
-		while(!gameOver){
+		while(true) {
+			
+		}
+		/*while(!gameOver){
 			if(playerTurn){
 				//player.attack();
 				if(!ai.hasShips()){
@@ -62,8 +64,8 @@ public class GameEngine {
 					break;
 				}
 			}
-		}
-		gameOver();
+		} */
+		//gameOver();
 
 	}
 
@@ -98,7 +100,8 @@ public class GameEngine {
 			else
 				System.exit(0);
 		}
-		resetGame();	// If the game is not over but the menu option for a New Game has been chosen, then the win/lose messages won't be displayed.
+		else
+			resetGame();	// If the game is not over but the menu option for a New Game has been chosen, then the win/lose messages won't be displayed.
 	}
 	public void testGameOver(boolean gameOverState) {
 		if(!gameOverState) {
@@ -114,13 +117,14 @@ public class GameEngine {
 	}
 	
 	private void resetGame() {
-		player = null;
-		ai = null;
-		gui = null;		// Calls GC here to make sure it does its job
-		System.gc();	// This keeps the program from ever taking up too much memory
+		gui.removeAll();
+		gui.setVisible(false);
+		gui = null;
+		System.gc();	// Calls GC here to make sure it does its job
+						// This keeps the program from ever taking up too much memory
 		gui = new GUI.Gui(this);
-		player = new Player();
-		ai = new AI(0);
+		//player = new Player();
+		//ai = new AI(0);
 		run();
 	}
 }

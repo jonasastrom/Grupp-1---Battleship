@@ -274,9 +274,11 @@ public class Gui extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource() == playerWins){
-			
+			gameEngine.testGameOver(true);
+			System.out.println("debug player wins");
 		}else if(e.getSource() == playerLose){
-			
+			gameEngine.testGameOver(false);
+			System.out.println("debug player lose");
 		}else if(e.getSource() == newGame){
 			gameEngine.run();
 		}else if(e.getSource() == quit){
@@ -301,14 +303,14 @@ public class Gui extends JFrame implements ActionListener {
 			System.out.println("insane");
 		}else if(e.getSource() instanceof Zone){
 
-			/*			if( KOLLA OM DET �R SPELARENS TUR){
+	//	if( KOLLA OM DET �R SPELARENS TUR){
 			Zone temp = (Zone) e.getSource();
 			System.out.println("x:" + temp.x + " y:" + temp.y + " name:" + temp.name);
 			int i = ((temp.y - 1) * 10 ) + temp.x;
 			System.out.println("nummer:" + i);
 			updateZone(temp.x, temp.y, ZoneState.MISS);
 			temp.setEnabled(false);
-						}	*/
+	//	}
 
 		}
 	}
