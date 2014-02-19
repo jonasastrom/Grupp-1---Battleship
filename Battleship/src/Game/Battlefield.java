@@ -61,7 +61,8 @@ public class Battlefield
 	 */
 	public boolean hasShip(int x, int y)
 	{
-		return zones[x][y].hasShip();
+		Zone zoneTMP = zones[x][y];
+		return zoneTMP.hasShip();
 	}
 
 	/**
