@@ -99,6 +99,8 @@ public class GameEngine {
 		gui.removeAll();
 		gui.setVisible(false);
 		gui = null;
+		player = null;
+		ai = null;
 		System.gc();	// Calls GC here to make sure it does its job
 						// This keeps the program from ever taking up too much memory
 		gui = new Gui(this);
