@@ -2,9 +2,9 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.ListIterator;
 
 /**
  * 
@@ -23,6 +23,7 @@ public class AI extends Player {
 	 * @param battlefield 
 	 */
 	public AI(int difficulties) {
+		super("ai");
 		this.difficulties = difficulties;
 		firingSolution = new ArrayList<>();
 		// Ships have not been placed yet.
@@ -81,81 +82,82 @@ public class AI extends Player {
 	}
 
 
-/**
- * if the boat fits to the chosen coordinates
- * 
- * @param yValue
- * @param xValue
- * @return true else
- * @return false
- */
-private boolean eastSpace(int xValue, int yValue, Ship ship) {
-	boolean takenNeighbour = false;
-	int counter = 0;
-	//ships length
-	while(!takenNeighbour && counter < ship.getLenght()){
-		takenNeighbour = battlefield.hasShip(xValue, yValue);
-		xValue++;
-		counter++;
-	}
-	return !takenNeighbour;
-
-}
-
-private boolean southSpace(int xValue, int yValue, Ship ship){
-	boolean takenNeighbour = false;
-	int counter =0;
-	while(!takenNeighbour && counter < ship.getLenght() ){
-		takenNeighbour = battlefield.hasShip(xValue, yValue);
-		yValue++;
-		counter++;
-	}
-	return !takenNeighbour;
-}
-
-private boolean westSpace(int xValue, int yValue, Ship ship){
-	boolean takenNeighbour = false;
-	int counter = 0;
-	while(!takenNeighbour && counter < ship.getLenght() ){
-		takenNeighbour = battlefield.hasShip(xValue, yValue);
-		xValue--;
-		counter++;
-	}
-	return !takenNeighbour;
-}
-
-private boolean northSpace (int xValue, int yValue, Ship ship){
-	boolean takenNeighbour = false;
-	int counter = 0;
-	while(!takenNeighbour && counter < ship.getLenght() ){
-		takenNeighbour = battlefield.hasShip(xValue, yValue);
-		yValue--;
-		counter ++;
-	}
-	return !takenNeighbour;
-}
-
-
-
-
-
-/**
- * AIs turn to attack
- * @param lastHit Wether the last attack was a hit or a miss
- * @return a two-position int containing X- and Y-coordinates to hit
- */
-public int[] attack(boolean lastHit) {
 	/**
-	 * TODO
-	 * Attack the player using the prepared list of random zones to hit. 
-	 * Give the AI the option of seeking out hit ships.
+	 * if the boat fits to the chosen coordinates
+	 * 
+	 * @param yValue
+	 * @param xValue
+	 * @return true else
+	 * @return false
 	 */
-	// For 1.0
-	if (difficulties == 1)
+	private boolean eastSpace(int xValue, int yValue, Ship ship) {
+		boolean takenNeighbour = false;
+		int counter = 0;
+		//ships length
+		while(!takenNeighbour && counter < ship.getLenght()){
+			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			xValue++;
+			counter++;
+		}
+		return !takenNeighbour;
 
-		return null;
-	return null;
-}
+	}
+
+	private boolean southSpace(int xValue, int yValue, Ship ship){
+		boolean takenNeighbour = false;
+		int counter =0;
+		while(!takenNeighbour && counter < ship.getLenght() ){
+			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			yValue++;
+			counter++;
+		}
+		return !takenNeighbour;
+	}
+
+	private boolean westSpace(int xValue, int yValue, Ship ship){
+		boolean takenNeighbour = false;
+		int counter = 0;
+		while(!takenNeighbour && counter < ship.getLenght() ){
+			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			xValue--;
+			counter++;
+		}
+		return !takenNeighbour;
+	}
+
+	private boolean northSpace (int xValue, int yValue, Ship ship){
+		boolean takenNeighbour = false;
+		int counter = 0;
+		while(!takenNeighbour && counter < ship.getLenght() ){
+			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			yValue--;
+			counter ++;
+		}
+		return !takenNeighbour;
+	}
+
+	/**
+	 * AIs turn to attack
+	 * @param lastHit Wether the last attack was a hit or a miss
+	 * @return a two-position int containing X- and Y-coordinates to hit
+	 */
+	public int[] attack(boolean lastHit) {
+		/**
+		 * TODO
+		 * Attack the player using the prepared list of random zones to hit. 
+		 * Give the AI the option of seeking out hit ships.
+		 */
+		int[] target = new int[2];
+		// For 1.0
+		ListIterator<int[]> hits = firingSolution.listIterator();
+		if (difficulties < 4) {
+			if (difficulties == 1)
+				target = hits.next();
+			// Remove the last square to be hit from the list permanently
+			hits.remove();
+		}
+		return target;
+	}
 	/**
 	 * Create the AI-players firing solution based on the set difficulty.
 	 */
@@ -173,12 +175,11 @@ public int[] attack(boolean lastHit) {
 		// Randomize the hitlist
 		Collections.shuffle(firingSolution, new Random());
 	}
-
+		
 	/**
 	 * @return Wether the AI has placed its ships or not.
 	 */
 	public boolean isShipsPlaced() {
 		return shipsPlaced;
 	}
-
 }
