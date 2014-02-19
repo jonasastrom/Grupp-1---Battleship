@@ -3,6 +3,7 @@ import java.util.Observable;
 
 import GUI.Gui;
 import Game.AI;
+import Game.Human;
 import Game.Player;
 
 @SuppressWarnings("unused")		// Because yellow lines are annoying
@@ -32,55 +33,13 @@ public class GameEngine {
 	public static void main(String[] args) {
 		GameEngine gamE = new GameEngine();
 		
-		gamE.run();
+		gamE.newGame();
 	}
 	
 	public static Gui getGui(){
 		return gui;
 	}
-	
-	/**
-	 * The main game loop
-	 * It sets the player's turn and lets players have their turns in
-	 * destroying each other's fleets
-	 */
-	public void run() {
 		
-		//boolean lastHit = false; to be used for milstolpe 2
-		newGame();
-		while(true) {
-			
-		}
-		/*while(!gameOver){
-			if(playerTurn){
-				player.attack(); //the player attacks the enemy 
-				if(!ai.hasShips()){
-					winPlayer = true;
-					gameOver = true;
-					break;
-				}
-				playerTurn = false;
-			}
-			else{
-			//first checks if the AI has placed the ships 
-			// if yes then get the coordinates the ai wants to attack while telling the ai if the last hit succeeded or not
-			// player.bomb, attacks the players field with the coordinates as parameters, returns if the hit succeeded or not
-			//	if(ai.isShipsPlaced()){    milstolpe 2
-			//		int[] coords = ai.attack(lastHit); milstolpe 2
-			//		lastHit = player.bomb(coords[0],coords[1]); //bomb the players field,milstolpe 2
-			//	}
-				if(!player.hasShips()){
-					winPlayer = false;
-					gameOver = true;
-					break;
-				}
-			}
-		} */
-		//gameOver();
-
-	}
-
-	
 	/**
 	 *  Sets a new game up by saying that the game is not over
 	 *  and making the players place their ships.
@@ -88,6 +47,8 @@ public class GameEngine {
 	public void newGame() {
 		gameOver = false;
 		winPlayer = false;
+		playerLastHit = false;
+		aiLastHit = false;
 		playerTurn = false; //before the ships are placed the playerturn is false
 		//player.placeShips(); milstolpe 2
 		ai.placeShips();
@@ -149,8 +110,18 @@ public class GameEngine {
 		playerTurn = false;			// Player's turn is over
 		
 		playerLastHit = ai.bomb(x, y);
+		if (!ai.hasShips()) {
+			winPlayer = true;
+			gameOver = true;
+			gameOver();
+		}
 		//int[] aiAttack = ai.attack(aiLastHit);
 		//aiLastHit = player.bomb(aiAttack, aiAttack[1]);
+		if (!player.hasShips()) {
+			winPlayer = false;
+			gameOver = true;
+			gameOver();
+		}
 		
 		playerTurn = true;			// Player's turn again
 	}
