@@ -27,6 +27,7 @@ import Game.GameEngine.ZoneState;
 /**
  * This class creates the GUI.
  * @author Grupp 1
+ *
  */
 public class Gui extends JFrame implements ActionListener, Observer {
 
@@ -112,12 +113,17 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		add(new JLabel("   "), BorderLayout.EAST);
 
 		/**
-		 * Add the zones in the middle of the frame. 
+		 * Add the zones in the middle of the frame
 		 */
+
 		//		JPanel centerFrame = new JPanel(new BorderLayout(2, 2));
 		JPanel leftGamePanel  = new JPanel(new GridLayout(11, 11, 2, 2));
 		//		JPanel rightGamePanel = new JPanel(new GridLayout(11, 11, 2, 2));
 		add(leftGamePanel, BorderLayout.CENTER);
+
+		JPanel gamePanel = new JPanel(new GridLayout(11, 11, 2, 2));
+		add(gamePanel, BorderLayout.CENTER);
+
 
 		letters.add(0, " ");
 		letters.add(1, "A");
@@ -136,7 +142,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			for(int j = 0; j < 11; j++){
 				String name = letters.get(j);
 				zone = new Zone(j, i, name + i);
-				leftGamePanel.add(zone);
+				gamePanel.add(zone);
 				zone.addActionListener(this);
 				if((i * j) != 0 ){
 					zoneArray.add(zone);
@@ -279,9 +285,11 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource() == playerWins){
-
+			gameEngine.testGameOver(true);
+			System.out.println("debug player wins");
 		}else if(e.getSource() == playerLose){
-
+			gameEngine.testGameOver(false);
+			System.out.println("debug player lose");
 		}else if(e.getSource() == newGame){
 			gameEngine.run();
 		}else if(e.getSource() == quit){

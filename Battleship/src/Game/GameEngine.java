@@ -18,9 +18,8 @@ public class GameEngine extends Observable{
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
 		gui = new GUI.Gui(this);
-		player = new Player(); 
-		ai = new AI(0);	//0 because we don't need more difficulties for now
-										//and ai wants a battlefield in the construktor
+		//player = new Player();
+		//ai = new AI(0);	//0 because we don't need more difficulties for now
 	}
 	
 	/**
@@ -47,8 +46,10 @@ public class GameEngine extends Observable{
 		
 		//boolean lastHit = false; to be used for milstolpe 2
 		newGame();
-		playerTurn = true;
-		while(!gameOver){
+		while(true) {
+			
+		}
+		/*while(!gameOver){
 			if(playerTurn){
 				player.attack(); //the player attacks the enemy 
 				if(!ai.hasShips()){
@@ -72,8 +73,8 @@ public class GameEngine extends Observable{
 					break;
 				}
 			}
-		}
-		gameOver();
+		} */
+		//gameOver();
 
 	}
 
@@ -110,7 +111,8 @@ public class GameEngine extends Observable{
 			else
 				System.exit(0);
 		}
-		resetGame();	// If the game is not over but the menu option for a New Game has been chosen, then the win/lose messages won't be displayed.
+		else
+			resetGame();	// If the game is not over but the menu option for a New Game has been chosen, then the win/lose messages won't be displayed.
 	}
 	
 	public void testGameOver(boolean gameOverState) {
@@ -130,13 +132,14 @@ public class GameEngine extends Observable{
 	 *	Empties the objects and recreates them for a new game 
 	 */
 	private void resetGame() {
-		player = null;
-		ai = null;
-		gui = null;		// Calls GC here to make sure it does its job
-		System.gc();	// This keeps the program from ever taking up too much memory
+		gui.removeAll();
+		gui.setVisible(false);
+		gui = null;
+		System.gc();	// Calls GC here to make sure it does its job
+						// This keeps the program from ever taking up too much memory
 		gui = new GUI.Gui(this);
-		player = new Player(); //change to human instead
-		ai = new AI(0);
+		//player = new Player();
+		//ai = new AI(0);
 		run();
 	}
 	
