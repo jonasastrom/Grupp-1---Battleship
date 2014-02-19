@@ -14,10 +14,10 @@ public class Player
 	/**
 	 * Construct a battlefield and a fleet
 	 */
-	public Player()
+	public Player(String id)
 	{
-		//battlefield = new Battlefield();
-		//fleet = new Fleet();
+		battlefield = new Battlefield(id);
+		fleet = new Fleet();
 	}
 
 	/**
@@ -35,11 +35,11 @@ public class Player
 	 * the GUI and returning the coordinates
 	 * @return The coordinates to be bombed
 	 */
-	public int[] attack()
-	{
+	//public int[] attack()
+	//{
 		//return GameEngine.getGui().getInput();
 		
-	}
+	//}
 
 	/**
 	 * Bomb this player's battlefield
