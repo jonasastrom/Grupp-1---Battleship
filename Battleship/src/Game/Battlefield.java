@@ -19,8 +19,8 @@ public class Battlefield
 		this.id = id;
 		zones = new Zone[10][10];
 
-		for (int y = 1; y < 10; y++) {	
-			for (int x = 1; x < 10; x++) {
+		for (int y = 1; y < 11; y++) {	
+			for (int x = 1; x < 11; x++) {
 				zones[x][y] = new Zone(x,y,id);
 			}
 		}
