@@ -1,5 +1,5 @@
 package Game;
-import java.util.Observable;
+
 
 import GUI.Gui;
 import Game.AI;
