@@ -157,6 +157,23 @@ public class AI extends Player {
 		}
 		return target;
 	}
+	
+	private int[] attackMoron() {
+		return null;
+	}
+	
+	private int[] attackNotDumb() {
+		return null;
+	}
+	
+	private int[] attackSmart() {
+		return null;
+	}
+	
+	private int[] attackInsane() {
+		return null;
+	}
+	
 	/**
 	 * Create the AI-players firing solution based on the set difficulty.
 	 */
