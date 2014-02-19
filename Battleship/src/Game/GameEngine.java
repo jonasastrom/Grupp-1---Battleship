@@ -1,4 +1,4 @@
-package src.Game;
+package Game;
 import java.util.Observable;
 
 import GUI.Gui;
