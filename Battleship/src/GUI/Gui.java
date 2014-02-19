@@ -238,7 +238,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	/**
 	 * This method get coordinates of a specific zone, and call a method to change to a color
 	 */
-	public void updateZone(int x, int y, String state){
+	private void updateZone(int x, int y, String state){
 		int zoneNumber = ((y - 1) * 10) + x;
 		Zone zone = zoneArray.get(zoneNumber - 1);
 		if(state.equals("miss")){
@@ -317,7 +317,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			System.out.println("x:" + tempZone.x + " y:" + tempZone.y + " name:" + tempZone.name);
 			int i = ((tempZone.y - 1) * 10 ) + tempZone.x;
 			System.out.println("nummer:" + i);
-			updateZone(tempZone.x, tempZone.y, "miss");
 			tempZone.setEnabled(false);
 			gameEngine.coordinates(tempZone.x, tempZone.y);
 			//		}
