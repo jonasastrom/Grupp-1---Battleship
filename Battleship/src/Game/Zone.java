@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import GUI.Gui;
-import Game.GameEngine.ZoneState;
 
 /**
  * Handles a zone
