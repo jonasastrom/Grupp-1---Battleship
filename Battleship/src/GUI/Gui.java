@@ -293,7 +293,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() == quit){
 			System.exit(0);
 		}else if(e.getSource() == about){
-			JOptionPane.showMessageDialog(null, "Hej! \nVi ï¿½r 7 coola kids frï¿½n DAT055 och vi gï¿½r ett spel.", "About", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Hej! \nVi är 7 coola kids från DAT055 och vi gör ett spel.", "About", JOptionPane.INFORMATION_MESSAGE);
 		}else if(e.getSource() == rules){
 			try {
 				openURIForRules();
@@ -318,7 +318,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			int i = ((tempZone.y - 1) * 10 ) + tempZone.x;
 			System.out.println("nummer:" + i);
 			tempZone.setEnabled(false);
-			gameEngine.coordinates(tempZone.x, tempZone.y);
+			gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
 			//		}
 
 		}
@@ -333,8 +333,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		if( observable instanceof Game.Zone && object instanceof ArrayList ){
 			System.out.println("Apan är här");
 			ArrayList<String> list = (ArrayList<String>) object;
-			//			int x = Integer.parseInt(list.get(0));
-			//			int y = Integer.parseInt(list.get(1));
+			//			int x = Integer.parseInt(list.get(0)) - 1;
+			//			int y = Integer.parseInt(list.get(1)) - 1;
 			//			String state = list.get(2);
 			//			if( x >= 1 && x <= 10 && y >= 1 && y <= 10 && ( state.equals("miss") || 
 			//					state.equals("hit") || state.equals("sunk") || state.equals("ship") )){
