@@ -50,16 +50,16 @@ public class Zone
 		if (ship != null) {
 			ship.hit();
 			if (ship.isSunk()) {
-				ZoneGui.updateZone(++xPos,++yPos,ZoneState.SUNK);
+				ZoneGui.updateZone(++xPos,++yPos,ZoneState.SUNK,id);
 				return true;
 			}
 			else {
-				ZoneGui.updateZone(++xPos,++yPos,ZoneState.HIT);
+				ZoneGui.updateZone(++xPos,++yPos,ZoneState.HIT,id);
 				return true;
 			}
 		}
 		else {
-			ZoneGui.updateZone(++xPos,++yPos,ZoneState.MISS);
+			ZoneGui.updateZone(++xPos,++yPos,ZoneState.MISS,id);
 			return false;
 		}
 	}
