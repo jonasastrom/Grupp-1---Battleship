@@ -85,6 +85,7 @@ public class Battlefield
 	 */
 	public void setShip(int x, int y, Ship ship)
 	{
+		System.out.println("Set ship");
 		zones[x][y].setShip(ship);
 	}
 }
