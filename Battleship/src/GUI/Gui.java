@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,14 +22,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Game.GameEngine;
-import Game.Zone.ZoneState;
+import Game.GameEngine.ZoneState;
 
 /**
  * This class creates the GUI.
  * @author Grupp 1
  *
  */
-public class Gui extends JFrame implements ActionListener {
+public class Gui extends JFrame implements ActionListener, Observer {
 
 	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane, playerWins, playerLose;
 	//	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
@@ -41,6 +43,7 @@ public class Gui extends JFrame implements ActionListener {
 	 */
 	public Gui(GameEngine gameEngine){
 		this.gameEngine = gameEngine;
+		gameEngine.addObserver(this);
 		makeGUIFrame();
 	}
 
@@ -112,8 +115,15 @@ public class Gui extends JFrame implements ActionListener {
 		/**
 		 * Add the zones in the middle of the frame
 		 */
+
+		//		JPanel centerFrame = new JPanel(new BorderLayout(2, 2));
+		JPanel leftGamePanel  = new JPanel(new GridLayout(11, 11, 2, 2));
+		//		JPanel rightGamePanel = new JPanel(new GridLayout(11, 11, 2, 2));
+		add(leftGamePanel, BorderLayout.CENTER);
+
 		JPanel gamePanel = new JPanel(new GridLayout(11, 11, 2, 2));
 		add(gamePanel, BorderLayout.CENTER);
+
 
 		letters.add(0, " ");
 		letters.add(1, "A");
@@ -257,8 +267,18 @@ public class Gui extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+	/**
+	 * This method displays a nice message where the player is asked whether
+	 * they want to play again
+	 * @param winText A string that contains either "won" or "lost". 
+	 * @return	True if yes has been answered, false if not
+	 */
+	public boolean gameOverText(String winText) {
+		return (JOptionPane.showConfirmDialog(	null, "You have " + winText + "!\n Would you like to play again?", "GAME OVER",
+				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+	}
+
 	/**
 	 *  This method listen to the players actions.
 	 */
@@ -294,14 +314,25 @@ public class Gui extends JFrame implements ActionListener {
 			System.out.println("insane");
 		}else if(e.getSource() instanceof Zone){
 
-	//	if( KOLLA OM DET ï¿½R SPELARENS TUR){
-			Zone temp = (Zone) e.getSource();
-			System.out.println("x:" + temp.x + " y:" + temp.y + " name:" + temp.name);
-			int i = ((temp.y - 1) * 10 ) + temp.x;
+			//			if(KOLLA OM DET ÄR SPELARENS TUR){
+			Zone tempZone = (Zone) e.getSource();
+			System.out.println("x:" + tempZone.x + " y:" + tempZone.y + " name:" + tempZone.name);
+			int i = ((tempZone.y - 1) * 10 ) + tempZone.x;
 			System.out.println("nummer:" + i);
-			updateZone(temp.x, temp.y, ZoneState.MISS);
-			temp.setEnabled(false);
-	//	}
+			updateZone(tempZone.x, tempZone.y, ZoneState.MISS);
+			tempZone.setEnabled(false);
+			gameEngine.coordinates(tempZone.x, tempZone.y);
+			//		}
+
+		}
+	}
+
+	/**
+	 * This method listen to updates
+	 */
+	@Override
+	public void update(Observable observable, Object object) {
+		if( observable instanceof GameEngine && object instanceof Integer ){
 
 		}
 	}

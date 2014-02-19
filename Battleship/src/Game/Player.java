@@ -31,17 +31,6 @@ public class Player
 	}
 
 	/**
-	 * Perform an attack by fetching input from
-	 * the GUI and returning the coordinates
-	 * @return The coordinates to be bombed
-	 */
-	//public int[] attack()
-	//{
-		//return GameEngine.getGui().getInput();
-		
-	//}
-
-	/**
 	 * Bomb this player's battlefield
 	 * @return true if a ship was hit,
 	 *         false otherwise

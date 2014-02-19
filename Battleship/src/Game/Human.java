@@ -8,9 +8,7 @@ package Game;
  */
 public class Human extends Player
 {
-	//private Battlefield battlefield;
 	private Fleet fleet;
-	//private String id;
 	
 	/**
 	 * Construct the human player
@@ -30,15 +28,4 @@ public class Human extends Player
 			//wait
 		}
 	}
-
-	/**
-	 * Perform an attack by fetching input from
-	 * the GUI and returning the coordinates
-	 * @return The coordinates to be bombed
-	 */
-	//@Override
-	//public int[] attack()
-	//{
-	//	return GameEngine.getGui().getInput();
-	//}
 }
