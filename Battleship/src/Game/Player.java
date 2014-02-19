@@ -39,12 +39,14 @@ public class Player
 	 */
 	public boolean bomb(int x, int y)
 	{
-		if (!battlefield.isBombed(x, y)) {
+		/*if (!battlefield.isBombed(x, y)) {
 			if (battlefield.setBomb(x, y)) {
 				return true;
 			}
 		}
-		return false;
+		return false;*/
+		battlefield.setBomb(x, y);
+	    return true;
 	}
 
 	/**
