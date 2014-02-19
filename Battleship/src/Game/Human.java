@@ -8,17 +8,16 @@ package Game;
  */
 public class Human extends Player
 {
-	private Battlefield battlefield;
+	//private Battlefield battlefield;
 	private Fleet fleet;
+	//private String id;
 	
 	/**
 	 * Construct the human player
 	 */
 	public Human()
 	{
-		super();
-		battlefield = new Battlefield();
-		fleet = new Fleet();
+		super("human");
 	}
 	
 	/**
@@ -37,9 +36,9 @@ public class Human extends Player
 	 * the GUI and returning the coordinates
 	 * @return The coordinates to be bombed
 	 */
-	@Override
-	public int[] attack()
-	{
-		return GameEngine.getGui().getInput();
-	}
+	//@Override
+	//public int[] attack()
+	//{
+	//	return GameEngine.getGui().getInput();
+	//}
 }

@@ -9,17 +9,19 @@ package Game;
 public class Battlefield
 {
 	private Zone[][] zones;
+	private String id;
 
 	/**
 	 * Construct the battlefield with 100 zones
 	 */
-	public Battlefield()
+	public Battlefield(String id)
 	{
+		this.id = id;
 		zones = new Zone[10][10];
 
 		for (int y = 1; y < 10; y++) {	
 			for (int x = 1; x < 10; x++) {
-				zones[x][y] = new Zone(x,y);
+				zones[x][y] = new Zone(x,y,id);
 			}
 		}
 	}

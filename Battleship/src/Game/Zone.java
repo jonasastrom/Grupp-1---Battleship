@@ -17,14 +17,16 @@ public class Zone
 	private boolean hasShip = false;
 	private Ship ship;
 	private Gui ZoneGui;
+	private String id;
 
 	/**
 	 * Constructor
 	 */
-	public Zone(int xPos, int yPos)
+	public Zone(int xPos, int yPos, String id)
 	{
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.id = id;
 	}
 
 	/**
