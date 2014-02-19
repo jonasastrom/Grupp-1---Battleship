@@ -20,7 +20,7 @@ public class GameEngine {
 	
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
-		gui = new GUI.Gui(this);
+		gui = new Gui(this);
 		//player = new Player();
 		//ai = new AI(0);	//0 because we don't need more difficulties for now
 	}
@@ -100,10 +100,10 @@ public class GameEngine {
 		gui = null;
 		System.gc();	// Calls GC here to make sure it does its job
 						// This keeps the program from ever taking up too much memory
-		gui = new GUI.Gui(this);
+		gui = new Gui(this);
 		//player = new Player();
 		//ai = new AI(0);
-		run();
+		newGame();
 	}
 	
 	public void coordinates (int x, int y ){
