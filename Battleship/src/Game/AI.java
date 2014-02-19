@@ -16,8 +16,7 @@ public class AI extends Player {
 	int difficulties;
 	private List<int[]> firingSolution;
 	private boolean shipsPlaced;
-	Battlefield battlefield;
-	Fleet fleet;
+	private boolean search;
 
 	/**
 	 * the constructor of this class
@@ -39,7 +38,7 @@ public class AI extends Player {
 	 * 
 	 */
 	public void placeShips() {
-		ArrayList<Ship> array = fleet.getShips();
+		ArrayList<Ship> array = getFleet().getShips();
 		Iterator<Ship> it = array.iterator();
 		Random random = new Random();
 		boolean takenSpot = true;
@@ -55,27 +54,27 @@ public class AI extends Player {
 				xValue = random.nextInt(10) + 1;
 				yValue = random.nextInt(10) + 1;
 				System.out.println(xValue +", " + yValue);
-				takenSpot = battlefield.hasShip(xValue, yValue); // if that
+				takenSpot = getBattlefield().hasShip(xValue, yValue); // if that
 			}
 
 
 			if (eastSpace(xValue+1, yValue, tempShip)) {
 				for (int i = 0; i < tempShip.getLenght(); i++)
-					battlefield.setShip(xValue+i, yValue, tempShip);
+					getBattlefield().setShip(xValue+i, yValue, tempShip);
 			}
 			else if(westSpace(xValue-1, yValue, tempShip)){
 				for (int i = 0; i < tempShip.getLenght(); i++)
-					battlefield.setShip(xValue-1, yValue, tempShip);
+					getBattlefield().setShip(xValue-1, yValue, tempShip);
 			}
 			else if(southSpace(xValue, yValue+1, tempShip)){
 				tempShip.rotate();
 				for (int i = 0; i < tempShip.getLenght(); i++)
-					battlefield.setShip(xValue, yValue+1, tempShip);
+					getBattlefield().setShip(xValue, yValue+1, tempShip);
 			}
 			else if(northSpace(xValue, yValue-1, tempShip)){
 				tempShip.rotate();
 				for (int i = 0; i < tempShip.getLenght(); i++)
-					battlefield.setShip(xValue, yValue-1, tempShip);
+					getBattlefield().setShip(xValue, yValue-1, tempShip);
 			}
 		}
 	}
@@ -94,7 +93,7 @@ public class AI extends Player {
 		int counter = 0;
 		//ships length
 		while(!takenNeighbour && counter < ship.getLenght()){
-			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			xValue++;
 			counter++;
 		}
@@ -106,7 +105,7 @@ public class AI extends Player {
 		boolean takenNeighbour = false;
 		int counter =0;
 		while(!takenNeighbour && counter < ship.getLenght() ){
-			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			yValue++;
 			counter++;
 		}
@@ -117,7 +116,7 @@ public class AI extends Player {
 		boolean takenNeighbour = false;
 		int counter = 0;
 		while(!takenNeighbour && counter < ship.getLenght() ){
-			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			xValue--;
 			counter++;
 		}
@@ -128,7 +127,7 @@ public class AI extends Player {
 		boolean takenNeighbour = false;
 		int counter = 0;
 		while(!takenNeighbour && counter < ship.getLenght() ){
-			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			yValue--;
 			counter ++;
 		}
@@ -146,10 +145,8 @@ public class AI extends Player {
 		 * Attack the player using the prepared list of random zones to hit. 
 		 * Give the AI the option of seeking out hit ships.
 		 */
-		attackEasy();
-		attackNormal();
-		attackHard();
-		attackInsane();
+		
+		search = false;
 		int[] target = new int[2];
 		// For 1.0
 		ListIterator<int[]> hits = firingSolution.listIterator();
@@ -160,22 +157,6 @@ public class AI extends Player {
 			hits.remove();
 		}
 		return target;
-	}
-	
-	private int[] attackEasy() {
-		return null;
-	}
-	
-	private int[] attackNormal() {
-		return null;
-	}
-	
-	private int[] attackHard() {
-		return null;
-	}
-	
-	private int[] attackInsane() {
-		return null;
 	}
 	
 	/**
