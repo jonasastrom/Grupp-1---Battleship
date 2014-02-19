@@ -18,7 +18,6 @@ public class Zone extends Observable
 	private boolean isBombed = false;
 	private boolean hasShip = false;
 	private Ship ship;
-	private Gui ZoneGui;
 	private String id;
 
 	/**
