@@ -1,19 +1,21 @@
-package Game;
+package src.Game;
 import java.util.Observable;
 
 import GUI.Gui;
+import Game.AI;
+import Game.Player;
 
 @SuppressWarnings("unused")		// Because yellow lines are annoying
-public class GameEngine extends Observable{
+public class GameEngine {
 	private static Gui gui;
-	private Player player;
+	private Human player;
 	private AI ai;
 	private boolean winPlayer;
 	private boolean gameOver;
 	private static boolean playerTurn;
+	private boolean playerLastHit;
+	private boolean aiLastHit;
 	
-	
-	public enum ZoneState{MISS,HIT,SUNK,SHIP}
 	
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
@@ -144,7 +146,13 @@ public class GameEngine extends Observable{
 	}
 	
 	public void coordinates (int x, int y ){
+		playerTurn = false;			// Player's turn is over
 		
+		playerLastHit = ai.bomb(x, y);
+		//int[] aiAttack = ai.attack(aiLastHit);
+		//aiLastHit = player.bomb(aiAttack, aiAttack[1]);
+		
+		playerTurn = true;			// Player's turn again
 	}
 	
 	/**
