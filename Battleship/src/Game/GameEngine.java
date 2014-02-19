@@ -102,8 +102,8 @@ public class GameEngine {
 		System.gc();	// Calls GC here to make sure it does its job
 						// This keeps the program from ever taking up too much memory
 		gui = new Gui(this);
-		//player = new Player();
-		//ai = new AI(0);
+		player = new Human();
+		ai = new AI(0);
 		newGame();
 	}
 	
@@ -116,8 +116,8 @@ public class GameEngine {
 			gameOver = true;
 			gameOver();
 		}
-		//int[] aiAttack = ai.attack(aiLastHit);
-		//aiLastHit = player.bomb(aiAttack, aiAttack[1]);
+		int[] aiAttack = ai.attack(aiLastHit);
+		aiLastHit = player.bomb(aiAttack[0], aiAttack[1]);
 		if (!player.hasShips()) {
 			winPlayer = false;
 			gameOver = true;
