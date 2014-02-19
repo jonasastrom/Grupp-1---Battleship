@@ -23,6 +23,7 @@ public class AI extends Player {
 	 * @param battlefield 
 	 */
 	public AI(int difficulties) {
+		super("ai");
 		this.difficulties = difficulties;
 		firingSolution = new ArrayList<>();
 		// Ships have not been placed yet.
