@@ -146,6 +146,10 @@ public class AI extends Player {
 		 * Attack the player using the prepared list of random zones to hit. 
 		 * Give the AI the option of seeking out hit ships.
 		 */
+		attackEasy();
+		attackNormal();
+		attackHard();
+		attackInsane();
 		int[] target = new int[2];
 		// For 1.0
 		ListIterator<int[]> hits = firingSolution.listIterator();
@@ -158,15 +162,15 @@ public class AI extends Player {
 		return target;
 	}
 	
-	private int[] attackMoron() {
+	private int[] attackEasy() {
 		return null;
 	}
 	
-	private int[] attackNotDumb() {
+	private int[] attackNormal() {
 		return null;
 	}
 	
-	private int[] attackSmart() {
+	private int[] attackHard() {
 		return null;
 	}
 	
