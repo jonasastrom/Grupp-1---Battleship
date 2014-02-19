@@ -62,7 +62,7 @@ public class Battlefield
 	public boolean hasShip(int x, int y)
 	{
 		Zone zoneTMP = zones[x][y];
-		System.out.print(""+x+""+y);
+		System.out.print("xCoord.Battleship="+x+"yCoord.Battleship="+y);
 		return zoneTMP.hasShip();
 	}
 
