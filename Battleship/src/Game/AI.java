@@ -2,6 +2,7 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.ListIterator;
@@ -28,8 +29,6 @@ public class AI extends Player {
 		firingSolution = new ArrayList<>();
 		// Ships have not been placed yet.
 		shipsPlaced = false;
-		fleet = new Fleet();
-		battlefield = new Battlefield();
 	}
 
 	@Override
@@ -143,7 +142,7 @@ public class AI extends Player {
 	 */
 	public int[] attack(boolean lastHit) {
 		/**
-		 * TODO
+		 * 
 		 * Attack the player using the prepared list of random zones to hit. 
 		 * Give the AI the option of seeking out hit ships.
 		 */
