@@ -1,10 +1,10 @@
 package Game;
-import javax.swing.JOptionPane;
+import java.util.Observable;
 
 import GUI.Gui;
 
 @SuppressWarnings("unused")		// Because yellow lines are annoying
-public class GameEngine {
+public class GameEngine extends Observable{
 	private static Gui gui;
 	private Player player;
 	private AI ai;
@@ -77,6 +77,7 @@ public class GameEngine {
 
 	}
 
+	
 	/**
 	 *  Sets a new game up by saying that the game is not over
 	 *  and making the players place their ships.
@@ -134,9 +135,13 @@ public class GameEngine {
 		gui = null;		// Calls GC here to make sure it does its job
 		System.gc();	// This keeps the program from ever taking up too much memory
 		gui = new GUI.Gui(this);
-		player = new Player();
+		player = new Player(); //change to human instead
 		ai = new AI(0);
 		run();
+	}
+	
+	public void coordinates (int x, int y ){
+		
 	}
 	
 	/**
