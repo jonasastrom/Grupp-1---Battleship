@@ -20,6 +20,9 @@ public class Human extends Player
 	
 	/**
 	 * TODO in 2.0
+	 * Skall fa in info fran gui. Den skall ha en string för att saga vilket skepp det galler.
+	 * Sedan skall den ocksa fa koordinater till de zoner som skeppet skall ligga i
+	 * anropar sedan dessan zoner och sager att de skall inehalla ett skepp
 	 */
 	@Override
 	public void placeShips()
