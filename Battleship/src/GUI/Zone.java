@@ -6,7 +6,6 @@ import javax.swing.JButton;
 /**
  * This is the class for representing the squares
  * @author Grupp 1
- *
  */
 public class Zone extends JButton{
 

@@ -1,31 +1,32 @@
 package Game;
+
 import GUI.Gui;
+import Game.GameEngine.ZoneState;
 
 /**
- * Handles the zones of the Battlefield
- * @author grupp1
- *
+ * Handles a zone
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 1.0
  */
-public class Zone {
-
-	int xPos;
-	int yPos;
-	int status;
-	boolean isBombed = false;
-	boolean hasShip = false;
-	Ship ship;
-	public static enum ZoneState
-	{
-		MISS,HIT,SUNK,SHIP;
-	}
+public class Zone
+{
+	private int xPos;
+	private int yPos;
+	private boolean isBombed = false;
+	private boolean hasShip = false;
+	private Ship ship;
+	private Gui ZoneGui;
+	private String id;
 
 	/**
 	 * Constructor
 	 */
-	public Zone(int xPos, int yPos)
+	public Zone(int xPos, int yPos, String id)
 	{
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.id = id;
 	}
 
 	/**
@@ -41,22 +42,27 @@ public class Zone {
 	 * Set true if the zone has already been bombed
 	 * 
 	 */
-	//Kompilatorn vill att updateZone skall vara static
-	/*public boolean setBomb()
+	public boolean setBomb()
 	{
+		ZoneGui = GameEngine.getGui();
+		
 		isBombed = true;
-		if(ship!=null)
-		{
+		if (ship != null) {
 			ship.hit();
-			if(ship.isSunk())
-			{
-				Gui.updateZone(++xPos,++yPos,ZoneState.SUNK);
+			if (ship.isSunk()) {
+				ZoneGui.updateZone(++xPos,++yPos,ZoneState.SUNK);
+				return true;
 			}
-			
-			else {GUI.Gui.updateZone(++xPos,++yPos,ZoneState.HIT);}
+			else {
+				ZoneGui.updateZone(++xPos,++yPos,ZoneState.HIT);
+				return true;
+			}
 		}
-		else{GUI.Gui.updateZone(++xPos,++yPos,ZoneState.MISS);}
-	}*/
+		else {
+			ZoneGui.updateZone(++xPos,++yPos,ZoneState.MISS);
+			return false;
+		}
+	}
 
 	/**
 	 * Returns true if the zone has a ship
@@ -75,12 +81,7 @@ public class Zone {
 	 */
 	public Ship getShip()
 	{
-		if(ship!= null)
-		{
-			return ship;
-		}
-		
-		else return null;
+		return ship;
 	}
 
 	/**

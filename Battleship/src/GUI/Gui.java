@@ -258,16 +258,7 @@ public class Gui extends JFrame implements ActionListener {
 		}
 	}
 	
-	/**
-	 * This method displays a nice message where the player is asked whether
-	 * they want to play again
-	 * @param winText A string that contains either "won" or "lost". 
-	 * @return	True if yes has been answered, false if not
-	 */
-	public boolean gameOverText(String winText) {
-		return (JOptionPane.showConfirmDialog(	null, "You have " + winText + "!\n Would you like to play again?", "GAME OVER",
-												JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
-	}
+	
 	/**
 	 *  This method listen to the players actions.
 	 */

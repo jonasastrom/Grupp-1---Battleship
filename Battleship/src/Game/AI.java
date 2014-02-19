@@ -1,7 +1,10 @@
-
 package Game;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 /**
  * 
@@ -11,14 +14,21 @@ import java.util.*;
 public class AI extends Player {
 	int difficulties;
 	private List<int[]> firingSolution;
-	private Battlefield battlefield;
+	private boolean shipsPlaced;
+	Battlefield battlefield;
+	Fleet fleet;
 
 	/**
 	 * the constructor of this class
+	 * @param battlefield 
 	 */
 	public AI(int difficulties) {
 		this.difficulties = difficulties;
 		firingSolution = new ArrayList<>();
+		// Ships have not been placed yet.
+		shipsPlaced = false;
+		fleet = new Fleet();
+		battlefield = new Battlefield();
 	}
 
 	@Override
@@ -26,65 +36,126 @@ public class AI extends Player {
 	 * Placing out the ships and 
 	 * it will override the Player class method placeShips() 
 	 * and call the method setShip()
-	 * get an array of all the list 
 	 * 
 	 */
-	public void placeShips(Ship ship) {
-
+	public void placeShips() {
+		ArrayList<Ship> array = fleet.getShips();
+		Iterator<Ship> it = array.iterator();
 		Random random = new Random();
-		int xNumber = random.nextInt(10) + 1; // randomize a number from 1-10												// for the x-coordinate
-		int yNumber = random.nextInt(10) + 1; // randomize number for the
-												// y-coordinate
-		int xNewNumber = random.nextInt(10) + 1;
-		int yNewNumber = random.nextInt(10) + 1;
-		battlefield = null;
+		boolean takenSpot = true;
+		int xValue = 0;
+		int yValue = 0;
 
-		System.out.println(xNumber);
-		System.out.println(yNumber);
 
-		if (isLegal(ship))
-			battlefield.setShip(xNumber, yNumber, ship);
-		else
-			System.out.println("Error, please try again!");
-	}
-
-	/**
-	 * 
-	 * @param xNumber
-	 * @param yNumber
-	 * @param yNewNumber
-	 * @param xNewNumber
-	 * @return
-	 */ 
-	private boolean isLegal(Ship ship) {
-		Iterator<Fleet> it = Iterator<Fleet>;
-		int counter = 0;
 		while (it.hasNext()) {
-			
+			Ship tempShip = (Ship)it.next();
+
+
+			while (takenSpot) {
+				xValue = random.nextInt(10) + 1;
+				yValue = random.nextInt(10) + 1;
+				System.out.println(xValue +", " + yValue);
+				takenSpot = battlefield.hasShip(xValue, yValue); // if that
+			}
+
+
+			if (eastSpace(xValue+1, yValue, tempShip)) {
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue+i, yValue, tempShip);
+			}
+			else if(westSpace(xValue-1, yValue, tempShip)){
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue-1, yValue, tempShip);
+			}
+			else if(southSpace(xValue, yValue+1, tempShip)){
+				tempShip.rotate();
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue, yValue+1, tempShip);
+			}
+			else if(northSpace(xValue, yValue-1, tempShip)){
+				tempShip.rotate();
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue, yValue-1, tempShip);
+			}
 		}
-
-		return false;
-		/**
-		 * if (battlefield.hasShip(xNumber, yNumber)) { if (Math.abs(xNumber -
-		 * xNewNumber) == 2 || (Math.abs(yNumber - yNewNumber) == 2)) { return
-		 * true; } else if (Math.abs(xNumber - xNewNumber) == 3 ||
-		 * (Math.abs(yNumber - yNewNumber) == 3)) { return true; } else if
-		 * (Math.abs(xNumber - xNewNumber) == 4 || (Math.abs(yNumber -
-		 * yNewNumber) == 4)) { return true; } else if (Math.abs(xNumber -
-		 * xNewNumber) == 3 || (Math.abs(yNumber - yNewNumber) == 5)) return
-		 * true;
-		 * 
-		 * } else return false;
-		 */
 	}
 
+
+/**
+ * if the boat fits to the chosen coordinates
+ * 
+ * @param yValue
+ * @param xValue
+ * @return true else
+ * @return false
+ */
+private boolean eastSpace(int xValue, int yValue, Ship ship) {
+	boolean takenNeighbour = false;
+	int counter = 0;
+	//ships length
+	while(!takenNeighbour && counter < ship.getLenght()){
+		takenNeighbour = battlefield.hasShip(xValue, yValue);
+		xValue++;
+		counter++;
+	}
+	return !takenNeighbour;
+
+}
+
+private boolean southSpace(int xValue, int yValue, Ship ship){
+	boolean takenNeighbour = false;
+	int counter =0;
+	while(!takenNeighbour && counter < ship.getLenght() ){
+		takenNeighbour = battlefield.hasShip(xValue, yValue);
+		yValue++;
+		counter++;
+	}
+	return !takenNeighbour;
+}
+
+private boolean westSpace(int xValue, int yValue, Ship ship){
+	boolean takenNeighbour = false;
+	int counter = 0;
+	while(!takenNeighbour && counter < ship.getLenght() ){
+		takenNeighbour = battlefield.hasShip(xValue, yValue);
+		xValue--;
+		counter++;
+	}
+	return !takenNeighbour;
+}
+
+private boolean northSpace (int xValue, int yValue, Ship ship){
+	boolean takenNeighbour = false;
+	int counter = 0;
+	while(!takenNeighbour && counter < ship.getLenght() ){
+		takenNeighbour = battlefield.hasShip(xValue, yValue);
+		yValue--;
+		counter ++;
+	}
+	return !takenNeighbour;
+}
+
+
+
+
+
+/**
+ * AIs turn to attack
+ * @param lastHit Wether the last attack was a hit or a miss
+ * @return a two-position int containing X- and Y-coordinates to hit
+ */
+public int[] attack(boolean lastHit) {
 	/**
-	 * AIs turn to attack
+	 * TODO
+	 * Attack the player using the prepared list of random zones to hit. 
+	 * Give the AI the option of seeking out hit ships.
 	 */
-	public void attack() {
+	// For 1.0
+	if (difficulties == 1)
 
-	}
-
+		return null;
+	return null;
+}
 	/**
 	 * Create the AI-players firing solution based on the set difficulty.
 	 */
@@ -93,7 +164,7 @@ public class AI extends Player {
 		// Do a loop to create random attacks, manually checking for conflicts?
 		for (int x = 1; x <= 10; x++) {
 			for (int y = 1; y <= 10; y++) {
-				int pos[] = new int[2]; 
+				int pos[] = new int[2];
 				pos[0] = x;
 				pos[1] = y;
 				firingSolution.add(pos);
@@ -101,6 +172,13 @@ public class AI extends Player {
 		}
 		// Randomize the hitlist
 		Collections.shuffle(firingSolution, new Random());
+	}
+
+	/**
+	 * @return Wether the AI has placed its ships or not.
+	 */
+	public boolean isShipsPlaced() {
+		return shipsPlaced;
 	}
 
 }

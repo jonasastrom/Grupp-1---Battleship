@@ -1,5 +1,10 @@
 Battleship/bin
 Battleship/bin/*
+Battleship/.settings
+Battleship/.settings/*
 .classpath
-*.class
 .metadata
+.project
+*.class
+*.db
+/bin
