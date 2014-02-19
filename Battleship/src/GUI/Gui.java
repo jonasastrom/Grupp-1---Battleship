@@ -22,7 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Game.GameEngine;
-import Game.GameEngine.ZoneState;
 
 /**
  * This class creates the GUI.
@@ -43,7 +42,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 */
 	public Gui(GameEngine gameEngine){
 		this.gameEngine = gameEngine;
-		gameEngine.addObserver(this);
 		makeGUIFrame();
 	}
 
@@ -240,16 +238,16 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	/**
 	 * This method get coordinates of a specific zone, and call a method to change to a color
 	 */
-	public void updateZone(int x, int y, ZoneState zoneState){
+	public void updateZone(int x, int y, String state){
 		int zoneNumber = ((y - 1) * 10) + x;
 		Zone zone = zoneArray.get(zoneNumber - 1);
-		if(zoneState == ZoneState.MISS){
+		if(state.equals("miss")){
 			zone.changeColor(Color.GRAY);
-		}else if(zoneState == ZoneState.HIT){
+		}else if(state.equals("hit")){
 			zone.changeColor(Color.GREEN);
-		}else if(zoneState == ZoneState.SUNK){
+		}else if(state.equals("sunk")){
 			zone.changeColor(new Color(222, 49, 99));
-		}else if(zoneState == ZoneState.SHIP){
+		}else if(state.equals("ship")){
 			zone.changeColor(Color.BLACK);
 		}
 	}
@@ -291,7 +289,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			gameEngine.testGameOver(false);
 			System.out.println("debug player lose");
 		}else if(e.getSource() == newGame){
-			gameEngine.run();
+			gameEngine.gameOver();
 		}else if(e.getSource() == quit){
 			System.exit(0);
 		}else if(e.getSource() == about){
@@ -319,7 +317,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			System.out.println("x:" + tempZone.x + " y:" + tempZone.y + " name:" + tempZone.name);
 			int i = ((tempZone.y - 1) * 10 ) + tempZone.x;
 			System.out.println("nummer:" + i);
-			updateZone(tempZone.x, tempZone.y, ZoneState.MISS);
+			updateZone(tempZone.x, tempZone.y, "miss");
 			tempZone.setEnabled(false);
 			gameEngine.coordinates(tempZone.x, tempZone.y);
 			//		}
@@ -332,8 +330,20 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 */
 	@Override
 	public void update(Observable observable, Object object) {
-		if( observable instanceof GameEngine && object instanceof Integer ){
-
+		System.out.println("Katten leker på staden");
+		if( observable instanceof Game.Zone && object instanceof ArrayList ){
+			System.out.println("Apan är här");
+			ArrayList<String> list = (ArrayList<String>) object;
+			//			int x = Integer.parseInt(list.get(0));
+			//			int y = Integer.parseInt(list.get(1));
+			//			String state = list.get(2);
+			//			if( x >= 1 && x <= 10 && y >= 1 && y <= 10 && ( state.equals("miss") || 
+			//					state.equals("hit") || state.equals("sunk") || state.equals("ship") )){
+			//				updateZone(x, y, state);
+			//			}
+			for(int i = 0; i < list.size(); i++){
+				System.out.println(list.get(0));
+			}
 		}
 	}
 }
