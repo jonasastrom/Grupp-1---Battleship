@@ -21,8 +21,8 @@ public class GameEngine {
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
 		gui = new Gui(this);
-		//player = new Player();
-		//ai = new AI(0);	//0 because we don't need more difficulties for now
+		player = new Human();
+		ai = new AI(0);	//0 because we don't need more difficulties for now
 	}
 	
 	/**
@@ -58,6 +58,7 @@ public class GameEngine {
 	 *  Ends the game, pops a prompt to the player, and cleans variables
 	 *  between games. This also starts a new game if the player has prompted it
 	 *  whether through the prompt or from being called before the game is over.
+	 *  Prompt.
 	 */
 	public void gameOver() {
 		
