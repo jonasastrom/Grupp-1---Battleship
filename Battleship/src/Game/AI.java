@@ -51,10 +51,10 @@ public class AI extends Player {
 
 
 			while (takenSpot) {
-				xValue = random.nextInt(10) + 1;
-				yValue = random.nextInt(10) + 1;
+				xValue = random.nextInt(10);
+				yValue = random.nextInt(10);
 				System.out.println(xValue +", " + yValue);
-				takenSpot = getBattlefield().hasShip(xValue, yValue); // if that
+				takenSpot = getBattlefield().hasShip(xValue, yValue);
 			}
 
 
