@@ -104,5 +104,6 @@ public class Zone extends Observable
 	public void setShip(Ship ship)
 	{
 		this.ship = ship;
+		hasShip = true;
 	}
 }
