@@ -16,8 +16,8 @@ public class Player
 	 */
 	public Player()
 	{
-		battlefield = new Battlefield();
-		fleet = new Fleet();
+		//battlefield = new Battlefield();
+		//fleet = new Fleet();
 	}
 
 	/**
@@ -25,9 +25,9 @@ public class Player
 	 */
 	public void placeShips()
 	{
-		while (!fleet.isPlaced()) {
+		//while (!fleet.isPlaced()) {
 			//wait
-		}
+		//}
 	}
 
 	/**
@@ -37,7 +37,8 @@ public class Player
 	 */
 	public int[] attack()
 	{
-		return GameEngine.getGui().getInput();
+		//return GameEngine.getGui().getInput();
+		
 	}
 
 	/**

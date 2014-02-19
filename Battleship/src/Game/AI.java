@@ -15,15 +15,20 @@ public class AI extends Player {
 	int difficulties;
 	private List<int[]> firingSolution;
 	private boolean shipsPlaced;
+	Battlefield battlefield;
+	Fleet fleet;
 
 	/**
 	 * the constructor of this class
+	 * @param battlefield 
 	 */
 	public AI(int difficulties) {
 		this.difficulties = difficulties;
 		firingSolution = new ArrayList<>();
 		// Ships have not been placed yet.
 		shipsPlaced = false;
+		fleet = new Fleet();
+		battlefield = new Battlefield();
 	}
 
 	@Override
@@ -34,27 +39,47 @@ public class AI extends Player {
 	 * 
 	 */
 	public void placeShips() {
-		Battlefield battlefield = getBattlefield();
-		ArrayList<Ship> array = getFleet().getShips();
+		ArrayList<Ship> array = fleet.getShips();
+		Iterator<Ship> it = array.iterator();
 		Random random = new Random();
-		int counter = 0;
-		int xValue;
-		int yValue;
+		boolean takenSpot = true;
+		int xValue = 0;
+		int yValue = 0;
 
-		while (counter <= 5) {
-			while (true) {
+
+		while (it.hasNext()) {
+			Ship tempShip = (Ship)it.next();
+
+
+			while (takenSpot) {
 				xValue = random.nextInt(10) + 1;
 				yValue = random.nextInt(10) + 1;
-				battlefield.hasShip(xValue, yValue); // if that
-
+				System.out.println(xValue +", " + yValue);
+				takenSpot = battlefield.hasShip(xValue, yValue); // if that
 			}
 
-			if (enoughSpace(xValue, yValue) == true) {
-				battlefield.setShip(xValue, yValue, ship.getNext());
-				counter++;
+
+			if (eastSpace(xValue+1, yValue, tempShip)) {
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue+i, yValue, tempShip);
+			}
+			else if(westSpace(xValue-1, yValue, tempShip)){
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue-1, yValue, tempShip);
+			}
+			else if(southSpace(xValue, yValue+1, tempShip)){
+				tempShip.rotate();
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue, yValue+1, tempShip);
+			}
+			else if(northSpace(xValue, yValue-1, tempShip)){
+				tempShip.rotate();
+				for (int i = 0; i < tempShip.getLenght(); i++)
+					battlefield.setShip(xValue, yValue-1, tempShip);
 			}
 		}
 	}
+
 
 	/**
 	 * if the boat fits to the chosen coordinates
@@ -64,29 +89,50 @@ public class AI extends Player {
 	 * @return true else
 	 * @return false
 	 */
-	private boolean enoughSpace(int xValue, int yValue) {
-
-		int countSquare;
-
-		for(countSquare = 0; countSquare < 6; countSquare++){
-			if(battlefield.hasShip(xValue, yValue) == true){
-				xValue++;
-			}
-			else if(battlefield.hasShip(xValue, yValue) == true){
-				xValue--;
-			}
-			else if(battlefield.hasShip(xValue, yValue) == true){
-				yValue++;
-			}
-			else if(battlefield.hasShip(xValue, yValue) == true){
-				yValue--;
-			}
-			else
-				break;
-			
-			return true;
+	private boolean eastSpace(int xValue, int yValue, Ship ship) {
+		boolean takenNeighbour = false;
+		int counter = 0;
+		//ships length
+		while(!takenNeighbour && counter < ship.getLenght()){
+			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			xValue++;
+			counter++;
 		}
-		return false;
+		return !takenNeighbour;
+
+	}
+
+	private boolean southSpace(int xValue, int yValue, Ship ship){
+		boolean takenNeighbour = false;
+		int counter =0;
+		while(!takenNeighbour && counter < ship.getLenght() ){
+			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			yValue++;
+			counter++;
+		}
+		return !takenNeighbour;
+	}
+
+	private boolean westSpace(int xValue, int yValue, Ship ship){
+		boolean takenNeighbour = false;
+		int counter = 0;
+		while(!takenNeighbour && counter < ship.getLenght() ){
+			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			xValue--;
+			counter++;
+		}
+		return !takenNeighbour;
+	}
+
+	private boolean northSpace (int xValue, int yValue, Ship ship){
+		boolean takenNeighbour = false;
+		int counter = 0;
+		while(!takenNeighbour && counter < ship.getLenght() ){
+			takenNeighbour = battlefield.hasShip(xValue, yValue);
+			yValue--;
+			counter ++;
+		}
+		return !takenNeighbour;
 	}
 
 	/**
@@ -104,7 +150,6 @@ public class AI extends Player {
 		// For 1.0
 		ListIterator<int[]> hits = firingSolution.listIterator();
 		if (difficulties < 4) {
-			
 			if (difficulties == 1)
 				target = hits.next();
 			// Remove the last square to be hit from the list permanently
@@ -129,12 +174,11 @@ public class AI extends Player {
 		// Randomize the hitlist
 		Collections.shuffle(firingSolution, new Random());
 	}
-	
+		
 	/**
 	 * @return Wether the AI has placed its ships or not.
 	 */
 	public boolean isShipsPlaced() {
 		return shipsPlaced;
 	}
-
 }

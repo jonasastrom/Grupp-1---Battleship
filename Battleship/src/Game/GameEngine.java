@@ -12,13 +12,15 @@ public class GameEngine {
 	private boolean gameOver;
 	private static boolean playerTurn;
 	
+	
 	public enum ZoneState{MISS,HIT,SUNK,SHIP}
 	
 	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
 		gui = new GUI.Gui(this);
-		player = new Player();
+		player = new Player(); 
 		ai = new AI(0);	//0 because we don't need more difficulties for now
+										//and ai wants a battlefield in the construktor
 	}
 	
 	/**
@@ -84,7 +86,7 @@ public class GameEngine {
 		winPlayer = false;
 		playerTurn = false; //before the ships are placed the playerturn is false
 		//player.placeShips(); milstolpe 2
-		//ai.placeShips();
+		ai.placeShips();
 	}
 
 	/**

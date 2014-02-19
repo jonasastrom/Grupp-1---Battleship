@@ -17,13 +17,14 @@ public class Human extends Player
 	public Human()
 	{
 		super();
-		battlefield = getBattlefield();
-		fleet = getFleet();
+		battlefield = new Battlefield();
+		fleet = new Fleet();
 	}
 	
 	/**
 	 * TODO in 2.0
 	 */
+	@Override
 	public void placeShips()
 	{
 		while (!fleet.isPlaced()) {
@@ -36,6 +37,7 @@ public class Human extends Player
 	 * the GUI and returning the coordinates
 	 * @return The coordinates to be bombed
 	 */
+	@Override
 	public int[] attack()
 	{
 		return GameEngine.getGui().getInput();
