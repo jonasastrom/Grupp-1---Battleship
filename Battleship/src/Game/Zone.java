@@ -48,7 +48,7 @@ public class Zone extends Observable
 		ArrayList<String> stringList = new ArrayList<String>();
 		stringList.add("hej");
 		setChanged();
-		notifyObservers();
+		notifyObservers(stringList);
 		return true;
 		
 		
