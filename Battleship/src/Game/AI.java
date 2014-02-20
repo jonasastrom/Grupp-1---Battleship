@@ -50,7 +50,8 @@ public class AI extends Player {
 		while (it.hasNext()) { // as long as there is another ship
 			Ship tempShip = (Ship) it.next();
 			lookForShip = true;
-
+			takenSpot = true;
+			
 			while (lookForShip) {
 				while (takenSpot) {
 					xValue = random.nextInt(10);
