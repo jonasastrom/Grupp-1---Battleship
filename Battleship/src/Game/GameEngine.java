@@ -120,14 +120,14 @@ public class GameEngine {
 			gameOver = true;
 			gameOver();
 		}
-		int[] aiAttack = ai.attack(aiLastHit);
+	/*	int[] aiAttack = ai.attack(aiLastHit);
 		aiLastHit = player.bomb(aiAttack[0], aiAttack[1]);
 		if (!player.hasShips()) {
 			winPlayer = false;
 			gameOver = true;
 			gameOver();
 		}
-		
+		*/
 		playerTurn = true;			// Player's turn again
 	}
 	
