@@ -59,9 +59,10 @@ public class AI extends Player {
 				}
 
 				if ((xValue < 9) && eastSpace(xValue + 1, yValue, tempShip)) {
-					for (int i = 0; i < tempShip.getLenght(); i++)
+					for (int i = 0; i < tempShip.getLenght(); i++){
 						getBattlefield().setShip(xValue + i, yValue, tempShip);
 						lookForShip = false;
+					}
 				} else if ((xValue > 0)
 						&& westSpace(xValue - 1, yValue, tempShip)) {
 					for (int i = 0; i < tempShip.getLenght(); i++){
@@ -145,7 +146,7 @@ public class AI extends Player {
 	 * AIs turn to attack
 	 * 
 	 * @param lastHit
-	 *            Wether the last attack was a hit or a miss
+	 * Whether the last attack was a hit or a miss
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
 	public int[] attack(boolean lastHit) {
