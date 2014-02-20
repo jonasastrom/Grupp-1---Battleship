@@ -18,11 +18,11 @@ public class GameEngine {
 	private boolean aiLastHit;
 	
 	
-	public GameEngine(){
+	public GameEngine(ZoneListener listener){
 		// Creates a new object of GUI (for creating a frame)
 		gui = new Gui(this);
-		player = new Human();
-		ai = new AI(0);	//0 because we don't need more difficulties for now
+		player = new Human(listener);
+		ai = new AI(0, listener);	//0 because we don't need more difficulties for now
 	}
 	
 	/**
