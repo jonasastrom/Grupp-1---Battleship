@@ -14,9 +14,9 @@ public class Player
 	/**
 	 * Construct a battlefield and a fleet
 	 */
-	public Player(String id)
+	public Player(String id, ZoneListener zoneListener)
 	{
-		battlefield = new Battlefield(id);
+		battlefield = new Battlefield(id, zoneListener);
 		fleet = new Fleet();
 	}
 

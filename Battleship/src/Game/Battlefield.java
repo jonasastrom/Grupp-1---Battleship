@@ -13,13 +13,13 @@ public class Battlefield
 	/**
 	 * Construct the battlefield with 100 zones
 	 */
-	public Battlefield(String id)
+	public Battlefield(String id, ZoneListener zoneListener)
 	{
 		zones = new Zone[10][10];
 
 		for (int y = 0; y < 10; y++) {	
 			for (int x = 0; x < 10; x++) {
-				zones[x][y] = new Zone(x,y,id);
+				zones[x][y] = new Zone(x,y,id,zoneListener);
 			}
 		}
 	}
