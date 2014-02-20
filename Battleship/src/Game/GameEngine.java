@@ -31,9 +31,10 @@ public class GameEngine {
 	 * @param args Does absolutely nothing in this program
 	 */
 	public static void main(String[] args) {
-		GameEngine gamE = new GameEngine();
-		
+		ZoneListener listener = new ZoneListener();
+		GameEngine gamE = new GameEngine(listener);
 		gamE.newGame();
+		listener.addObserver(gui);
 	}
 	
 	public static Gui getGui(){
