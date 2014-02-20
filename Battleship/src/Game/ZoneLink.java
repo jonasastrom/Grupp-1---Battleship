@@ -14,5 +14,22 @@ public class ZoneLink
 		this.leftOrRight = leftOrRight;
 		this.state = state;
 	}
+	
+	public int getX()
+	{
+		return x;
+	}
 
+	public int getY()
+	{
+		return y;
+	}
+	public String getLeftOrRight()
+	{
+		return leftOrRight;
+	}
+	public String getSate()
+	{
+		return state;
+	}
 }
