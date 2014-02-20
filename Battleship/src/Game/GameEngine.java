@@ -113,7 +113,7 @@ public class GameEngine {
 	
 	public void coordinates (int x, int y ){
 		playerTurn = false;			// Player's turn is over
-		
+		System.out.println("Coordinates called");
 		playerLastHit = ai.bomb(x, y);
 		if (!ai.hasShips()) {
 			winPlayer = true;
