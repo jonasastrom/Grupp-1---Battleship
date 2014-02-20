@@ -45,6 +45,7 @@ public class Zone
 	 */
 	public boolean setBomb()
 	{
+		ship.hit();
 		if(hasShip)
 		{
 			if(ship.isSunk()){zoneListener.update(xPos, yPos, "left", "sunk");}
