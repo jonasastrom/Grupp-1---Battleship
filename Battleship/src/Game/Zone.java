@@ -50,7 +50,7 @@ public class Zone
 			if(ship.isSunk()){zoneListener.update(xPos, yPos, "left", "sunk");}
 			else{zoneListener.update(xPos, yPos, "left", "hit");}
 		}
-		if(ship.isSunk()){zoneListener.update(xPos, yPos, "left", "sunk");}
+		
 		
 		else {zoneListener.update(xPos, yPos, "left", "bombed");}
 		
