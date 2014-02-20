@@ -17,15 +17,19 @@ public class AI extends Player {
 	private List<int[]> firingSolution;
 	private boolean shipsPlaced;
 	private boolean search;
+	private Battlefield opponent;
 
 	/**
 	 * the constructor of this class
 	 * 
 	 * @param battlefield
 	 */
-	public AI(int difficulties, ZoneListener listener) {
+	public AI(int difficulties,Battlefield opponent, ZoneListener listener) {
 		super("ai", listener);
 		this.difficulties = difficulties;
+		// This is new as of 2014-02-20, Vickie needs to give us te players
+		// battlefield.
+		this.opponent = opponent;
 		firingSolution = new ArrayList<>();
 		// Ships have not been placed yet.
 		shipsPlaced = false;
@@ -170,6 +174,10 @@ public class AI extends Player {
 			}
 		} else if (difficulties == 5) {
 			// Kommer bara skjuta där det garanterat finns skepp
+		} else {
+			// Gameengine should never do anything with these
+			target[0] = 0;
+			target[1] = 0;
 		}
 			
 		return target;
