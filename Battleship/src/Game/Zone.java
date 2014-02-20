@@ -57,8 +57,11 @@ public class Zone
 		}
 		
 		
-		else {zoneListener.update(xPos, yPos, "left", "bombed");
-		System.out.println("tredje");}
+		else {
+			System.out.println("else");
+			zoneListener.update(xPos, yPos, "left", "bombed");
+		System.out.println("tredje");
+		}
 		
 		return true;
 
