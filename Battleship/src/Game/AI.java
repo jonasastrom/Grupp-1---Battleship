@@ -60,25 +60,25 @@ public class AI extends Player {
 					takenSpot = getBattlefield().hasShip(xValue, yValue);
 				}
 
-				if ((xValue < 9) && eastSpace(xValue + 1, yValue, tempShip)) {
+				if (((tempShip.getLenght() + xValue -1) <= 9) && eastSpace(xValue + 1, yValue, tempShip)) {
 					for (int i = 0; i < tempShip.getLenght(); i++){
 						getBattlefield().setShip(xValue + i, yValue, tempShip);
 						lookForShip = false;
 					}
-				} else if ((xValue > 0)
+				} else if (((tempShip.getLenght() - xValue -1) >= 0)
 						&& westSpace(xValue - 1, yValue, tempShip)) {
 					for (int i = 0; i < tempShip.getLenght(); i++){
 						getBattlefield().setShip(xValue - 1, yValue, tempShip);
 						lookForShip = false;
 					}
-				} else if ((yValue < 9)
+				} else if (((tempShip.getLenght() + yValue -1) <= 9)
 						&& southSpace(xValue, yValue + 1, tempShip)) {
 					tempShip.rotate();
 					for (int i = 0; i < tempShip.getLenght(); i++){
 						getBattlefield().setShip(xValue, yValue + 1, tempShip);
 						lookForShip = false;
 					}
-				} else if ((yValue > 0)
+				} else if ((tempShip.getLenght() - yValue -1) >= 0
 						&& northSpace(xValue, yValue - 1, tempShip)) {
 					tempShip.rotate();
 					for (int i = 0; i < tempShip.getLenght(); i++){
@@ -100,7 +100,7 @@ public class AI extends Player {
 	 */
 	private boolean eastSpace(int xValue, int yValue, Ship ship) {
 		boolean takenNeighbour = false;
-		int counter = 0;
+		int counter = 1;
 		// ships length
 		while (!takenNeighbour && counter < ship.getLenght()) {
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
