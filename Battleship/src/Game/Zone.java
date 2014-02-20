@@ -48,12 +48,15 @@ public class Zone
 		ship.hit();
 		if(hasShip)
 		{
-			if(ship.isSunk()){zoneListener.update(xPos, yPos, "left", "sunk");}
-			else{zoneListener.update(xPos, yPos, "left", "hit");}
+			if(ship.isSunk()){zoneListener.update(xPos, yPos, "left", "sunk");
+								System.out.println("forsta");}
+			else{zoneListener.update(xPos, yPos, "left", "hit");
+			System.out.println("andra");}
 		}
 		
 		
-		else {zoneListener.update(xPos, yPos, "left", "bombed");}
+		else {zoneListener.update(xPos, yPos, "left", "bombed");
+		System.out.println("tredje");}
 		
 		return true;
 
