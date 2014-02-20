@@ -16,6 +16,7 @@ public class GameEngine {
 	private static boolean playerTurn;
 	private boolean playerLastHit;
 	private boolean aiLastHit;
+	private static ZoneListener listener;
 	
 	
 	public GameEngine(ZoneListener listener){
@@ -31,7 +32,7 @@ public class GameEngine {
 	 * @param args Does absolutely nothing in this program
 	 */
 	public static void main(String[] args) {
-		ZoneListener listener = new ZoneListener();
+		listener = new ZoneListener();
 		GameEngine gamE = new GameEngine(listener);
 		gamE.newGame();
 		listener.addObserver(gui);
@@ -105,8 +106,8 @@ public class GameEngine {
 		System.gc();	// Calls GC here to make sure it does its job
 						// This keeps the program from ever taking up too much memory
 		gui = new Gui(this);
-		player = new Human();
-		ai = new AI(0);
+		player = new Human(listener);
+		ai = new AI(0,listener);
 		newGame();
 	}
 	
