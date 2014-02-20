@@ -1,7 +1,7 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.Observable;
+
 
 /**
  * Handles a zone
@@ -9,7 +9,7 @@ import java.util.Observable;
  * @author Group 1 - DAT055 2014
  * @version 1.0
  */
-public class Zone extends Observable
+public class Zone
 {
 	private int xPos;
 	private int yPos;
@@ -17,15 +17,17 @@ public class Zone extends Observable
 	private boolean hasShip = false;
 	private Ship ship;
 	private String id;
+	private ZoneListener zoneListener;
 
 	/**
 	 * Constructor
 	 */
-	public Zone(int xPos, int yPos, String id)
+	public Zone(int xPos, int yPos, String id, ZoneListener zoneListener)
 	{
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.id = id;
+		this.zoneListener = zoneListener;
 	}
 
 	/**
@@ -43,10 +45,14 @@ public class Zone extends Observable
 	 */
 	public boolean setBomb()
 	{
-		ArrayList<String> stringList = new ArrayList<String>();
+		/*ArrayList<String> stringList = new ArrayList<String>();
 		stringList.add("hej");
 		setChanged();
-		notifyObservers(stringList);
+		notifyObservers(stringList);*/
+		
+		int tst = 5;
+		zoneListener.update(tst);
+		
 		return true;
 
 

@@ -13,9 +13,9 @@ public class Human extends Player
 	/**
 	 * Construct the human player
 	 */
-	public Human()
+	public Human(ZoneListener zoneListener)
 	{
-		super("human");
+		super("human", zoneListener);
 		fleet = getFleet();
 	}
 
