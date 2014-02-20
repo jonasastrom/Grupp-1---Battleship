@@ -23,10 +23,10 @@ public class Player
 	/**
 	 * TODO in 2.0
 	 */
-	/*public void placeShips()
+	public void placeShips()
 	{
 
-	}*/
+	}
 
 	/**
 	 * Bomb this player's battlefield
