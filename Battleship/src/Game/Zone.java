@@ -45,12 +45,9 @@ public class Zone
 	 */
 	public boolean setBomb()
 	{
-		/*ArrayList<String> stringList = new ArrayList<String>();
-		stringList.add("hej");
-		setChanged();
-		notifyObservers(stringList);*/
+		if(hasShip){zoneListener.update(xPos, yPos, "left", "hit");}
 		
-		zoneListener.update(xPos, yPos, "left", "bombed");
+		else {zoneListener.update(xPos, yPos, "left", "bombed");}
 		
 		return true;
 
