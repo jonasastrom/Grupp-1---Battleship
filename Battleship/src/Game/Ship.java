@@ -95,6 +95,8 @@ public class Ship
 	 */
 	public void hit()
 	{
+		//
+		isSunk = true;
 		if (--health == 0) isSunk = true;
 	}
 }
