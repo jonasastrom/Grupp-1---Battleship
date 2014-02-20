@@ -1,7 +1,6 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 
 /**
@@ -10,7 +9,7 @@ import java.util.Observable;
  * @author Group 1 - DAT055 2014
  * @version 1.0
  */
-public class Zone extends Observable
+public class Zone
 {
 	private int xPos;
 	private int yPos;
