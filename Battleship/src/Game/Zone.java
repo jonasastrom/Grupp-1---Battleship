@@ -46,7 +46,8 @@ public class Zone
 	public boolean setBomb()
 	{
 		System.out.println("innan");
-		ship.hit();
+		if(ship!=null){ship.hit();}
+		
 		if(hasShip)
 		{
 			System.out.println("he");
