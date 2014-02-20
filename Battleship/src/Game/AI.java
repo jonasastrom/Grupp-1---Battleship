@@ -47,8 +47,9 @@ public class AI extends Player {
 		int xValue = 0;
 		int yValue = 0;
 
-		while (it.hasNext()) {
+		while (it.hasNext()) { // as long as there is another ship
 			Ship tempShip = (Ship) it.next();
+			lookForShip = true;
 
 			while (lookForShip) {
 				while (takenSpot) {
