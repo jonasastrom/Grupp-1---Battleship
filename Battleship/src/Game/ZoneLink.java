@@ -2,11 +2,17 @@ package Game;
 
 public class ZoneLink 
 {
-	public int input;
+	public int x;
+	public int y;
+	public String leftOrRight;
+	public String state;
 	
-	public ZoneLink(int input)
+	public ZoneLink(int x, int y, String leftOrRight, String state)
 	{
-		this.input = input;
+		this.x = x;
+		this.y = y;
+		this.leftOrRight = leftOrRight;
+		this.state = state;
 	}
 
 }
