@@ -50,8 +50,7 @@ public class Zone
 		setChanged();
 		notifyObservers(stringList);*/
 		
-		int tst = 5;
-		zoneListener.update(tst);
+		zoneListener.update(xPos, yPos, "left", "bombed");
 		
 		return true;
 
