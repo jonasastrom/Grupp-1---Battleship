@@ -328,8 +328,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	@Override
 	public void update(Observable observable, Object object) {
 		System.out.println("Katten leker pa staden");
-		//if( observable instanceof Game.Zone && object instanceof ArrayList ){
-			//System.out.println("Apan �r h�r");
+			if( observable instanceof Game.ZoneListener && object instanceof Game.ZoneLink){///ArrayList ){
+				System.out.println("Apan something"); }
 			//ArrayList<String> list = (ArrayList<String>) object;
 			//			int x = Integer.parseInt(list.get(0)) - 1;
 			//			int y = Integer.parseInt(list.get(1)) - 1;
