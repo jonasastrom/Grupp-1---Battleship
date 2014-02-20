@@ -49,6 +49,7 @@ public class Zone
 		ship.hit();
 		if(hasShip)
 		{
+			System.out.println("he");
 			if(ship.isSunk()){zoneListener.update(xPos, yPos, "left", "sunk");
 								System.out.println("forsta");}
 			else{zoneListener.update(xPos, yPos, "left", "hit");
