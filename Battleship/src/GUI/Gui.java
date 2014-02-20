@@ -329,7 +329,22 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	public void update(Observable observable, Object object) {
 		System.out.println("Katten leker pa staden");
 			if( observable instanceof Game.ZoneListener && object instanceof Game.ZoneLink){///ArrayList ){
-				System.out.println("Apan something"); }
+				System.out.println("Apan something"); 
+			
+//---------------Test ---------------
+				Zone zone = zoneArray.get(Game.ZoneLink.x);
+				if(Game.ZoneLink.state.equals("bombed")){
+					zone.changeColor(Color.GRAY);
+					
+				}else if(Game.ZoneLink.state.equals("hit")){
+					zone.changeColor(Color.GREEN);
+				}else if(Game.ZoneLink.state.equals("sunk")){
+					zone.changeColor(new Color(222, 49, 99));
+				}else if(Game.ZoneLink.state.equals("ship")){
+					zone.changeColor(Color.BLACK);
+//----------------------------------------
+			}
+			}	
 			//ArrayList<String> list = (ArrayList<String>) object;
 			//			int x = Integer.parseInt(list.get(0)) - 1;
 			//			int y = Integer.parseInt(list.get(1)) - 1;

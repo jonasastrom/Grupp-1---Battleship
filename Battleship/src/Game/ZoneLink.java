@@ -2,10 +2,10 @@ package Game;
 
 public class ZoneLink 
 {
-	public int x;
-	public int y;
-	public String leftOrRight;
-	public String state;
+	public static int x;
+	public static int y;
+	public static String leftOrRight;
+	public static String state;
 	
 	public ZoneLink(int x, int y, String leftOrRight, String state)
 	{
