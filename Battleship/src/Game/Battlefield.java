@@ -9,14 +9,12 @@ package Game;
 public class Battlefield
 {
 	private Zone[][] zones;
-	private String id;
 
 	/**
 	 * Construct the battlefield with 100 zones
 	 */
 	public Battlefield(String id)
 	{
-		this.id = id;
 		zones = new Zone[10][10];
 
 		for (int y = 0; y < 10; y++) {	
@@ -62,7 +60,9 @@ public class Battlefield
 	public boolean hasShip(int x, int y)
 	{
 		Zone zoneTMP = zones[x][y];
+		///////////////////////////
 		System.out.println("xCoord.Battleship="+x+" yCoord.Battleship="+y);
+		///////////////////////////
 		return zoneTMP.hasShip();
 	}
 
@@ -85,7 +85,9 @@ public class Battlefield
 	 */
 	public void setShip(int x, int y, Ship ship)
 	{
+		///////////////////////////
 		System.out.println("Set ship");
+		///////////////////////////
 		zones[x][y].setShip(ship);
 	}
 }

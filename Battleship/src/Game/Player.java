@@ -1,7 +1,5 @@
 package Game;
 
-import java.util.Observable;
-
 /**
  * The base class for all players
  * 
@@ -25,12 +23,10 @@ public class Player
 	/**
 	 * TODO in 2.0
 	 */
-	public void placeShips()
+	/*public void placeShips()
 	{
-		//while (!fleet.isPlaced()) {
-			//wait
-		//}
-	}
+
+	}*/
 
 	/**
 	 * Bomb this player's battlefield
@@ -45,8 +41,9 @@ public class Player
 			}
 		}
 		return false;*/
+		
 		battlefield.setBomb(x, y);
-	    return true;
+		return true;
 	}
 
 	/**

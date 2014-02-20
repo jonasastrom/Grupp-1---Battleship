@@ -3,8 +3,6 @@ package Game;
 import java.util.ArrayList;
 import java.util.Observable;
 
-import GUI.Gui;
-
 /**
  * Handles a zone
  * 
@@ -50,14 +48,14 @@ public class Zone extends Observable
 		setChanged();
 		notifyObservers(stringList);
 		return true;
-		
-		
+
+
 		/*String whatBattlefield;
 		if(id.equals("ai")){whatBattlefield = "left";}
 		else{
 			whatBattlefield = "right";}
 		ZoneGui = GameEngine.getGui();
-		
+
 		isBombed = true;
 		if (ship != null) {
 			ship.hit();
