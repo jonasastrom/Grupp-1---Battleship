@@ -113,7 +113,7 @@ public class AI extends Player {
 
 	private boolean southSpace(int xValue, int yValue, Ship ship) {
 		boolean takenNeighbour = false;
-		int counter = 0;
+		int counter = 1;
 		while (!takenNeighbour && counter < ship.getLenght()) {
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			yValue++;
@@ -124,7 +124,7 @@ public class AI extends Player {
 
 	private boolean westSpace(int xValue, int yValue, Ship ship) {
 		boolean takenNeighbour = false;
-		int counter = 0;
+		int counter = 1;
 		while (!takenNeighbour && counter < ship.getLenght()) {
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			xValue--;
@@ -135,7 +135,7 @@ public class AI extends Player {
 
 	private boolean northSpace(int xValue, int yValue, Ship ship) {
 		boolean takenNeighbour = false;
-		int counter = 0;
+		int counter = 1;
 		while (!takenNeighbour && counter < ship.getLenght()) {
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			yValue--;
