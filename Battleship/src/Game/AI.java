@@ -162,12 +162,16 @@ public class AI extends Player {
 		int[] target = new int[2];
 		// For 1.0
 		ListIterator<int[]> hits = firingSolution.listIterator();
-		if (difficulties < 4) {
-			if (difficulties == 1)
+		if (difficulties < 5) {
+			if (difficulties == 1) {
 				target = hits.next();
-			// Remove the last square to be hit from the list permanently
-			hits.remove();
+				// Remove the last square to be hit from the list permanently
+				hits.remove();
+			}
+		} else if (difficulties == 5) {
+			// Kommer bara skjuta där det garanterat finns skepp
 		}
+			
 		return target;
 	}
 
@@ -177,8 +181,8 @@ public class AI extends Player {
 	private void createFiringSolution() {
 		// In the initial, stupid iteration, only randomly attack zones.
 		// Do a loop to create random attacks, manually checking for conflicts?
-		for (int x = 1; x <= 10; x++) {
-			for (int y = 1; y <= 10; y++) {
+		for (int x = 0; x < 10; x++) {
+			for (int y = 0; y < 10; y++) {
 				int pos[] = new int[2];
 				pos[0] = x;
 				pos[1] = y;
