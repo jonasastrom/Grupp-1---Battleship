@@ -39,14 +39,22 @@ public class Battlefield
 
 	/**
 	 * Bomb the zone with the specified coordinates
+	 * and sink the ship if it was sunk
 	 * @param x The x-coordinate of the zone
 	 * @param y The y-coordinate of the zone
 	 * @return true if a ship was hit,
 	 *         false otherwise
 	 */
 	public boolean setBomb(int x, int y)
-	{
-		return zones[x][y].setBomb();
+	{	
+		if(zones[x][y].setBomb()) {
+			Ship ship = zones[x][y].getShip();
+			if (ship.isSunk()) {
+				sinkShip(ship);
+			}
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -89,5 +97,19 @@ public class Battlefield
 		System.out.println("Set ship");
 		///////////////////////////
 		zones[x][y].setShip(ship);
+	}
+
+	/**
+	 * 
+	 */
+	public void sinkShip(Ship ship)
+	{
+		for (Zone[] zones2 : zones) {
+			for (Zone zone : zones2) {
+				if (zone.getShip() == ship) {
+					zone.setSunk();
+				}
+			}
+		}
 	}
 }

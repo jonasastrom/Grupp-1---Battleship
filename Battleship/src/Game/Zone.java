@@ -1,8 +1,5 @@
 package Game;
 
-import java.util.ArrayList;
-
-
 /**
  * Handles a zone
  * 
@@ -18,6 +15,7 @@ public class Zone
 	private Ship ship;
 	private String id;
 	private ZoneListener zoneListener;
+	private String side;
 
 	/**
 	 * Constructor
@@ -28,6 +26,8 @@ public class Zone
 		this.yPos = yPos;
 		this.id = id;
 		this.zoneListener = zoneListener;
+		if(id.equals("ai")){side = "right";}
+		else {side = "left";}
 	}
 
 	/**
@@ -45,36 +45,28 @@ public class Zone
 	 */
 	public boolean setBomb()
 	{
-		String side;
-		if(id.equals("ai")){side = "right";}
-		else {side = "left";}
-		
 		System.out.println("innan");
-		
+
 		if(ship!=null){ship.hit();}
-		
+
 		if(hasShip)
 		{
-			System.out.println("he");
-			if(ship.isSunk())
-			{
-				zoneListener.update(xPos, yPos, side, "sunk");
-				System.out.println("forsta");
-			}
-			else{
-				zoneListener.update(xPos, yPos, side, "hit");
-				System.out.println("andra");
-			}
+			zoneListener.update(xPos, yPos, side, "hit");
+			isBombed = true;
+			System.out.println("andra");
+			return isBombed;
+
 		}
-		
-		
+
+
 		else {
 			System.out.println("else");
 			zoneListener.update(xPos, yPos, side, "miss");
 			System.out.println("tredje");
+			return isBombed;
 		}
-		
-		return true;
+
+
 	}
 
 	/**
@@ -105,5 +97,10 @@ public class Zone
 	{
 		this.ship = ship;
 		hasShip = true;
+	}
+
+	public void setSunk()
+	{
+		zoneListener.update(xPos, yPos, side, "sunk");
 	}
 }
