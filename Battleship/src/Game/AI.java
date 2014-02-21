@@ -220,25 +220,27 @@ public class AI extends Player {
 	}
 
 	/**
-	 * if the boat fits to the chosen coordinates
+	 * Checks if the zones right to the start-zone are free
 	 * 
 	 * @param yValue
+	 *            x-coordinate of the start-zone
 	 * @param xValue
-	 * @return true else
-	 * @return false
+	 *            y-coordinate of the start-zone
+	 * @param ship
+	 *            The ship to use to get the length
+	 * @return true if the zones are not taken
 	 */
 	private boolean eastSpace(int xValue, int yValue, Ship ship) {
-		int shipLength = ship.getLength();
-
-		if ((shipLength + xValue - 1) > 9)
+		// Checks if the ship actually will fit inside the field
+		if ((ship.getLength() + xValue - 1) > 9)
 			return false;
-
-		for (int i = 0; i < shipLength; i++) {
+		// Loop-checks if the zones already has a boat, if so return false
+		for (int i = 0; i < ship.getLength(); i++) {
 			if (getBattlefield().hasShip(xValue + i, yValue))
 				return false;
 		}
 		return true;
-		
+	
 		/*int counter = 1;
 		// ships length
 		while (!takenNeighbour && counter < ship.getLength()) {
@@ -249,17 +251,28 @@ public class AI extends Player {
 		}*/
 	}
 
+	/**
+	 * Checks if the zones below to the start-zone are free
+	 * 
+	 * @param yValue
+	 *            x-coordinate of the start-zone
+	 * @param xValue
+	 *            y-coordinate of the start-zone
+	 * @param ship
+	 *            The ship to use to get the length
+	 * @return true if the zones are not taken
+	 */
 	private boolean southSpace(int xValue, int yValue, Ship ship) {
-		int shipLength = ship.getLength();
-
-		if ((shipLength + yValue - 1) > 9)
+		// Checks if the ship actually will fit inside the field
+		if ((ship.getLength() + yValue - 1) > 9)
 			return false;
-		for (int i = 0; i < shipLength; i++) {
+		// Checks if the zones already has a boat
+		for (int i = 0; i < ship.getLength(); i++) {
 			if (getBattlefield().hasShip(xValue, yValue + i))
 				return false;
 		}
 		return true;
-		/*
+	/*
 		boolean takenNeighbour = false;
 		int counter = 1;
 		while (!takenNeighbour && counter < ship.getLength()) {
@@ -270,17 +283,28 @@ public class AI extends Player {
 		return !takenNeighbour;*/
 	}
 
+	/**
+	 * Checks if the zones left to the start-zone are free
+	 * 
+	 * @param yValue
+	 *            x-coordinate of the start-zone
+	 * @param xValue
+	 *            y-coordinate of the start-zone
+	 * @param ship
+	 *            The ship to use to get the length
+	 * @return true if the zones are not taken
+	 */
 	private boolean westSpace(int xValue, int yValue, Ship ship) {
-		int shipLength = ship.getLength();
-
-		if ((xValue-shipLength + 1) < 0)
+		// Checks if the ship actually will fit inside the field
+		if ((xValue - ship.getLength() + 1) < 0)
 			return false;
-		for (int i=0; i<shipLength; i++){
-			if(getBattlefield().hasShip(xValue-i, yValue))
+		// Checks if the zones already has a boat
+		for (int i = 0; i < ship.getLength(); i++) {
+			if (getBattlefield().hasShip(xValue - i, yValue))
 				return false;
 		}
 		return true;
-		/*boolean takenNeighbour = false;
+	/*boolean takenNeighbour = false;
 		int counter = 1;
 		while (!takenNeighbour && counter < ship.getLength()) {
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
@@ -290,13 +314,25 @@ public class AI extends Player {
 		return !takenNeighbour;*/
 	}
 
+	/**
+	 * Checks if the zones above to the start-zone are free
+	 * 
+	 * @param yValue
+	 *            x-coordinate of the start-zone
+	 * @param xValue
+	 *            y-coordinate of the start-zone
+	 * @param ship
+	 *            The ship to use to get the length
+	 * @return true if the zones are not taken
+	 */
 	private boolean northSpace(int xValue, int yValue, Ship ship) {
 		int shipLength = ship.getLength();
-
-		if ((yValue-shipLength + 1) < 0)
+		// Checks if the ship actually will fit inside the field
+		if ((yValue - shipLength + 1) < 0)
 			return false;
-		for (int i=0; i<shipLength; i++){
-			if(getBattlefield().hasShip(xValue, yValue-i))
+		// Checks if the zones already has a boat
+		for (int i = 0; i < shipLength; i++) {
+			if (getBattlefield().hasShip(xValue, yValue - i))
 				return false;
 		}
 		return true;
