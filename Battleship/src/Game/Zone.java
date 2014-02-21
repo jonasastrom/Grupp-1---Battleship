@@ -24,8 +24,8 @@ public class Zone
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.zoneListener = zoneListener;
-		if(id.equals("ai")){side = "right";}
-		else if(id.equals("human")){side = "left";}
+		if(id.equals("ai")){side = "left";}
+		else if(id.equals("human")){side = "right";}
 	}
 
 	/**
