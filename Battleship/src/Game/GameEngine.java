@@ -130,6 +130,11 @@ public class GameEngine {
 		listener = null;
 		System.gc();	// Calls GC here to make sure it does its job
 						// This keeps the program from ever taking up too much memory
+		try {
+			Thread.sleep(250);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		gui = new Gui(this);
 		listener = new ZoneListener();
 		listener.addObserver(gui);
