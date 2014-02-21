@@ -30,7 +30,7 @@ import Game.GameEngine;
  */
 public class Gui extends JFrame implements ActionListener, Observer {
 
-	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane, playerWins, playerLose;
+	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane, playerWins, playerLose, ATOMBOMB;
 	//	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
 	private JLabel informatioText;
 	private ArrayList<String> letters = new ArrayList<String>();
@@ -226,6 +226,10 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		playerLose = new JMenuItem("Player Lose");
 		debug.add(playerLose);
 		playerLose.addActionListener(this);
+		
+		ATOMBOMB = new JMenuItem("Döda alla!");
+		debug.add(ATOMBOMB);
+		ATOMBOMB.addActionListener(this);
 	}
 
 	/**
@@ -281,13 +285,15 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 *  This method listen to the players actions.
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e){
+	public void actionPerformed(ActionEvent e){ 
 		if(e.getSource() == playerWins){
 			gameEngine.testGameOver(true);
 			System.out.println("debug player wins");
 		}else if(e.getSource() == playerLose){
 			gameEngine.testGameOver(false);
 			System.out.println("debug player lose");
+		}else if(e.getSource() == ATOMBOMB){
+			gameEngine.testNuke();
 		}else if(e.getSource() == newGame){
 			gameEngine.gameOver();
 		}else if(e.getSource() == quit){
@@ -318,7 +324,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			System.out.println("nummer:" + i);
 			tempZone.setEnabled(false);
 			gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
-
 		}
 	}
 
@@ -329,9 +334,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	public void update(Observable observable, Object object) {
 		System.out.println("Katten leker pa staden");
 		if( observable instanceof Game.ZoneListener && object instanceof Game.ZoneLink){
-			System.out.println("Apan something"); 
 
 			Zone zone = zoneArray.get(((Game.ZoneLink.y) * 10) + Game.ZoneLink.x);
+			System.out.println(Game.ZoneLink.state);
 			if(Game.ZoneLink.state.equals("miss")){
 				zone.changeColor(Color.GRAY);
 			}else if(Game.ZoneLink.state.equals("hit")){
