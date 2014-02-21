@@ -211,10 +211,10 @@ ZoneListener
     <panel_attributes>Package::Game
 ZoneLink
 --
-+ int x
-+ int y
-+ String leftOrRight
-+ String state
+_+ int x_
+_+ int y_
+_+ String leftOrRight_
+_+ String state_
 --
 </panel_attributes>
     <additional_attributes/>
