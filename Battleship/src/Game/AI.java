@@ -273,7 +273,7 @@ public class AI extends Player {
 	private boolean westSpace(int xValue, int yValue, Ship ship) {
 		int shipLength = ship.getLenght();
 
-		if ((xValue-shipLength + 1) > -1)
+		if ((xValue-shipLength + 1) < -1)
 			return false;
 		for (int i=0; i<shipLength; i++){
 			if(getBattlefield().hasShip(xValue-i, yValue))
@@ -293,7 +293,7 @@ public class AI extends Player {
 	private boolean northSpace(int xValue, int yValue, Ship ship) {
 		int shipLength = ship.getLenght();
 
-		if ((yValue-shipLength + 1) > -1)
+		if ((yValue-shipLength + 1) < -1)
 			return false;
 		for (int i=0; i<shipLength; i++){
 			if(getBattlefield().hasShip(xValue, yValue-i))
