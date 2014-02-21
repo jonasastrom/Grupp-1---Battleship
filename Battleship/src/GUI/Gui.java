@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -20,22 +21,24 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import Game.GameEngine;
 
 /**
  * This class creates the GUI.
  * @author Grupp 1
- *
  */
 public class Gui extends JFrame implements ActionListener, Observer {
 
 	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane, playerWins, playerLose, ATOMBOMB;
-	//	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
+	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
 	private JLabel informatioText;
 	private ArrayList<String> letters = new ArrayList<String>();
-	private ArrayList<Zone> zoneArray = new ArrayList<Zone>();
+	private ArrayList<Zone> leftZoneArray = new ArrayList<Zone>();
+	private ArrayList<Zone> rightZoneArray = new ArrayList<Zone>();
 	private GameEngine gameEngine;
+	private int[] ship = null;
 
 	/**
 	 *  Constructor
@@ -51,32 +54,37 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	private void makeGUIFrame(){
 		setTitle("BattleShip");
 		setLayout(new BorderLayout(10, 10));
-
 		/**
 		 *  Add the buttons to the left in the frame
 		 */
-		//		ButtonGroup buttonGroup = new ButtonGroup();
-		//
-		//		carrier = new JRadioButton("Carrier 5 Rutor");
-		//		battleship = new JRadioButton("Battleship 4 Rutor");
-		//		submarine = new JRadioButton("Submarine 3 Rutor");
-		//		cruiser = new JRadioButton("Cruiser 3 Rutor");
-		//		destroyer = new JRadioButton("Destroyer 2 Rutor ");
-		//
-		//		buttonGroup.add(carrier);
-		//		buttonGroup.add(battleship);
-		//		buttonGroup.add(submarine);
-		//		buttonGroup.add(cruiser);
-		//		buttonGroup.add(destroyer);
-		//		
-		//		JPanel radioButtonPanel = new JPanel(new GridLayout(0, 1));
-		//		radioButtonPanel.add(carrier);
-		//		radioButtonPanel.add(battleship);
-		//		radioButtonPanel.add(submarine);
-		//		radioButtonPanel.add(cruiser);
-		//		radioButtonPanel.add(destroyer);
-		//
-		//		add(radioButtonPanel, BorderLayout.WEST);
+		ButtonGroup buttonGroup = new ButtonGroup();
+
+		carrier = new JRadioButton("Carrier 5 Rutor");
+		battleship = new JRadioButton("Battleship 4 Rutor");
+		submarine = new JRadioButton("Submarine 3 Rutor");
+		cruiser = new JRadioButton("Cruiser 3 Rutor");
+		destroyer = new JRadioButton("Destroyer 2 Rutor ");
+
+		carrier.addActionListener(this);
+		battleship.addActionListener(this);
+		submarine.addActionListener(this);
+		cruiser.addActionListener(this);
+		destroyer.addActionListener(this);
+
+		buttonGroup.add(carrier);
+		buttonGroup.add(battleship);
+		buttonGroup.add(submarine);
+		buttonGroup.add(cruiser);
+		buttonGroup.add(destroyer);
+
+		JPanel radioButtonPanel = new JPanel(new GridLayout(0, 1));
+		radioButtonPanel.add(carrier);
+		radioButtonPanel.add(battleship);
+		radioButtonPanel.add(submarine);
+		radioButtonPanel.add(cruiser);
+		radioButtonPanel.add(destroyer);
+
+		add(radioButtonPanel, BorderLayout.WEST);
 
 		/**
 		 * Add the color-description to the top of the frame
@@ -111,17 +119,14 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		add(new JLabel("   "), BorderLayout.EAST);
 
 		/**
-		 * Add the zones in the middle of the frame
+		 * Add the zones in the middle of the frame. 
 		 */
-
-		//		JPanel centerFrame = new JPanel(new BorderLayout(2, 2));
+		JPanel centerFrame = new JPanel(new GridLayout(1, 2, 50, 0));
 		JPanel leftGamePanel  = new JPanel(new GridLayout(11, 11, 2, 2));
-		//		JPanel rightGamePanel = new JPanel(new GridLayout(11, 11, 2, 2));
-		add(leftGamePanel, BorderLayout.CENTER);
-
-		JPanel gamePanel = new JPanel(new GridLayout(11, 11, 2, 2));
-		add(gamePanel, BorderLayout.CENTER);
-
+		JPanel rightGamePanel = new JPanel(new GridLayout(11, 11, 2, 2));
+		centerFrame.add(leftGamePanel);
+		centerFrame.add(rightGamePanel);
+		add(centerFrame, BorderLayout.CENTER);
 
 		letters.add(0, " ");
 		letters.add(1, "A");
@@ -135,28 +140,40 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		letters.add(9, "I");
 		letters.add(10, "J");
 
+		/**
+		 * Add all the zones to the left frame, and then to the right frame.
+		 * Only add actionListeners to the left frames zones, and setEnable false for the right frames zones.
+		 */
 		Zone zone = null;
-		for(int i = 0; i < 11; i ++){
+		for(int i = 0; i < 11; i++){
 			for(int j = 0; j < 11; j++){
 				String name = letters.get(j);
 				zone = new Zone(j, i, name + i);
-				gamePanel.add(zone);
+				leftGamePanel.add(zone);
 				zone.addActionListener(this);
 				if((i * j) != 0 ){
-					zoneArray.add(zone);
+					leftZoneArray.add(zone);
+				}
+			}
+		}
+
+		zone = null;
+		for(int k = 0; k < 11; k++){
+			for(int l = 0; l < 11; l++){
+				String name = letters.get(l);
+				zone = new Zone(l, k, name + k);
+				rightGamePanel.add(zone);
+				zone.setEnabled(false);
+				if((k * l) != 0 ){
+					rightZoneArray.add(zone);
 				}
 			}
 		}
 
 		makeMenuBar();
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
-		setSize(400, 400);
+		setSize(850, 400);
 		setVisible(true);
 	}
 
@@ -238,6 +255,17 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	}
 
 	/**
+	 * Show an input dialog where the user can select a difficulty
+	 */
+	public int selectDifficultyWIndow(){
+		Object[] options = {"Training", "Easy", "Normal", "Hard", "Insane"};
+		int difficulty = JOptionPane.showOptionDialog(null, "Select which difficulty you want:", "Difficulty",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+				null, options, options[0]);
+		return difficulty;
+	}
+
+	/**
 	 * When this method gets called, set the string to the bottom of the frame
 	 */
 	public void changeInformatioText(String string){
@@ -245,32 +273,17 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	}
 
 	/**
-	 * This method get coordinates of a specific zone, and call a method to change to a color
-	 */
-	private void updateZone(int x, int y, String state){
-		int zoneNumber = ((y - 1) * 10) + x;
-		Zone zone = zoneArray.get(zoneNumber - 1);
-		if(state.equals("miss")){
-			zone.changeColor(Color.GRAY);
-		}else if(state.equals("hit")){
-			zone.changeColor(Color.GREEN);
-		}else if(state.equals("sunk")){
-			zone.changeColor(new Color(222, 49, 99));
-		}else if(state.equals("ship")){
-			zone.changeColor(Color.BLACK);
-		}
-	}
-
-	/**
 	 * This method gets called when a user click on the menu-bar on the button "Rules". 
 	 * Then the wiki-page about the game Battleship will open.
 	 * @throws URISyntaxException
 	 */
-	private void openURIForRules() throws URISyntaxException{
-		final URI uri = new URI("http://battleship.wikia.com/wiki/Battleship_(game)");
+	private void openURIForRules(){
 		try {
+			final URI uri = new URI("http://battleship.wikia.com/wiki/Battleship_(game)");
 			Desktop.getDesktop().browse(uri);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 	}
@@ -290,7 +303,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 *  This method listen to the players actions.
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e){ 
+	public void actionPerformed(ActionEvent e){
 		if(e.getSource() == playerWins){
 			gameEngine.testGameOver(true);
 			System.out.println("debug player wins");
@@ -304,13 +317,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() == quit){
 			System.exit(0);
 		}else if(e.getSource() == about){
-			JOptionPane.showMessageDialog(null, "Hej! \nVi ï¿½r 7 coola kids frï¿½n DAT055 och vi gï¿½r ett \"spel\".", "About", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Hej! \nVi ï¿½r 7 coola kids frï¿½n DAT055 och vi gï¿½r ett spel.", "About", JOptionPane.INFORMATION_MESSAGE);
 		}else if(e.getSource() == rules){
-			try {
-				openURIForRules();
-			} catch (URISyntaxException e1) {
-				e1.printStackTrace();
-			}		
+			openURIForRules();
 		}else if(e.getSource() == training){
 			System.out.println("training");
 		}else if(e.getSource() == easy){
@@ -322,11 +331,45 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() == insane){
 			System.out.println("insane");
 		}else if(e.getSource() instanceof Zone){
-
+			if( ship != null){
+				System.out.println("apa");
+				ship = null;
+			}
+			//			if( GameEngine.isPlayerTurn() == true){
 			Zone tempZone = (Zone) e.getSource();
 			tempZone.setEnabled(false);
-			// Call coordinates with coordinates x-1 and y-1, because GUI has coordinates 1-10 and logic 0-9
 			gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
+			//			}
+		}else if(e.getSource() == carrier){
+			ship = new int[5];
+			battleship.setEnabled(false);
+			submarine.setEnabled(false);
+			cruiser.setEnabled(false);
+			destroyer.setEnabled(false);
+		}else if(e.getSource() == battleship){
+			ship = new int[4];
+			carrier.setEnabled(false);
+			submarine.setEnabled(false);
+			cruiser.setEnabled(false);
+			destroyer.setEnabled(false);
+		}else if(e.getSource() == submarine){
+			ship = new int[3];
+			carrier.setEnabled(false);
+			battleship.setEnabled(false);
+			cruiser.setEnabled(false);
+			destroyer.setEnabled(false);
+		}else if(e.getSource() == cruiser){
+			ship = new int[3];
+			carrier.setEnabled(false);
+			battleship.setEnabled(false);
+			submarine.setEnabled(false);
+			destroyer.setEnabled(false);
+		}else if(e.getSource() == destroyer){
+			ship = new int[2];
+			carrier.setEnabled(false);
+			battleship.setEnabled(false);
+			submarine.setEnabled(false);
+			cruiser.setEnabled(false);
 		}
 	}
 
@@ -336,17 +379,25 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	@Override
 	public void update(Observable observable, Object object) {
 		if( observable instanceof Game.ZoneListener && object instanceof Game.ZoneLink){
-
-			Zone zone = zoneArray.get(((Game.ZoneLink.y) * 10) + Game.ZoneLink.x);
-			System.out.println(Game.ZoneLink.state);
-			if(Game.ZoneLink.state.equals("miss")){
-				zone.changeColor(Color.GRAY);
-			}else if(Game.ZoneLink.state.equals("hit")){
-				zone.changeColor(Color.GREEN);
-			}else if(Game.ZoneLink.state.equals("sunk")){
-				zone.changeColor(new Color(222, 49, 99));
-			}else if(Game.ZoneLink.state.equals("ship")){
-				zone.changeColor(Color.BLACK);
+			Zone zone = null;
+			if(Game.ZoneLink.leftOrRight.equals("right")){
+				zone = rightZoneArray.get(((Game.ZoneLink.y) * 10) + Game.ZoneLink.x);
+			}else if(Game.ZoneLink.leftOrRight.equals("left")){
+				zone = leftZoneArray.get(((Game.ZoneLink.y) * 10) + Game.ZoneLink.x);
+			}
+			// TESTA ATT SKICKA MED EN RIKTING SOM INTE ÄR RIGHT ELLER LEFT! och en som inte är miss hit sunk ship
+			try{
+				if(Game.ZoneLink.state.equals("miss")){
+					zone.changeColor(Color.GRAY);
+				}else if(Game.ZoneLink.state.equals("hit")){
+					zone.changeColor(Color.GREEN);
+				}else if(Game.ZoneLink.state.equals("sunk")){
+					zone.changeColor(new Color(222, 49, 99));
+				}else if(Game.ZoneLink.state.equals("ship")){
+					zone.changeColor(Color.BLACK);
+				}
+			}catch (NullPointerException e){
+				e.printStackTrace();
 			}
 		}	
 	}
