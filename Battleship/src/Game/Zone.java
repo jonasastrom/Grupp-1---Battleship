@@ -75,30 +75,6 @@ public class Zone
 		}
 		
 		return true;
-
-
-		/*String whatBattlefield;
-		if(id.equals("ai")){whatBattlefield = "left";}
-		else{
-			whatBattlefield = "right";}
-		ZoneGui = GameEngine.getGui();
-
-		isBombed = true;
-		if (ship != null) {
-			ship.hit();
-			if (ship.isSunk()) {
-				ZoneGui.updateZone(++xPos,++yPos,ZoneState.SUNK,whatBattlefield);
-				return true;
-			}
-			else {
-				ZoneGui.updateZone(++xPos,++yPos,ZoneState.HIT,whatBattlefield);
-				return true;
-			}
-		}
-		else {
-			ZoneGui.updateZone(++xPos,++yPos,ZoneState.MISS,id);
-			return false;
-		}*/
 	}
 
 	/**
