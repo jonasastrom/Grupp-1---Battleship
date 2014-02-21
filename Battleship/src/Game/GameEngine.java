@@ -21,9 +21,11 @@ public class GameEngine {
 	
 	public GameEngine(ZoneListener listener){
 		// Creates a new object of GUI (for creating a frame)
+		int difficulty = 0;
 		gui = new Gui(this);
 		player = new Human(listener);
-		ai = new AI(0, player.getBattlefield(), listener);	//0 because we don't need more difficulties for now
+		//difficulty = gui.selectDifficultyWindow()
+		ai = new AI(difficulty, player.getBattlefield(), listener);	//0 because we don't need more difficulties for now
 	}
 	
 	/**
@@ -129,11 +131,13 @@ public class GameEngine {
 						// This keeps the program from ever taking up too much memory
 						// I do this because I think the GC is lazy
 		try {Thread.sleep(150);} catch (InterruptedException e2) {}
+		int difficulty = 0;
 		gui = new Gui(this);
 		listener = new ZoneListener();
 		listener.addObserver(gui);
 		player = new Human(listener);
-		ai = new AI(0, player.getBattlefield(), listener);
+		// difficulty = gui.selectDifficultyWindow()
+		ai = new AI(difficulty, player.getBattlefield(), listener);
 		newGame();
 	}
 	
