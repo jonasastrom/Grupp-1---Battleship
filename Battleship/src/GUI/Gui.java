@@ -293,7 +293,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() == quit){
 			System.exit(0);
 		}else if(e.getSource() == about){
-			JOptionPane.showMessageDialog(null, "Hej! \nVi �r 7 coola kids fr�n DAT055 och vi g�r ett spel.", "About", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Hej! \nVi �r 7 coola kids fr�n DAT055 och vi g�r ett \"spel\".", "About", JOptionPane.INFORMATION_MESSAGE);
 		}else if(e.getSource() == rules){
 			try {
 				openURIForRules();
