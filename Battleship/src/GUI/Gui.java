@@ -149,6 +149,11 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}
 
 		makeMenuBar();
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 		setSize(400, 400);
