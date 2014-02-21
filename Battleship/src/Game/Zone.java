@@ -13,7 +13,6 @@ public class Zone
 	private boolean isBombed = false;
 	private boolean hasShip = false;
 	private Ship ship;
-	private String id;
 	private ZoneListener zoneListener;
 	private String side;
 
@@ -24,10 +23,9 @@ public class Zone
 	{
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.id = id;
 		this.zoneListener = zoneListener;
 		if(id.equals("ai")){side = "right";}
-		else {side = "left";}
+		else if(id.equals("human")){side = "left";}
 	}
 
 	/**
@@ -41,32 +39,23 @@ public class Zone
 
 	/**
 	 * Set true if the zone has already been bombed
-	 * 
 	 */
 	public boolean setBomb()
 	{
-		System.out.println("innan");
-
-		if(ship!=null){ship.hit();}
-
-		if(hasShip)
-		{
+		System.out.println("setBomb innan");
+		if (hasShip) {
+			ship.hit();
 			zoneListener.update(xPos, yPos, side, "hit");
 			isBombed = true;
-			System.out.println("andra");
+			System.out.println("setBomb andra");
 			return isBombed;
-
 		}
-
-
 		else {
 			System.out.println("else");
 			zoneListener.update(xPos, yPos, side, "miss");
-			System.out.println("tredje");
+			System.out.println("setBomb tredje");
 			return isBombed;
 		}
-
-
 	}
 
 	/**
