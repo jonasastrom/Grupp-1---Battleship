@@ -71,12 +71,12 @@ public class GameEngine {
 				winText = "won";
 			else
 				winText = "lost";
-			if(gui.gameOverText(winText)) {
-				winText = null;
+			if(gui.gameOverText(winText)) {	// gameOverText returns a boolean depending on which button got pressed
+				winText = null;				// If yes, then the game is reset and remade
 				resetGame();
 			}
 			else
-				System.exit(0);
+				System.exit(0);				// Else the game exits
 		}
 		else
 			resetGame();	// If the game is not over but the menu option for a New Game has been chosen, then the win/lose messages won't be displayed.
@@ -104,37 +104,31 @@ public class GameEngine {
 	 * This bombs every single square on the battlefield
 	 */
 	public void testNuke() {
-
+		System.out.println("Nuclear launch detected");
 		for(int x = 0 ; x < 10 ; x++) {
 			for(int y = 0 ; y < 10 ; y++) {
 				ai.bomb(x, y);
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				try {Thread.sleep(10);} catch (InterruptedException e) {} // Gui gets woozy when things get bombed too fast
 			}
 		}
-		System.out.println("Nuke deployed");
+		System.out.println("Splash");
 	}
 	
 	/**
-	 *	Empties the objects and recreates them for a new game 
+	 *	Empties the objects, cleans them away and recreates them for a new game 
 	 */
 	private void resetGame() {
 		gui.removeAll();
 		gui.setVisible(false);
 		gui = null;
+		try {Thread.sleep(50);} catch (InterruptedException e1) {}
 		player = null;
 		ai = null;
 		listener = null;
 		System.gc();	// Calls GC here to make sure it does its job
 						// This keeps the program from ever taking up too much memory
-		try {
-			Thread.sleep(250);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+						// I do this because I think the GC is lazy
+		try {Thread.sleep(150);} catch (InterruptedException e2) {}
 		gui = new Gui(this);
 		listener = new ZoneListener();
 		listener.addObserver(gui);
@@ -143,6 +137,13 @@ public class GameEngine {
 		newGame();
 	}
 	
+	/**
+	 * This is called by the gui once a square has been pressed
+	 * It takes the coordinates of that square and sends them to the ai to be bombed
+	 * It then lets the ai have its turn
+	 * @param x The x coordinate of the column to be bombed
+	 * @param y The y coordinate of the row to be bombed
+	 */
 	public void coordinates (int x, int y ){
 		playerTurn = false;			// Player's turn is over
 		System.out.println("Coordinates called");
