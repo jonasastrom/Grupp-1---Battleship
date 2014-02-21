@@ -51,13 +51,19 @@ public class GameEngine {
 	 *  and making the players place their ships.
 	 */
 	public void newGame() {
+		playerTurn = false; // before the ships are placed it's not the player's
+							// turn
 		gameOver = false;
 		winPlayer = false;
 		playerLastHit = false;
 		aiLastHit = false;
-		playerTurn = false; //before the ships are placed it's not the player's turn
-		//player.placeShips(); milstolpe 2
+		// player.placeShips(); milstolpe 2
 		ai.placeShips();
+		try {
+			Thread.sleep(20);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		playerTurn = true;
 	}
 
