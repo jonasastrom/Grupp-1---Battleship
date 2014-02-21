@@ -45,23 +45,33 @@ public class Zone
 	 */
 	public boolean setBomb()
 	{
+		String side;
+		if(id.equals("ai")){side = "right";}
+		else {side = "left";}
+		
 		System.out.println("innan");
+		
 		if(ship!=null){ship.hit();}
 		
 		if(hasShip)
 		{
 			System.out.println("he");
-			if(ship.isSunk()){zoneListener.update(xPos, yPos, "left", "sunk");
-								System.out.println("forsta");}
-			else{zoneListener.update(xPos, yPos, "left", "hit");
-			System.out.println("andra");}
+			if(ship.isSunk())
+			{
+				zoneListener.update(xPos, yPos, side, "sunk");
+				System.out.println("forsta");
+			}
+			else{
+				zoneListener.update(xPos, yPos, side, "hit");
+				System.out.println("andra");
+			}
 		}
 		
 		
 		else {
 			System.out.println("else");
-			zoneListener.update(xPos, yPos, "left", "bombed");
-		System.out.println("tredje");
+			zoneListener.update(xPos, yPos, side, "miss");
+			System.out.println("tredje");
 		}
 		
 		return true;
