@@ -9,9 +9,9 @@ public class ZoneLink
 	
 	public ZoneLink(int x, int y, String leftOrRight, String state)
 	{
-		this.x = x;
-		this.y = y;
-		this.leftOrRight = leftOrRight;
-		this.state = state;
+		ZoneLink.x = x;
+		ZoneLink.y = y;
+		ZoneLink.leftOrRight = leftOrRight;
+		ZoneLink.state = state;
 	}
 }
