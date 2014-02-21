@@ -104,13 +104,15 @@ public class AI extends Player {
 	 */
 	public void placeShipsHardcoded() {
 		Iterator<Ship> iter = getFleet().getShips().iterator();
+		int x = 0;
 		while (iter.hasNext()) {
 			Ship boat = iter.next();
-			for (int x = 0; x < 5; x++) {
+			
 				for (int y = 0; y < boat.getLenght(); y++) {
 					getBattlefield().setShip(x, y, boat);
 				}
-			}
+			// Go to next row
+			x++;
 		}
 	}
 	
@@ -131,7 +133,9 @@ public class AI extends Player {
 			boolean placingShip = true;
 			
 			while (placingShip) {
+				// For looping, assume the head-coordinate for the ship is taken
 				boolean headTaken = true;
+				// Make sure coordinates are inited before continuing
 				int xCoord = 0;
 				int yCoord = 0;
 				
@@ -141,6 +145,7 @@ public class AI extends Player {
 					yCoord = rng.nextInt(10);
 					headTaken = getBattlefield().hasShip(xCoord, yCoord);
 				}
+				
 				
 			}
 		}
