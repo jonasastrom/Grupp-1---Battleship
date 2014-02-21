@@ -1,5 +1,9 @@
 package Game;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+
 /**
  * Handles the human player
  * 
@@ -21,15 +25,41 @@ public class Human extends Player
 
 	/**
 	 * TODO in 2.0
-	 * Skall fa in info fran gui. Den skall ha en string för att saga vilket skepp det galler.
-	 * Sedan skall den ocksa fa koordinater till de zoner som skeppet skall ligga i
-	 * anropar sedan dessan zoner och sager att de skall inehalla ett skepp
 	 */
-	/*@Override
 	public void placeShips()
 	{
 		while (!fleet.isPlaced()) {
 			//wait
 		}
-	}*/
+	}
+	
+	/**
+	 * 
+	 * @param shipInfo
+	 * @throws Exception
+	 */
+	public void placeShips(ArrayList<String> shipInfo) throws Exception
+	{
+		String shipName = shipInfo.get(0);
+		Iterator<Ship> it = fleet.getShips().iterator();
+		ArrayList<String> ourList = new ArrayList<>();
+		Ship shipTMP = null;
+		
+		while(it.hasNext()){
+			shipTMP = it.next();
+			if(shipTMP.getName().equals(shipName)){	
+				break;
+			}
+		}
+		if(shipTMP == null){throw new Exception(); }
+		
+		int lenght = shipTMP.getLenght();
+		
+		for(int x = 1; x <= lenght; x++){
+			ourList.add(shipInfo.get(x));
+			Collections.sort(ourList);
+			
+		}
+	}
 }
+

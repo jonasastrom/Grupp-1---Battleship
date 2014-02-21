@@ -17,15 +17,17 @@ public class GameEngine {
 	private boolean playerLastHit;
 	private boolean aiLastHit;
 	private static ZoneListener listener;
+	private HighScore highScore;
 	
 	
 	public GameEngine(ZoneListener listener){
 		// Creates a new object of GUI (for creating a frame)
-		int difficulty = 0;
+		int difficulty = 0;	//0 because we don't need more difficulties for now
+		//difficulty = gui.selectDifficultyWindow()	//This actually lets you select a difficulty,when that's implemented
 		gui = new Gui(this);
 		player = new Human(listener);
-		//difficulty = gui.selectDifficultyWindow()
-		ai = new AI(difficulty, player.getBattlefield(), listener);	//0 because we don't need more difficulties for now
+		ai = new AI(difficulty, player.getBattlefield(), listener);
+		highScore = new HighScore();
 	}
 	
 	/**
@@ -114,6 +116,7 @@ public class GameEngine {
 			}
 		}
 		System.out.println("Splash");
+		gui.changeInformatioText("CHEATER!!!!!11!!1!!!");
 	}
 	
 	/**
@@ -152,6 +155,8 @@ public class GameEngine {
 		playerTurn = false;			// Player's turn is over
 		System.out.println("Coordinates called");
 		playerLastHit = ai.bomb(x, y);
+		if(playerLastHit){gui.changeInformatioText("You Hit!");}
+		else{gui.changeInformatioText("You Missed!");}
 		if (!ai.hasShips()) {
 			winPlayer = true;
 			gameOver = true;
@@ -159,6 +164,8 @@ public class GameEngine {
 		}
 	/*	int[] aiAttack = ai.attack(aiLastHit);
 		aiLastHit = player.bomb(aiAttack[0], aiAttack[1]);
+		if(aiLastHit){gui.changeInformatioText("Admiral Akbar Hit!");}
+		else{gui.changeInformatioText("Admiral Akbar Missed!");}
 		if (!player.hasShips()) {
 			winPlayer = false;
 			gameOver = true;
