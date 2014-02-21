@@ -116,6 +116,7 @@ public class GameEngine {
 			}
 		}
 		System.out.println("Splash");
+		gui.changeInformatioText("CHEATER!!!!!11!!1!!!");
 	}
 	
 	/**
@@ -154,6 +155,8 @@ public class GameEngine {
 		playerTurn = false;			// Player's turn is over
 		System.out.println("Coordinates called");
 		playerLastHit = ai.bomb(x, y);
+		if(playerLastHit){gui.changeInformatioText("You Hit!");}
+		else{gui.changeInformatioText("You Missed!");}
 		if (!ai.hasShips()) {
 			winPlayer = true;
 			gameOver = true;
@@ -161,6 +164,8 @@ public class GameEngine {
 		}
 	/*	int[] aiAttack = ai.attack(aiLastHit);
 		aiLastHit = player.bomb(aiAttack[0], aiAttack[1]);
+		if(aiLastHit){gui.changeInformatioText("Admiral Akbar Hit!");}
+		else{gui.changeInformatioText("Admiral Akbar Missed!");}
 		if (!player.hasShips()) {
 			winPlayer = false;
 			gameOver = true;
