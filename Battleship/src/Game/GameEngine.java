@@ -108,9 +108,12 @@ public class GameEngine {
 		gui = null;
 		player = null;
 		ai = null;
+		listener = null;
 		System.gc();	// Calls GC here to make sure it does its job
 						// This keeps the program from ever taking up too much memory
 		gui = new Gui(this);
+		listener = new ZoneListener();
+		listener.addObserver(gui);
 		player = new Human(listener);
 		ai = new AI(0, player.getBattlefield(), listener);
 		newGame();
