@@ -17,15 +17,17 @@ public class GameEngine {
 	private boolean playerLastHit;
 	private boolean aiLastHit;
 	private static ZoneListener listener;
+	private HighScore highScore;
 	
 	
 	public GameEngine(ZoneListener listener){
 		// Creates a new object of GUI (for creating a frame)
-		int difficulty = 0;
+		int difficulty = 0;	//0 because we don't need more difficulties for now
+		//difficulty = gui.selectDifficultyWindow()	//This actually lets you select a difficulty,when that's implemented
 		gui = new Gui(this);
 		player = new Human(listener);
-		//difficulty = gui.selectDifficultyWindow()
-		ai = new AI(difficulty, player.getBattlefield(), listener);	//0 because we don't need more difficulties for now
+		ai = new AI(difficulty, player.getBattlefield(), listener);
+		highScore = new HighScore();
 	}
 	
 	/**
