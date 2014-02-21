@@ -1,7 +1,5 @@
 package Game;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -32,34 +30,51 @@ public class Human extends Player
 			//wait
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param shipInfo
 	 * @throws Exception
+	 * @return True is boat placement is valid
 	 */
-	public void placeShips(ArrayList<String> shipInfo) throws Exception
+	public boolean placeShips(String name, int[] x, int[] y) throws Exception
 	{
-		String shipName = shipInfo.get(0);
 		Iterator<Ship> it = fleet.getShips().iterator();
-		ArrayList<String> ourList = new ArrayList<>();
 		Ship shipTMP = null;
-		
+
 		while(it.hasNext()){
 			shipTMP = it.next();
-			if(shipTMP.getName().equals(shipName)){	
+			if(shipTMP.getName().equals(name)){	
 				break;
 			}
 		}
 		if(shipTMP == null){throw new Exception(); }
-		
-		int lenght = shipTMP.getLenght();
-		
-		for(int x = 1; x <= lenght; x++){
-			ourList.add(shipInfo.get(x));
-			Collections.sort(ourList);
-			
+
+		int length = shipTMP.getLength();
+
+		if(x.length != y.length || x.length != length) throw new Exception();
+
+		for(int i = 1; i <= length; i++){
+			if(x[0] == x[i]){
+				for(int j = 0; j <= length; j++){
+					if(y[j]+1 == y[j+1]){
+						return true;
+					}
+
+				}
+
+			}
+			if(y[0] == y[i]){
+				for(int k = 1; k <= length; k++){
+					if(x[k] == x[k+1]+1){
+						return true;
+					}
+
+				}
+
+			}
 		}
+		return false;
 	}
 }
 

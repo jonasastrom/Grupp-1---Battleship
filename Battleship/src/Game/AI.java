@@ -20,6 +20,7 @@ public class AI extends Player {
 	private Battlefield opponent;
 
 	private boolean DEBUG = true;
+	private boolean DEBUG_PLACE = false;
 	
 	/**
 	 * the constructor of this class
@@ -37,7 +38,7 @@ public class AI extends Player {
 		shipsPlaced = false;
 	}
 
-	@Override
+	//@Override
 	/**
 	 * Placing out the ships and 
 	 * it will override the Player class method placeShips() 
@@ -46,7 +47,10 @@ public class AI extends Player {
 	 */
 	public void placeShips() {
 		if (DEBUG)
-			placeShipsHardcoded();
+			if (DEBUG_PLACE)
+				placeShipsProposed();
+			else
+				placeShipsHardcoded();
 		else {
 			ArrayList<Ship> array = getFleet().getShips();
 			Iterator<Ship> it = array.iterator();
@@ -123,6 +127,13 @@ public class AI extends Player {
 	public void placeShipsProposed() {
 		Random rng = new Random();
 		
+		// Create a list of directions that will be randomized later
+		ArrayList<String> directions = new ArrayList<>();
+		directions.add("down");
+		directions.add("up");
+		directions.add("left");
+		directions.add("right");
+		
 		// Get a list of all the ships to place
 		Iterator<Ship> ships = getFleet().getShips().iterator();
 		
@@ -132,6 +143,8 @@ public class AI extends Player {
 			// We have not yet placed this ship
 			boolean placingShip = true;
 			
+			// Loop while we are placing the ship, only break loop when we 
+			// have found a place to set it down
 			while (placingShip) {
 				// For looping, assume the head-coordinate for the ship is taken
 				boolean headTaken = true;
@@ -146,7 +159,62 @@ public class AI extends Player {
 					headTaken = getBattlefield().hasShip(xCoord, yCoord);
 				}
 				
+				// Randomize the list of directions and then take out a 
+				// new iterator from it
+				Collections.shuffle(directions, rng);
+				Iterator<String> dirIter = directions.iterator();
 				
+				while (dirIter.hasNext()) {
+					// Grab the next direction to test
+					String direction = dirIter.next();
+					
+					switch (direction) {
+					case "down":
+						// Do stuff to test if the chosen direction is open
+						if (southSpace(xCoord, yCoord, boat)) {
+							// Then actually place the ship in that direction
+							for (int i = 0; i < boat.getLenght(); i++) {
+								// Place ship at yCoord + loop-control to place
+								getBattlefield().setShip(xCoord,
+														 yCoord + i, boat);
+							}
+							// Ship has been placed, set placingShip accordingly
+							placingShip = false;
+						}
+						break;
+					case "up":
+						if (northSpace(xCoord, yCoord, boat)) {
+							for (int i = 0; i < boat.getLenght(); i++) {
+								getBattlefield().setShip(xCoord, 
+														 yCoord - i, boat);
+							}
+							placingShip = false;
+						}
+						break;
+					case "left":
+						if (westSpace(xCoord, yCoord, boat)) {
+							for (int i = 0; i < boat.getLenght(); i++) {
+								getBattlefield().setShip(xCoord - i,
+														 yCoord, boat);
+							}
+							placingShip = false;
+						}
+						break;
+					case "right":
+						if (eastSpace(xCoord, yCoord, boat)) {
+							for (int i = 0; i < boat.getLenght(); i++) {
+								getBattlefield().setShip(xCoord + i,
+														 yCoord, boat);
+							}
+							placingShip = false;
+						}
+						break;
+					default:
+						System.out.println("PlaceShipsProposed has just "
+								+ "failed completely and didn't try to place "
+								+ "a ship in any direction.");
+					}
+				}
 			}
 		}
 	}
@@ -160,8 +228,13 @@ public class AI extends Player {
 	 * @return false
 	 */
 	private boolean eastSpace(int xValue, int yValue, Ship ship) {
-		for (int i=xValue+1; i<ship.getLenght(); i++){
-			if(getBattlefield().hasShip(i, yValue))
+		int shipLength = ship.getLenght();
+
+		if ((shipLength + xValue - 1) > 9)
+			return false;
+
+		for (int i = 0; i < shipLength; i++) {
+			if (getBattlefield().hasShip(xValue + i, yValue))
 				return false;
 		}
 		return true;
@@ -177,8 +250,12 @@ public class AI extends Player {
 	}
 
 	private boolean southSpace(int xValue, int yValue, Ship ship) {
-		for (int i=yValue+1; i<ship.getLenght(); i++){
-			if(getBattlefield().hasShip(xValue, i))
+		int shipLength = ship.getLenght();
+
+		if ((shipLength + yValue - 1) > 9)
+			return false;
+		for (int i = 0; i < shipLength; i++) {
+			if (getBattlefield().hasShip(xValue, yValue + i))
 				return false;
 		}
 		return true;
@@ -194,8 +271,12 @@ public class AI extends Player {
 	}
 
 	private boolean westSpace(int xValue, int yValue, Ship ship) {
-		for (int i=xValue-1; i<ship.getLenght(); i--){
-			if(getBattlefield().hasShip(i, yValue))
+		int shipLength = ship.getLenght();
+
+		if ((xValue-shipLength + 1) < -1)
+			return false;
+		for (int i=0; i<shipLength; i++){
+			if(getBattlefield().hasShip(xValue-i, yValue))
 				return false;
 		}
 		return true;
@@ -210,14 +291,23 @@ public class AI extends Player {
 	}
 
 	private boolean northSpace(int xValue, int yValue, Ship ship) {
-		boolean takenNeighbour = false;
+		int shipLength = ship.getLenght();
+
+		if ((yValue-shipLength + 1) < -1)
+			return false;
+		for (int i=0; i<shipLength; i++){
+			if(getBattlefield().hasShip(xValue, yValue-i))
+				return false;
+		}
+		return true;
+		/*boolean takenNeighbour = false;
 		int counter = 1;
 		while (!takenNeighbour && counter < ship.getLenght()) {
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			yValue--;
 			counter++;
 		}
-		return !takenNeighbour;
+		return !takenNeighbour;*/
 	}
 
 	/**
