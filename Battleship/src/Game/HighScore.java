@@ -35,4 +35,8 @@ public class HighScore {
 		}
 		return false;
 	}
+	
+	public ArrayList<Score> getHighScoreList() {
+		return this.highScore;
+	}
 }
