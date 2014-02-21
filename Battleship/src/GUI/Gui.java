@@ -231,7 +231,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		playerLose = new JMenuItem("Player Lose");
 		debug.add(playerLose);
 		playerLose.addActionListener(this);
-		
+
 		ATOMBOMB = new JMenuItem("Döda alla!");
 		debug.add(ATOMBOMB);
 		ATOMBOMB.addActionListener(this);
@@ -324,10 +324,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() instanceof Zone){
 
 			Zone tempZone = (Zone) e.getSource();
-			System.out.println("x:" + tempZone.x + " y:" + tempZone.y + " name:" + tempZone.name);
-			int i = ((tempZone.y - 1) * 10 ) + tempZone.x;
-			System.out.println("nummer:" + i);
 			tempZone.setEnabled(false);
+			// Call coordinates with coordinates x-1 and y-1, because GUI has coordinates 1-10 and logic 0-9
 			gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
 		}
 	}
@@ -337,7 +335,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 */
 	@Override
 	public void update(Observable observable, Object object) {
-		System.out.println("Katten leker pa staden");
 		if( observable instanceof Game.ZoneListener && object instanceof Game.ZoneLink){
 
 			Zone zone = zoneArray.get(((Game.ZoneLink.y) * 10) + Game.ZoneLink.x);
