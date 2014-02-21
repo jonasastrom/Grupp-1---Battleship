@@ -6,7 +6,7 @@ package Game;
  * @author Group 1 - DAT055 2014
  * @version 1.0
  */
-public class Player
+public abstract class Player
 {
 	private Battlefield battlefield;
 	private Fleet fleet;
@@ -23,10 +23,7 @@ public class Player
 	/**
 	 * TODO in 2.0
 	 */
-	public void placeShips()
-	{
-
-	}
+	public abstract void placeShips();
 
 	/**
 	 * Bomb this player's battlefield
@@ -35,15 +32,12 @@ public class Player
 	 */
 	public boolean bomb(int x, int y)
 	{
-		/*if (!battlefield.isBombed(x, y)) {
+		if (!battlefield.isBombed(x, y)) {
 			if (battlefield.setBomb(x, y)) {
 				return true;
 			}
 		}
-		return false;*/
-		
-		battlefield.setBomb(x, y);
-		return true;
+		return false;
 	}
 
 	/**
