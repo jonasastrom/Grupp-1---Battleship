@@ -160,8 +160,13 @@ public class AI extends Player {
 	 * @return false
 	 */
 	private boolean eastSpace(int xValue, int yValue, Ship ship) {
-		for (int i=xValue+1; i<ship.getLenght(); i++){
-			if(getBattlefield().hasShip(i, yValue))
+		int shipLength = ship.getLenght();
+
+		if ((shipLength + xValue - 1) > 9)
+			return false;
+
+		for (int i = 0; i < shipLength; i++) {
+			if (getBattlefield().hasShip(xValue + i, yValue))
 				return false;
 		}
 		return true;
@@ -177,8 +182,12 @@ public class AI extends Player {
 	}
 
 	private boolean southSpace(int xValue, int yValue, Ship ship) {
-		for (int i=yValue+1; i<ship.getLenght(); i++){
-			if(getBattlefield().hasShip(xValue, i))
+		int shipLength = ship.getLenght();
+
+		if ((shipLength + yValue - 1) > 9)
+			return false;
+		for (int i = 0; i < shipLength; i++) {
+			if (getBattlefield().hasShip(xValue, yValue + i))
 				return false;
 		}
 		return true;
@@ -194,8 +203,12 @@ public class AI extends Player {
 	}
 
 	private boolean westSpace(int xValue, int yValue, Ship ship) {
-		for (int i=xValue-1; i<ship.getLenght(); i--){
-			if(getBattlefield().hasShip(i, yValue))
+		int shipLength = ship.getLenght();
+
+		if ((xValue-shipLength + 1) > -1)
+			return false;
+		for (int i=0; i<shipLength; i++){
+			if(getBattlefield().hasShip(xValue-i, yValue))
 				return false;
 		}
 		return true;
@@ -210,14 +223,23 @@ public class AI extends Player {
 	}
 
 	private boolean northSpace(int xValue, int yValue, Ship ship) {
-		boolean takenNeighbour = false;
+		int shipLength = ship.getLenght();
+
+		if ((yValue-shipLength + 1) > -1)
+			return false;
+		for (int i=0; i<shipLength; i++){
+			if(getBattlefield().hasShip(xValue, yValue-i))
+				return false;
+		}
+		return true;
+		/*boolean takenNeighbour = false;
 		int counter = 1;
 		while (!takenNeighbour && counter < ship.getLenght()) {
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			yValue--;
 			counter++;
 		}
-		return !takenNeighbour;
+		return !takenNeighbour;*/
 	}
 
 	/**
