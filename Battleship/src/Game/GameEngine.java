@@ -23,7 +23,7 @@ public class GameEngine {
 		// Creates a new object of GUI (for creating a frame)
 		gui = new Gui(this);
 		player = new Human(listener);
-		ai = new AI(0, listener);	//0 because we don't need more difficulties for now
+		ai = new AI(0, player.getBattlefield(), listener);	//0 because we don't need more difficulties for now
 	}
 	
 	/**
@@ -51,9 +51,10 @@ public class GameEngine {
 		winPlayer = false;
 		playerLastHit = false;
 		aiLastHit = false;
-		playerTurn = false; //before the ships are placed the playerturn is false
+		playerTurn = false; //before the ships are placed it's not the player's turn
 		//player.placeShips(); milstolpe 2
 		ai.placeShips();
+		playerTurn = true;
 	}
 
 	/**
@@ -81,6 +82,10 @@ public class GameEngine {
 			resetGame();	// If the game is not over but the menu option for a New Game has been chosen, then the win/lose messages won't be displayed.
 	}
 	
+	/**
+	 * Test method. Not going to be accessible by a normal player
+	 * @param gameOverState True means the player has won, false that it hasn't
+	 */
 	public void testGameOver(boolean gameOverState) {
 		if(!gameOverState) {
 			gameOver = true;
@@ -107,7 +112,7 @@ public class GameEngine {
 						// This keeps the program from ever taking up too much memory
 		gui = new Gui(this);
 		player = new Human(listener);
-		ai = new AI(0,listener);
+		ai = new AI(0, player.getBattlefield(), listener);
 		newGame();
 	}
 	
