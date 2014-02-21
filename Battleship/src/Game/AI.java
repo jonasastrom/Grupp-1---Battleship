@@ -20,7 +20,7 @@ public class AI extends Player {
 	private Battlefield opponent;
 
 	private boolean DEBUG = true;
-	private boolean DEBUG_PLACE = false;
+	private boolean DEBUG_PLACE = true;
 	
 	/**
 	 * the constructor of this class
@@ -71,29 +71,29 @@ public class AI extends Player {
 						takenSpot = getBattlefield().hasShip(xValue, yValue);
 					}
 
-					if (((tempShip.getLenght() + xValue -1) <= 9) 
+					if (((tempShip.getLength() + xValue -1) <= 9) 
 							&& eastSpace(xValue + 1, yValue, tempShip)) {
-						for (int i = 0; i < tempShip.getLenght(); i++){
+						for (int i = 0; i < tempShip.getLength(); i++){
 							getBattlefield().setShip(xValue + i, yValue, tempShip);
 							lookForShip = false;
 						}
-					} else if (((tempShip.getLenght() - xValue -1) >= 0)
+					} else if (((tempShip.getLength() - xValue -1) >= 0)
 							&& westSpace(xValue - 1, yValue, tempShip)) {
-						for (int i = 0; i < tempShip.getLenght(); i++){
+						for (int i = 0; i < tempShip.getLength(); i++){
 							getBattlefield().setShip(xValue - 1, yValue, tempShip);
 							lookForShip = false;
 						}
-					} else if (((tempShip.getLenght() + yValue -1) <= 9)
+					} else if (((tempShip.getLength() + yValue -1) <= 9)
 							&& southSpace(xValue, yValue + 1, tempShip)) {
 						tempShip.rotate();
-						for (int i = 0; i < tempShip.getLenght(); i++){
+						for (int i = 0; i < tempShip.getLength(); i++){
 							getBattlefield().setShip(xValue, yValue + 1, tempShip);
 							lookForShip = false;
 						}
-					} else if ((tempShip.getLenght() - yValue -1) >= 0
+					} else if ((tempShip.getLength() - yValue -1) >= 0
 							&& northSpace(xValue, yValue - 1, tempShip)) {
 						tempShip.rotate();
-						for (int i = 0; i < tempShip.getLenght(); i++){
+						for (int i = 0; i < tempShip.getLength(); i++){
 							getBattlefield().setShip(xValue, yValue - 1, tempShip);
 							lookForShip = false;
 						}
@@ -112,7 +112,7 @@ public class AI extends Player {
 		while (iter.hasNext()) {
 			Ship boat = iter.next();
 			
-				for (int y = 0; y < boat.getLenght(); y++) {
+				for (int y = 0; y < boat.getLength(); y++) {
 					getBattlefield().setShip(x, y, boat);
 				}
 			// Go to next row
@@ -164,7 +164,7 @@ public class AI extends Player {
 				Collections.shuffle(directions, rng);
 				Iterator<String> dirIter = directions.iterator();
 				
-				while (dirIter.hasNext()) {
+				while (dirIter.hasNext() && placingShip) {
 					// Grab the next direction to test
 					String direction = dirIter.next();
 					
@@ -173,7 +173,7 @@ public class AI extends Player {
 						// Do stuff to test if the chosen direction is open
 						if (southSpace(xCoord, yCoord, boat)) {
 							// Then actually place the ship in that direction
-							for (int i = 0; i < boat.getLenght(); i++) {
+							for (int i = 0; i < boat.getLength(); i++) {
 								// Place ship at yCoord + loop-control to place
 								getBattlefield().setShip(xCoord,
 														 yCoord + i, boat);
@@ -184,7 +184,7 @@ public class AI extends Player {
 						break;
 					case "up":
 						if (northSpace(xCoord, yCoord, boat)) {
-							for (int i = 0; i < boat.getLenght(); i++) {
+							for (int i = 0; i < boat.getLength(); i++) {
 								getBattlefield().setShip(xCoord, 
 														 yCoord - i, boat);
 							}
@@ -193,7 +193,7 @@ public class AI extends Player {
 						break;
 					case "left":
 						if (westSpace(xCoord, yCoord, boat)) {
-							for (int i = 0; i < boat.getLenght(); i++) {
+							for (int i = 0; i < boat.getLength(); i++) {
 								getBattlefield().setShip(xCoord - i,
 														 yCoord, boat);
 							}
@@ -202,7 +202,7 @@ public class AI extends Player {
 						break;
 					case "right":
 						if (eastSpace(xCoord, yCoord, boat)) {
-							for (int i = 0; i < boat.getLenght(); i++) {
+							for (int i = 0; i < boat.getLength(); i++) {
 								getBattlefield().setShip(xCoord + i,
 														 yCoord, boat);
 							}
@@ -228,7 +228,7 @@ public class AI extends Player {
 	 * @return false
 	 */
 	private boolean eastSpace(int xValue, int yValue, Ship ship) {
-		int shipLength = ship.getLenght();
+		int shipLength = ship.getLength();
 
 		if ((shipLength + xValue - 1) > 9)
 			return false;
@@ -241,7 +241,7 @@ public class AI extends Player {
 		
 		/*int counter = 1;
 		// ships length
-		while (!takenNeighbour && counter < ship.getLenght()) {
+		while (!takenNeighbour && counter < ship.getLength()) {
 			System.out.println("Placing " + ship.getName());
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			xValue++;
@@ -250,7 +250,7 @@ public class AI extends Player {
 	}
 
 	private boolean southSpace(int xValue, int yValue, Ship ship) {
-		int shipLength = ship.getLenght();
+		int shipLength = ship.getLength();
 
 		if ((shipLength + yValue - 1) > 9)
 			return false;
@@ -262,7 +262,7 @@ public class AI extends Player {
 		/*
 		boolean takenNeighbour = false;
 		int counter = 1;
-		while (!takenNeighbour && counter < ship.getLenght()) {
+		while (!takenNeighbour && counter < ship.getLength()) {
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			yValue++;
 			counter++;
@@ -271,9 +271,9 @@ public class AI extends Player {
 	}
 
 	private boolean westSpace(int xValue, int yValue, Ship ship) {
-		int shipLength = ship.getLenght();
+		int shipLength = ship.getLength();
 
-		if ((xValue-shipLength + 1) < -1)
+		if ((xValue-shipLength + 1) < 0)
 			return false;
 		for (int i=0; i<shipLength; i++){
 			if(getBattlefield().hasShip(xValue-i, yValue))
@@ -282,7 +282,7 @@ public class AI extends Player {
 		return true;
 		/*boolean takenNeighbour = false;
 		int counter = 1;
-		while (!takenNeighbour && counter < ship.getLenght()) {
+		while (!takenNeighbour && counter < ship.getLength()) {
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			xValue--;
 			counter++;
@@ -291,9 +291,9 @@ public class AI extends Player {
 	}
 
 	private boolean northSpace(int xValue, int yValue, Ship ship) {
-		int shipLength = ship.getLenght();
+		int shipLength = ship.getLength();
 
-		if ((yValue-shipLength + 1) < -1)
+		if ((yValue-shipLength + 1) < 0)
 			return false;
 		for (int i=0; i<shipLength; i++){
 			if(getBattlefield().hasShip(xValue, yValue-i))
@@ -302,7 +302,7 @@ public class AI extends Player {
 		return true;
 		/*boolean takenNeighbour = false;
 		int counter = 1;
-		while (!takenNeighbour && counter < ship.getLenght()) {
+		while (!takenNeighbour && counter < ship.getLength()) {
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			yValue--;
 			counter++;
