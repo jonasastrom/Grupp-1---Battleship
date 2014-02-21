@@ -51,14 +51,20 @@ public class GameEngine {
 	 *  and making the players place their ships.
 	 */
 	public void newGame() {
+		playerTurn = false; // before the ships are placed it's not the player's
+							// turn
 		gameOver = false;
 		winPlayer = false;
 		playerLastHit = false;
 		aiLastHit = false;
-		playerTurn = false; //before the ships are placed it's not the player's turn
-		//player.placeShips(); milstolpe 2
+		// player.placeShips(); milstolpe 2
 		ai.placeShips();
-		playerTurn = true;
+		try {
+			Thread.sleep(20);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		playerTurn = true; 
 	}
 
 	/**
@@ -116,6 +122,7 @@ public class GameEngine {
 			}
 		}
 		System.out.println("Splash");
+		gui.changeInformationText("CHEATER!!!!!11!!1!!!");
 	}
 	
 	/**
@@ -154,6 +161,8 @@ public class GameEngine {
 		playerTurn = false;			// Player's turn is over
 		System.out.println("Coordinates called");
 		playerLastHit = ai.bomb(x, y);
+		if(playerLastHit){gui.changeInformationText("You Hit!");}
+		else{gui.changeInformationText("You Missed!");}
 		if (!ai.hasShips()) {
 			winPlayer = true;
 			gameOver = true;
@@ -161,6 +170,8 @@ public class GameEngine {
 		}
 	/*	int[] aiAttack = ai.attack(aiLastHit);
 		aiLastHit = player.bomb(aiAttack[0], aiAttack[1]);
+		if(aiLastHit){gui.changeInformationText("Admiral Akbar Hit!");}
+		else{gui.changeInformationText("Admiral Akbar Missed!");}
 		if (!player.hasShips()) {
 			winPlayer = false;
 			gameOver = true;
