@@ -84,6 +84,7 @@ public class GameEngine {
 	
 	/**
 	 * Test method. Not going to be accessible by a normal player
+	 * This pops up a a game over screen where the player has won or lost
 	 * @param gameOverState True means the player has won, false that it hasn't
 	 */
 	public void testGameOver(boolean gameOverState) {
@@ -97,6 +98,18 @@ public class GameEngine {
 			winPlayer = true;
 			gameOver();
 		}
+	}
+	/**
+	 * Test method. Not going to be accessible by normal players
+	 * This bombs every single square on the battlefield
+	 */
+	public void testNuke() {
+		for(int x = 0 ; x < 10 ; x++) {
+			for(int y = 0 ; y < 10 ; y++) {
+				ai.bomb(x, y);
+			}
+		}
+		System.out.println("Nuke deployed");
 	}
 	
 	/**
