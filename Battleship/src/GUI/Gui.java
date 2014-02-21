@@ -38,7 +38,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	private ArrayList<Zone> leftZoneArray = new ArrayList<Zone>();
 	private ArrayList<Zone> rightZoneArray = new ArrayList<Zone>();
 	private GameEngine gameEngine;
-	private int[] ship = null;
+	private ArrayList<String> ship = new ArrayList<String>();
+	private int sizeOnShip = 0;
 
 	/**
 	 *  Constructor
@@ -268,7 +269,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	/**
 	 * When this method gets called, set the string to the bottom of the frame
 	 */
-	public void changeInformatioText(String string){
+	public void changeInformationText(String string){
 		informatioText.setText(string);
 	}
 
@@ -331,41 +332,52 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() == insane){
 			System.out.println("insane");
 		}else if(e.getSource() instanceof Zone){
-			if( ship != null){
-				System.out.println("apa");
-				ship = null;
-			}
-			//			if( GameEngine.isPlayerTurn() == true){
 			Zone tempZone = (Zone) e.getSource();
-			tempZone.setEnabled(false);
-			gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
-			//			}
+			if( sizeOnShip != 0){
+				ship.add(tempZone.name);
+				sizeOnShip = sizeOnShip - 1;
+				if(sizeOnShip == 0){
+					for(int i = 0; i < ship.size(); i++){
+						System.out.println(ship.get(i));
+					}
+				}
+			}
+			if( GameEngine.isPlayerTurn() == true){
+				
+				tempZone.setEnabled(false);
+				gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
+			}
 		}else if(e.getSource() == carrier){
-			ship = new int[5];
+			ship.add("carrier");
+			sizeOnShip = 5;
 			battleship.setEnabled(false);
 			submarine.setEnabled(false);
 			cruiser.setEnabled(false);
 			destroyer.setEnabled(false);
 		}else if(e.getSource() == battleship){
-			ship = new int[4];
+			ship.add("battleship");
+			sizeOnShip = 4;
 			carrier.setEnabled(false);
 			submarine.setEnabled(false);
 			cruiser.setEnabled(false);
 			destroyer.setEnabled(false);
 		}else if(e.getSource() == submarine){
-			ship = new int[3];
+			ship.add("submarine");
+			sizeOnShip = 3;
 			carrier.setEnabled(false);
 			battleship.setEnabled(false);
 			cruiser.setEnabled(false);
 			destroyer.setEnabled(false);
 		}else if(e.getSource() == cruiser){
-			ship = new int[3];
+			ship.add("cruiser");
+			sizeOnShip = 3;
 			carrier.setEnabled(false);
 			battleship.setEnabled(false);
 			submarine.setEnabled(false);
 			destroyer.setEnabled(false);
 		}else if(e.getSource() == destroyer){
-			ship = new int[2];
+			ship.add("destroyer");
+			sizeOnShip = 2;
 			carrier.setEnabled(false);
 			battleship.setEnabled(false);
 			submarine.setEnabled(false);
