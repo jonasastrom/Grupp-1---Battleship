@@ -64,7 +64,7 @@ public class GameEngine {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		playerTurn = true;
+		playerTurn = true; 
 	}
 
 	/**
