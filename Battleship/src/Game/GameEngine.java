@@ -104,9 +104,15 @@ public class GameEngine {
 	 * This bombs every single square on the battlefield
 	 */
 	public void testNuke() {
+
 		for(int x = 0 ; x < 10 ; x++) {
 			for(int y = 0 ; y < 10 ; y++) {
 				ai.bomb(x, y);
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		System.out.println("Nuke deployed");
