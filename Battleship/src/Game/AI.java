@@ -118,7 +118,7 @@ public class AI extends Player {
 	 * Proposed method for randomly placing ships
 	 * Work in progress
 	 */
-	public void placeShipsProposed(() {
+	public void placeShipsProposed() {
 		Random rng = new Random();
 		
 		// Get a list of all the ships to place
