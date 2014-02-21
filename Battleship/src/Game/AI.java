@@ -19,6 +19,8 @@ public class AI extends Player {
 	private boolean search;
 	private Battlefield opponent;
 
+	private boolean DEBUG = true;
+	
 	/**
 	 * the constructor of this class
 	 * 
@@ -43,53 +45,103 @@ public class AI extends Player {
 	 * 
 	 */
 	public void placeShips() {
-		ArrayList<Ship> array = getFleet().getShips();
-		Iterator<Ship> it = array.iterator();
-		Random random = new Random();
-		boolean takenSpot = true;
-		boolean lookForShip = true;
-		int xValue = 0;
-		int yValue = 0;
+		if (DEBUG)
+			placeShipsHardcoded();
+		else {
+			ArrayList<Ship> array = getFleet().getShips();
+			Iterator<Ship> it = array.iterator();
+			Random random = new Random();
+			int xValue = 0;
+			int yValue = 0;
 
-		while (it.hasNext()) { // as long as there is another ship
-			Ship tempShip = (Ship) it.next();
-			lookForShip = true;
-			takenSpot = true;
+			while (it.hasNext()) { // as long as there is another ship
+				Ship tempShip = (Ship) it.next();
+				boolean lookForShip = true;
+				boolean takenSpot = true;
+
+				while (lookForShip) {
+					while (takenSpot) {
+						xValue = random.nextInt(10);
+						yValue = random.nextInt(10);
+						System.out.println(xValue + ", " + yValue);
+						takenSpot = getBattlefield().hasShip(xValue, yValue);
+					}
+
+					if (((tempShip.getLenght() + xValue -1) <= 9) 
+							&& eastSpace(xValue + 1, yValue, tempShip)) {
+						for (int i = 0; i < tempShip.getLenght(); i++){
+							getBattlefield().setShip(xValue + i, yValue, tempShip);
+							lookForShip = false;
+						}
+					} else if (((tempShip.getLenght() - xValue -1) >= 0)
+							&& westSpace(xValue - 1, yValue, tempShip)) {
+						for (int i = 0; i < tempShip.getLenght(); i++){
+							getBattlefield().setShip(xValue - 1, yValue, tempShip);
+							lookForShip = false;
+						}
+					} else if (((tempShip.getLenght() + yValue -1) <= 9)
+							&& southSpace(xValue, yValue + 1, tempShip)) {
+						tempShip.rotate();
+						for (int i = 0; i < tempShip.getLenght(); i++){
+							getBattlefield().setShip(xValue, yValue + 1, tempShip);
+							lookForShip = false;
+						}
+					} else if ((tempShip.getLenght() - yValue -1) >= 0
+							&& northSpace(xValue, yValue - 1, tempShip)) {
+						tempShip.rotate();
+						for (int i = 0; i < tempShip.getLenght(); i++){
+							getBattlefield().setShip(xValue, yValue - 1, tempShip);
+							lookForShip = false;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Used for debugging
+	 */
+	public void placeShipsHardcoded() {
+		Iterator<Ship> iter = getFleet().getShips().iterator();
+		while (iter.hasNext()) {
+			Ship boat = iter.next();
+			for (int x = 0; x < 5; x++) {
+				for (int y = 0; y < boat.getLenght(); y++) {
+					getBattlefield().setShip(x, y, boat);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Proposed method for randomly placing ships
+	 * Work in progress
+	 */
+	public void placeShipsProposed(() {
+		Random rng = new Random();
+		
+		// Get a list of all the ships to place
+		Iterator<Ship> ships = getFleet().getShips().iterator();
+		
+		while (ships.hasNext()) {
+			Ship boat = ships.next();
 			
-			while (lookForShip) {
-				while (takenSpot) {
-					xValue = random.nextInt(10);
-					yValue = random.nextInt(10);
-					System.out.println(xValue + ", " + yValue);
-					takenSpot = getBattlefield().hasShip(xValue, yValue);
+			// We have not yet placed this ship
+			boolean placingShip = true;
+			
+			while (placingShip) {
+				boolean headTaken = true;
+				int xCoord = 0;
+				int yCoord = 0;
+				
+				// Test to see if starting coordinates are taken
+				while (headTaken) {
+					xCoord = rng.nextInt(10);
+					yCoord = rng.nextInt(10);
+					headTaken = getBattlefield().hasShip(xCoord, yCoord);
 				}
-
-				if (((tempShip.getLenght() + xValue -1) <= 9) && eastSpace(xValue + 1, yValue, tempShip)) {
-					for (int i = 0; i < tempShip.getLenght(); i++){
-						getBattlefield().setShip(xValue + i, yValue, tempShip);
-						lookForShip = false;
-					}
-				} else if (((tempShip.getLenght() - xValue -1) >= 0)
-						&& westSpace(xValue - 1, yValue, tempShip)) {
-					for (int i = 0; i < tempShip.getLenght(); i++){
-						getBattlefield().setShip(xValue - 1, yValue, tempShip);
-						lookForShip = false;
-					}
-				} else if (((tempShip.getLenght() + yValue -1) <= 9)
-						&& southSpace(xValue, yValue + 1, tempShip)) {
-					tempShip.rotate();
-					for (int i = 0; i < tempShip.getLenght(); i++){
-						getBattlefield().setShip(xValue, yValue + 1, tempShip);
-						lookForShip = false;
-					}
-				} else if ((tempShip.getLenght() - yValue -1) >= 0
-						&& northSpace(xValue, yValue - 1, tempShip)) {
-					tempShip.rotate();
-					for (int i = 0; i < tempShip.getLenght(); i++){
-						getBattlefield().setShip(xValue, yValue - 1, tempShip);
-						lookForShip = false;
-					}
-				}
+				
 			}
 		}
 	}
@@ -107,6 +159,7 @@ public class AI extends Player {
 		int counter = 1;
 		// ships length
 		while (!takenNeighbour && counter < ship.getLenght()) {
+			System.out.println("Placing " + ship.getName());
 			takenNeighbour = getBattlefield().hasShip(xValue, yValue);
 			xValue++;
 			counter++;
@@ -173,7 +226,8 @@ public class AI extends Player {
 				hits.remove();
 			}
 		} else if (difficulties == 5) {
-			// Kommer bara skjuta där det garanterat finns skepp
+			// Will only shoot where a hit is guaranteed. This looks as if it 
+			// will require access to opponents battlefield.
 		} else {
 			// Gameengine should never do anything with these
 			target[0] = 0;
