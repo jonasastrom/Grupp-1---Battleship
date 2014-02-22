@@ -58,20 +58,29 @@ public class Human extends Player
 			if(x[0] == x[i]){
 				for(int j = 0; j <= length; j++){
 					if(y[j]+1 == y[j+1]){
-						return true;
+						for (int k = 0; k < 10; k++) {	
+							for (int l = 0; l < 10; l++) {
+								getBattlefield().setShip(k,l,shipTMP);
+								return true;
+							}
+
+						}
 					}
-
 				}
-
 			}
 			if(y[0] == y[i]){
 				for(int k = 1; k <= length; k++){
 					if(x[k] == x[k+1]+1){
-						return true;
+						for (int r = 0; r < 10; r++) {	
+							for (int p = 0; p < 10; p++) {
+								getBattlefield().setShip(r,p,shipTMP);
+								return true;
+							}
+
+						}
+
 					}
-
 				}
-
 			}
 		}
 		return false;
