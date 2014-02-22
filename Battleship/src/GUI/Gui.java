@@ -53,7 +53,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 *  This method creates the frame for the GUI.
 	 */
 	private void makeGUIFrame(){
-		setTitle("BattleShip");
+		setTitle("Battleship");
 		setLayout(new BorderLayout(10, 10));
 		/**
 		 *  Add the buttons to the left in the frame
