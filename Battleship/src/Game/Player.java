@@ -4,7 +4,7 @@ package Game;
  * The base class for all players
  * 
  * @author Group 1 - DAT055 2014
- * @version 1.0
+ * @version 2.0
  */
 public abstract class Player
 {
@@ -21,7 +21,8 @@ public abstract class Player
 	}
 
 	/**
-	 * TODO in 2.0
+	 * Called in the beginning of the game when
+	 * the player should place it's ships
 	 */
 	public abstract void placeShips();
 
