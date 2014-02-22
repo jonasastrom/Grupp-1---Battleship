@@ -1,5 +1,4 @@
-package Game;
-
+package game;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,8 +9,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import GUI.Gui;
+import gui.Gui;
 
+/**
+ * class GameEngine
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 2.0
+ */
 @SuppressWarnings("unused")		// Because yellow lines are annoying
 public class GameEngine {
 	private static Gui gui;

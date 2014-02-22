@@ -1,7 +1,13 @@
-package Game;
+package game;
 
 import java.util.ArrayList;
 
+/**
+ * class HighScore
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 3.0
+ */
 public class HighScore {
 	ArrayList<Score> highScore;
 	

@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -23,11 +23,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import Game.GameEngine;
+import game.GameEngine;
+import game.ZoneLink;
+import game.ZoneListener;
 
 /**
  * This class creates the GUI.
- * @author Grupp 1
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 2.0
  */
 public class Gui extends JFrame implements ActionListener, Observer {
 
@@ -390,22 +394,22 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 */
 	@Override
 	public void update(Observable observable, Object object) {
-		if( observable instanceof Game.ZoneListener && object instanceof Game.ZoneLink){
+		if( observable instanceof ZoneListener && object instanceof ZoneLink){
 			Zone zone = null;
-			if(Game.ZoneLink.leftOrRight.equals("right")){
-				zone = rightZoneArray.get(((Game.ZoneLink.y) * 10) + Game.ZoneLink.x);
-			}else if(Game.ZoneLink.leftOrRight.equals("left")){
-				zone = leftZoneArray.get(((Game.ZoneLink.y) * 10) + Game.ZoneLink.x);
+			if(ZoneLink.leftOrRight.equals("right")){
+				zone = rightZoneArray.get(((ZoneLink.y) * 10) + ZoneLink.x);
+			}else if(ZoneLink.leftOrRight.equals("left")){
+				zone = leftZoneArray.get(((ZoneLink.y) * 10) + ZoneLink.x);
 			}
 			// TESTA ATT SKICKA MED EN RIKTING SOM INTE ÄR RIGHT ELLER LEFT! och en som inte är miss hit sunk ship
 			try{
-				if(Game.ZoneLink.state.equals("miss")){
+				if(ZoneLink.state.equals("miss")){
 					zone.changeColor(Color.GRAY);
-				}else if(Game.ZoneLink.state.equals("hit")){
+				}else if(ZoneLink.state.equals("hit")){
 					zone.changeColor(Color.GREEN);
-				}else if(Game.ZoneLink.state.equals("sunk")){
+				}else if(ZoneLink.state.equals("sunk")){
 					zone.changeColor(new Color(222, 49, 99));
-				}else if(Game.ZoneLink.state.equals("ship")){
+				}else if(ZoneLink.state.equals("ship")){
 					zone.changeColor(Color.BLACK);
 				}
 			}catch (NullPointerException e){

@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 /**
  * Handles the battlefield for a player

@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,9 +8,10 @@ import java.util.Random;
 import java.util.ListIterator;
 
 /**
+ * class AI
  * 
- * @author Grupp 1
- * 
+ * @author Group 1 - DAT055 2014
+ * @version 2.0
  */
 public class AI extends Player {
 	int difficulties;

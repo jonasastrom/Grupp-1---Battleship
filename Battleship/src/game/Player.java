@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 /**
  * The base class for all players
