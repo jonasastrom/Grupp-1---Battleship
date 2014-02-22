@@ -47,11 +47,9 @@ public class Battlefield
 	 */
 	public boolean setBomb(int x, int y)
 	{	
-		if(zones[x][y].setBomb()) {
+		if (zones[x][y].setBomb()) {
 			Ship ship = zones[x][y].getShip();
-			if (ship.isSunk()) {
-				sinkShip(ship);
-			}
+			if (ship.isSunk()) sinkShip(ship);
 			return true;
 		}
 		return false;
@@ -67,11 +65,10 @@ public class Battlefield
 	 */
 	public boolean hasShip(int x, int y)
 	{
-		Zone zoneTMP = zones[x][y];
-		///////////////////////////
-		System.out.println("xCoord.Battleship="+x+" yCoord.Battleship="+y);
-		///////////////////////////
-		return zoneTMP.hasShip();
+		// Debug
+		System.out.println("Battlefield.hasShip: "+x+","+y+" (x,y)");
+
+		return zones[x][y].hasShip();
 	}
 
 	/**
@@ -93,22 +90,22 @@ public class Battlefield
 	 */
 	public void setShip(int x, int y, Ship ship)
 	{
-		///////////////////////////
-		System.out.println("Set ship");
-		///////////////////////////
+		// Debug
+		System.out.println("Battlefield.setShip: "+x+","+y+" (x,y)");
+
 		zones[x][y].setShip(ship);
 	}
 
 	/**
-	 * 
+	 * Sink a ship on the battlefield
+	 * @param ship The ship that shall be sunk
 	 */
 	public void sinkShip(Ship ship)
 	{
-		for (Zone[] zones2 : zones) {
-			for (Zone zone : zones2) {
-				if (zone.getShip() == ship) {
+		for (Zone[] array : zones) {
+			for (Zone zone : array) {
+				if (zone.getShip() == ship)
 					zone.setSunk();
-				}
 			}
 		}
 	}
