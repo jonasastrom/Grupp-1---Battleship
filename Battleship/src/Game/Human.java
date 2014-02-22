@@ -6,10 +6,11 @@ import java.util.Iterator;
  * Handles the human player
  * 
  * @author Group 1 - DAT055 2014
- * @version 1.0
+ * @version 2.0
  */
 public class Human extends Player
 {
+	private Battlefield battlefield;
 	private Fleet fleet;
 
 	/**
@@ -18,67 +19,72 @@ public class Human extends Player
 	public Human(ZoneListener zoneListener)
 	{
 		super("human", zoneListener);
+		battlefield = getBattlefield();
 		fleet = getFleet();
 	}
 
 	/**
-	 * TODO in 2.0
+	 * Called by the GameEngine when
+	 * this player should place it's ships
 	 */
 	public void placeShips()
 	{
 		while (!fleet.isPlaced()) {
-			//wait
+			// Sleep for 1 second
+			try { Thread.sleep(1000); }
+			catch (InterruptedException e) {}
 		}
 	}
 
 	/**
-	 * 
-	 * @param shipInfo
-	 * @throws Exception
-	 * @return True is boat placement is valid
+	 * Called by the GUI when a ship has been
+	 * placed on the battlefield
+	 * @param name The name of the ship
+	 * @param x An array with all x-coordinates
+	 * @param y An array with all y-coordinates
+	 * @return true if the placement is valid,
+	 *         false otherwise
 	 */
-	public boolean placeShips(String name, int[] x, int[] y) throws Exception
+	public boolean placeShip(String name, int[] x, int[] y)
 	{
 		Iterator<Ship> it = fleet.getShips().iterator();
-		Ship shipTMP = null;
+		Ship ship = null;
 
-		while(it.hasNext()){
-			shipTMP = it.next();
-			if(shipTMP.getName().equals(name)){	
-				break;
-			}
+		while (it.hasNext()){
+			ship = it.next();
+			if (ship.getName().equals(name)) break;
 		}
-		if(shipTMP == null){throw new Exception(); }
 
-		int length = shipTMP.getLength();
+		int length = ship.getLength();
 
-		if(x.length != y.length || x.length != length) throw new Exception();
+		// Throw an exception if the provided coordinates
+		// doesn't match the length of the ship
+		if (x.length != length || y.length != length) {
+			throw new IllegalArgumentException();
+		}
 
-		for(int i = 1; i <= length; i++){
-			if(x[0] == x[i]){
-				for(int j = 0; j <= length; j++){
-					if(y[j]+1 == y[j+1]){
+		for (int i = 1; i <= length; i++) {
+			if (x[0] == x[i]) {
+				for (int j = 0; j <= length; j++) {
+					if (y[j]+1 == y[j+1]) {
 						for (int k = 0; k < 10; k++) {	
 							for (int l = 0; l < 10; l++) {
-								getBattlefield().setShip(k,l,shipTMP);
+								battlefield.setShip(k,l,ship);
 								return true;
 							}
-
 						}
 					}
 				}
 			}
-			if(y[0] == y[i]){
-				for(int k = 1; k <= length; k++){
-					if(x[k] == x[k+1]+1){
-						for (int r = 0; r < 10; r++) {	
-							for (int p = 0; p < 10; p++) {
-								getBattlefield().setShip(r,p,shipTMP);
+			if (y[0] == y[i]) {
+				for (int j = 1; j <= length; j++) {
+					if (x[j] == x[j+1]+1) {
+						for (int k = 0; k < 10; k++) {	
+							for (int l = 0; l < 10; l++) {
+								battlefield.setShip(k,l,ship);
 								return true;
 							}
-
 						}
-
 					}
 				}
 			}
@@ -86,4 +92,3 @@ public class Human extends Player
 		return false;
 	}
 }
-
