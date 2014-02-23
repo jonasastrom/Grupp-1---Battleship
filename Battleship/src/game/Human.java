@@ -71,9 +71,9 @@ public class Human extends Player
 						for (int k = 0; k < 10; k++) {	
 							for (int l = 0; l < 10; l++) {
 								battlefield.setShip(k,l,ship);
-								tmp = true;
 							}
 						}
+						tmp = true;
 					}
 				}
 			}
@@ -83,9 +83,9 @@ public class Human extends Player
 						for (int k = 0; k < 10; k++) {	
 							for (int l = 0; l < 10; l++) {
 								battlefield.setShip(k,l,ship);
-								tmp = true;
 							}
 						}
+						tmp = true;
 					}
 				}
 			}
