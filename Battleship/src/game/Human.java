@@ -49,6 +49,7 @@ public class Human extends Player
 	{
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
+		boolean tmp = false;
 
 		while (it.hasNext()){
 			ship = it.next();
@@ -70,7 +71,7 @@ public class Human extends Player
 						for (int k = 0; k < 10; k++) {	
 							for (int l = 0; l < 10; l++) {
 								battlefield.setShip(k,l,ship);
-								return true;
+								tmp = true;
 							}
 						}
 					}
@@ -82,13 +83,14 @@ public class Human extends Player
 						for (int k = 0; k < 10; k++) {	
 							for (int l = 0; l < 10; l++) {
 								battlefield.setShip(k,l,ship);
-								return true;
+								tmp = true;
 							}
 						}
 					}
 				}
 			}
 		}
-		return false;
+		if(tmp){return true;}
+		else {return false;}
 	}
 }
