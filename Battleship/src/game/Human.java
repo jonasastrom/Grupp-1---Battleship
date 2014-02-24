@@ -112,7 +112,7 @@ public class Human extends Player
 		}
 
 		for (int i = 0; i < length-1; i++) {
-			if (c[i]+1 != c[i+1]){
+			if (c[i]+1 == c[i+1]){
 				System.out.println("error = true");
 				error = true;}
 		}
