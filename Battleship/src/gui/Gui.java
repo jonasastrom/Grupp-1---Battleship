@@ -438,7 +438,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 					zone.changeColor(new Color(222, 49, 99));
 				}else if(ZoneLink.state.equals("ship")){
 					zone.changeColor(Color.BLACK);
-				}else if(Game.ZoneLink.state.equals("sea")){
+				}else if(game.ZoneLink.state.equals("sea")){
 					zone.changeColor(Color.BLUE);
 				}
 			}catch (NullPointerException e){
