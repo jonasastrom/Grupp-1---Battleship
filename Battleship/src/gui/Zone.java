@@ -12,6 +12,7 @@ import javax.swing.JButton;
  */
 public class Zone extends JButton{
 
+	private static final long serialVersionUID = -4145708944665750892L;
 	public final int x, y;
 	public final String name;
 
