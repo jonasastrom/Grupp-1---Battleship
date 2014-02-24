@@ -50,6 +50,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	private ArrayList<String> zoneName = new ArrayList<String>();
 	private GameEngine gameEngine;
 	private Human human;
+	private ButtonGroup buttonGroup;
 	private Fleet fleet;
 	private String ship;
 	private int sizeOnShip = 0;
@@ -77,7 +78,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		/**
 		 *  Add the buttons to the left in the frame, add them in a group of button, and add actionListeners
 		 */
-		ButtonGroup buttonGroup = new ButtonGroup();
+		buttonGroup = new ButtonGroup();
 
 		carrier = new JRadioButton("Carrier 5 Rutor");
 		battleship = new JRadioButton("Battleship 4 Rutor");
@@ -406,23 +407,26 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				 * then call human.placeShip with the selected zones. If all ships are done, start the game.
 				 */
 				if(sizeOnShip == 0){
+					buttonGroup.clearSelection();
 					for(int j = 0; j < x.length; j++){
 						System.out.print(zoneName.get(j) + " ");
 						System.out.print(x[j] + " ");
 						System.out.println(y[j] + "");
 					}
 					human.placeShip(ship, x, y);
-					
+
 					for(int i = 0; i < shipArray.size(); i++){
 						Ship ship = shipArray.get(i);
 						if(ship.isPlaced() == false){
 							jRadioButtonArray.get(i).setEnabled(true);
 						}
-						if(fleet.isPlaced()){
-							changeBattlefield();
-							// gameEngine.setPlayerTurn();
-						}
 					}
+
+					if(fleet.isPlaced()){
+						changeBattlefield();
+						gameEngine.setPlayerTurn();
+					}
+
 					sizeOnShip = 0;
 					x = null;
 					y = null;
