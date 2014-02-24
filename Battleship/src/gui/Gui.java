@@ -23,8 +23,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import game.Fleet;
 import game.GameEngine;
 import game.Human;
+import game.Ship;
 import game.ZoneLink;
 import game.ZoneListener;
 
@@ -42,6 +44,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	private ArrayList<String> letters = new ArrayList<String>();
 	private ArrayList<Zone> leftZoneArray = new ArrayList<Zone>();
 	private ArrayList<Zone> rightZoneArray = new ArrayList<Zone>();
+	private ArrayList<Ship> shipArray = new ArrayList<Ship>();
+	private ArrayList<JRadioButton> jRadioButtonArray = new ArrayList<JRadioButton>();
+	private ArrayList<String> zoneName = new ArrayList<String>();
 	private GameEngine gameEngine;
 	private Human player;
 	private String ship;
@@ -55,7 +60,15 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	public Gui(GameEngine gameEngine, Human player){
 		this.gameEngine = gameEngine;
 		this.player = player;
+		Fleet fleet = player.getFleet();
+		shipArray = fleet.getShips();
 		makeGUIFrame();
+
+		for(int i = 0; i < shipArray.size(); i++){
+			Ship ship = shipArray.get(i);
+			System.out.println(ship.getName());
+		}
+		System.out.println("" + jRadioButtonArray.size() + shipArray.size());
 	}
 
 	/**
@@ -94,6 +107,12 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		radioButtonPanel.add(submarine);
 		radioButtonPanel.add(cruiser);
 		radioButtonPanel.add(destroyer);
+
+		jRadioButtonArray.add(carrier);
+		jRadioButtonArray.add(battleship);
+		jRadioButtonArray.add(submarine);
+		jRadioButtonArray.add(cruiser);
+		jRadioButtonArray.add(destroyer);
 
 		add(radioButtonPanel, BorderLayout.WEST);
 
@@ -162,6 +181,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				zone = new Zone(j, i, name + i);
 				leftGamePanel.add(zone);
 				zone.addActionListener(this);
+				zone.setEnabled(false);
 				if((i * j) != 0 ){
 					leftZoneArray.add(zone);
 				}
@@ -174,7 +194,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				String name = letters.get(l);
 				zone = new Zone(l, k, name + k);
 				rightGamePanel.add(zone);
-				zone.setEnabled(false);
+				zone.addActionListener(this);
 				if((k * l) != 0 ){
 					rightZoneArray.add(zone);
 				}
@@ -267,6 +287,16 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	}
 
 	/**
+	 * Change battlefield so the left one becomes click-able and the right one dont get clickable
+	 */
+	private void changeBattlefield(){
+		for(int i = 0; i < 100; i++){
+			leftZoneArray.get(i).setEnabled(true);
+			rightZoneArray.get(i).setEnabled(false);
+		}
+	}
+
+	/**
 	 * Show an input dialog where the user can select a difficulty
 	 */
 	public int selectDifficultyWIndow(){
@@ -345,24 +375,35 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() instanceof Zone){
 			Zone tempZone = (Zone) e.getSource();
 			if( sizeOnShip != 0){
+				tempZone.changeColor(Color.BLACK);
 				tempZone.setEnabled(false);
+				zoneName.add(tempZone.name);
 				sizeOnShip = sizeOnShip - 1;
 				x[sizeOnShip] = tempZone.x - 1;
 				y[sizeOnShip] = tempZone.y - 1;
-				
+
 				if(sizeOnShip == 0){
-					// ship.skicka iväg det till n¨ågon
-					for(int i = 0; i < 5; i++){
-						System.out.print("" + x[i]);
-						System.out.println("" + y[i]);
+					// ship.skicka iväg det till någon
+					for(int j = 0; j < x.length; j++){
+						System.out.print(zoneName.get(j) + " ");
+						System.out.print(x[j] + " ");
+						System.out.println(y[j] + "");
 					}
-					if(placeShips(ship, x, y) == false){
-						// Sätt de kordinaterna från x[] och y[] tillbaka till blåa och göra de klickbara igen
+					//player.placeShip(ship, x, y);
+
+					for(int i = 0; i < shipArray.size(); i++){
+						Ship ship = shipArray.get(i);
+						if(ship.isPlaced() == false){
+							jRadioButtonArray.get(i).setEnabled(true);
+						}
 					}
+					sizeOnShip = 0;
+					x = null;
+					y = null;
+					// Nollställ alla variabler och call changeBattlefield();
 				}
 			}
 			if( GameEngine.isPlayerTurn() == true){
-
 				tempZone.setEnabled(false);
 				gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
 			}
@@ -443,6 +484,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 					zone.changeColor(Color.BLACK);
 				}else if(game.ZoneLink.state.equals("sea")){
 					zone.changeColor(Color.BLUE);
+					zone.setEnabled(true);
 				}
 			}catch (NullPointerException e){
 				e.printStackTrace();
