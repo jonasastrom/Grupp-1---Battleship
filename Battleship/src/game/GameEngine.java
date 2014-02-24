@@ -35,9 +35,9 @@ public class GameEngine {
 		// Creates a new object of GUI (for creating a frame)
 		int difficulty = 0;	//0 because we don't need more difficulties for now
 		//difficulty = gui.selectDifficultyWindow()	//This actually lets you select a difficulty,when that's implemented
-		gui = new Gui(this);
 		player = new Human(listener);
-		ai = new AI(difficulty, player.getBattlefield(), listener);
+		gui = new Gui(this, player); //so gui can be able to place the boats
+		ai = new AI(difficulty, player.getBattlefield(), listener); //ai can use a isSunk bool to keep track if the fleet got sunk
 		highScore = new HighScore();
 	}
 	
