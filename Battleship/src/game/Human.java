@@ -107,7 +107,7 @@ public class Human extends Player
 			System.out.println("Human error");
 			
 			for (int i = 0; i < length; i++) {
-				battlefield.setClear(x[i],y[i]);
+				battlefield.setClear(savedX[i],savedY[i]);
 			}
 			return false;
 		}
