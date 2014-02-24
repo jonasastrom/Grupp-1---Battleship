@@ -1,5 +1,11 @@
-package Game;
+package game;
 
+/**
+ * class ZoneLink
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 1.0
+ */
 public class ZoneLink 
 {
 	public static int x;

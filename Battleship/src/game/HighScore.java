@@ -1,7 +1,13 @@
-package Game;
+package game;
 
 import java.util.ArrayList;
 
+/**
+ * class HighScore
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 3.0
+ */
 public class HighScore {
 	ArrayList<Score> highScore;
 	
@@ -9,7 +15,7 @@ public class HighScore {
 		highScore = new ArrayList<Score>();
 		highScore.add(0,new Score(10000, "Gurka"));
 		highScore.add(1,new Score(9000, "Katamaran"));
-		highScore.add(2,new Score(8000, "Apa"));
+		highScore.add(2,new Score(8000, "Bar"));
 		highScore.add(3,new Score(7000, "Katt"));
 		highScore.add(4,new Score(6000, "Ratatosk"));
 		highScore.add(5,new Score(5000, "Foo"));
@@ -18,6 +24,21 @@ public class HighScore {
 		highScore.add(8,new Score(2000, "PowerKing"));
 		highScore.add(9,new Score(-89, "Sverker"));
 	}
+	
+	/**
+	 * This compares the current high score list to anew high score list and
+	 * updated the current one with new scores if they're higher
+	 * @param newHighScore The high score list to check against
+	 */
+	public boolean compHighScore(HighScore newHighScore){
+		boolean changed = false;
+		for(Score newScore : newHighScore.getHighScoreList()) {
+			if(addScore(newScore.getPoints(), newScore.getName()))
+				changed = true;
+		}
+		return changed;
+	}
+	
 	 /**
 	  * Adds a score to the high score list if it's greater than a score
 	  * currently on the list

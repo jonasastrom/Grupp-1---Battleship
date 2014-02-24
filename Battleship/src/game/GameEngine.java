@@ -1,11 +1,22 @@
-package Game;
+package game;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
-import GUI.Gui;
-import Game.AI;
-import Game.Human;
-import Game.Player;
+import gui.Gui;
 
+/**
+ * class GameEngine
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 2.0
+ */
 @SuppressWarnings("unused")		// Because yellow lines are annoying
 public class GameEngine {
 	private static Gui gui;
@@ -180,6 +191,30 @@ public class GameEngine {
 		*/
 		playerTurn = true;			// Player's turn again
 	}
+	
+	/**
+	 * This fetches the high score from a server, updates the local one,
+	 * then uploads the new high score to the server.
+	 * If there is no high score on the server, creates one.
+	 * @param server The URL to the wanted server
+	 */
+	public void updateHighScore(String server) throws MalformedURLException, IOException {
+		boolean changed = false;
+		HighScore newHighScore = null;
+		URL url = new URL(server);
+		URLConnection connection = url.openConnection();
+		
+		DataInputStream inputStream = new DataInputStream(connection.getInputStream());
+		ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+		try {newHighScore = (HighScore) objectInputStream.readObject();} catch (ClassNotFoundException e) {}
+		if(newHighScore != null)
+			highScore.compHighScore(newHighScore);
+		inputStream.close();
+		//DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+		//ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+		
+	}
+	
 	
 	/**
 	 * Returns if it's the players turn

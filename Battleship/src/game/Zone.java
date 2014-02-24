@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 /**
  * Handles a zone
@@ -42,18 +42,14 @@ public class Zone
 	 */
 	public boolean setBomb()
 	{
-		System.out.println("setBomb innan");
 		if (hasShip) {
 			ship.hit();
 			zoneListener.update(xPos, yPos, side, "hit");
 			isBombed = true;
-			System.out.println("setBomb andra");
 			return isBombed;
 		}
 		else {
-			System.out.println("else");
 			zoneListener.update(xPos, yPos, side, "miss");
-			System.out.println("setBomb tredje");
 			return isBombed;
 		}
 	}
@@ -87,9 +83,11 @@ public class Zone
 		this.ship = ship;
 		hasShip = true;
 	}
-
+	/**
+	 * Sets the ship of the zone to be sunked
+	 */
 	public void setSunk()
 	{
 		zoneListener.update(xPos, yPos, side, "sunk");
-	}
+	}	
 }

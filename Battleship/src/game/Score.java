@@ -1,5 +1,11 @@
-package Game;
+package game;
 
+/**
+ * class Score
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 3.0
+ */
 public class Score {
 	long points;
 	String name;

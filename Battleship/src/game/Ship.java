@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 /**
  * Handles a ship
@@ -30,7 +30,7 @@ public class Ship
 	/**
 	 * Return the length of this ship
 	 */
-	public int getLenght()
+	public int getLength()
 	{
 		return length;
 	}

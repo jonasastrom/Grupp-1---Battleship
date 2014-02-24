@@ -1,7 +1,13 @@
-package Game;
+package game;
 
 import java.util.Observable;
 
+/**
+ * class ZoneListener
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 1.0
+ */
 public class ZoneListener extends Observable
 {
 

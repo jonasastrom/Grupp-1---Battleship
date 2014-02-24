@@ -1,11 +1,14 @@
-package GUI;
+package gui;
 
 import java.awt.Color;
 
 import javax.swing.JButton;
+
 /**
  * This is the class for representing the squares
- * @author Grupp 1
+ * 
+ * @author Group 1 - DAT055 2014
+ * @version 1.0
  */
 public class Zone extends JButton{
 
