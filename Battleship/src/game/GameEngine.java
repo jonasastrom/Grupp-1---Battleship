@@ -204,7 +204,7 @@ public class GameEngine {
 			gameOver();
 		}
 		*/
-		setPlayerTurn();
+		setPlayerTurn(); // is needed becuz AI's turn is over, it's time to attack AI again.. 
 	}
 	
 	/**
