@@ -50,6 +50,8 @@ public class Human extends Player
 	{
 		System.out.print("First");
 		boolean error = false;
+		int [] savedX = x;
+		int savedY[] = y;
 		
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
@@ -115,7 +117,7 @@ public class Human extends Player
 			System.out.println("Human not error");
 			
 			for (int i = 0; i < length; i++) {
-				battlefield.setShip(x[i],y[i],ship);
+				battlefield.setShip(savedX[i],savedY[i],ship);
 			}
 			
 			ship.setPlaced();
