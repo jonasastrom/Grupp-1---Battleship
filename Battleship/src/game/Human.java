@@ -70,25 +70,33 @@ public class Human extends Player
 		boolean xEquals = true;
 		for (int i = 1; i < length; i++) {
 			if (x[0] != x[i])
+				System.out.println("xEquals false");
 				xEquals = false;
 		}
 
 		boolean yEquals = true;
 		for (int i = 1; i < length; i++) {
 			if (y[0] != y[i])
+				System.out.println("Yequals false");
 				yEquals = false;
 		}
 		
-		if (!xEquals && !yEquals) error = true;
+		//if (!xEquals && !yEquals) error = true;
 
 		int[] c;
-		if (xEquals) c = x;
-		else c = y;
+		if (xEquals) c = y;
+		else c = x;
 
 		Arrays.sort(c);
+		
+		for(int k=0; k<length; k++)
+		{
+			System.out.println(""+c[k]);
+		}
 
 		for (int i = 0; i < length-1; i++) {
 			if (c[i]+1 != c[i+1])
+				System.out.println("error = true");
 				error = true;
 		}
 		
