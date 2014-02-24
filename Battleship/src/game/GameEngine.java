@@ -57,6 +57,15 @@ public class GameEngine {
 		return gui;
 	}
 		
+	
+	/**
+	 * Called by gui to say the whole fleet is now placed by the human player
+	 * The player can start attacking the enemy
+	 */
+	 public void setPlayerTurn(){
+		playerTurn = true;
+	}
+	
 	/**
 	 *  Sets a new game up by saying that the game is not over
 	 *  and making the players place their ships.
@@ -72,7 +81,7 @@ public class GameEngine {
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
 		
-		playerTurn = true; 
+		//playerTurn = true; dont think this will be needed anymore
 	}
 
 	/**
