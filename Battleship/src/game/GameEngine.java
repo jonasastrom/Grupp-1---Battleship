@@ -81,22 +81,26 @@ public class GameEngine {
 	 *  Prompt.
 	 */
 	public void gameOver() {
-		
+
 		String winText;
-		if(gameOver){	
-			if(winPlayer)
+		if (gameOver) {
+			if (winPlayer)
 				winText = "won";
-			else
+			else {
+				ai.getBattlefield().showShips();
 				winText = "lost";
-			if(gui.gameOverText(winText)) {	// gameOverText returns a boolean depending on which button got pressed
-				winText = null;				// If yes, then the game is reset and remade
-				resetGame();
 			}
-			else
-				System.exit(0);				// Else the game exits
-		}
-		else
-			resetGame();	// If the game is not over but the menu option for a New Game has been chosen, then the win/lose messages won't be displayed.
+			if (gui.gameOverText(winText)) { // gameOverText returns a boolean
+												// depending on which button got
+												// pressed
+				winText = null; // If yes, then the game is reset and remade
+				resetGame();
+			} else
+				System.exit(0); // Else the game exits
+		} else
+			resetGame(); // If the game is not over but the menu option for a
+							// New Game has been chosen, then the win/lose
+							// messages won't be displayed.
 	}
 	
 	/**
