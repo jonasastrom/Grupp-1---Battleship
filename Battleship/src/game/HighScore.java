@@ -13,8 +13,8 @@ public class HighScore {
 	
 	public HighScore() {
 		highScore = new ArrayList<Score>();
-		highScore.add(0,new Score(10000, "Gurka"));
-		highScore.add(1,new Score(9000, "Katamaran"));
+		highScore.add(0,new Score(10000, "Gurka"));		// These are only the
+		highScore.add(1,new Score(9000, "Katamaran"));	// the standard Best Players
 		highScore.add(2,new Score(8000, "Bar"));
 		highScore.add(3,new Score(7000, "Katt"));
 		highScore.add(4,new Score(6000, "Ratatosk"));
@@ -22,7 +22,7 @@ public class HighScore {
 		highScore.add(6,new Score(4000, "Knugen"));
 		highScore.add(7,new Score(3000, "Gunhild"));
 		highScore.add(8,new Score(2000, "PowerKing"));
-		highScore.add(9,new Score(-89, "Sverker"));
+		highScore.add(9,new Score(-89, "Resverk"));
 	}
 	
 	/**
@@ -31,11 +31,11 @@ public class HighScore {
 	 * @param newHighScore The high score list to check against
 	 */
 	public boolean compHighScore(HighScore newHighScore){
-		boolean changed = false;
-		for(Score newScore : newHighScore.getHighScoreList()) {
-			if(addScore(newScore.getPoints(), newScore.getName()))
-				changed = true;
-		}
+		boolean changed = false;	// Nothing has happened, therefore nothing is changed
+		for(Score newScore : newHighScore.getHighScoreList()) {		// Go through every single score in the external high score list
+			if(addScore(newScore.getPoints(), newScore.getName()))	// Treat these scores as competing scores, which automatically checks if they're better and puts them into the right place
+				changed = true;		// This only sets changed to true because if changed = addScore()
+		}							// then it could go from true to false which is very wrong
 		return changed;
 	}
 	
@@ -47,10 +47,10 @@ public class HighScore {
 	  * @return	True if the score was placed in the list
 	  */
 	public boolean addScore(long score, String name) {
-		for(Score currentScore : highScore) {
-			if(score > currentScore.getPoints()) {
-				highScore.add(highScore.indexOf(currentScore), new Score(score, name));
-				highScore.remove(10);
+		for(Score currentScore : highScore) {	// Check the high score list from the top
+			if(score > currentScore.getPoints()) {	// If the score is higher than the list's score,
+				highScore.add(highScore.indexOf(currentScore), new Score(score, name));	// then it should be inserted at the list's score's index, pushing all other scores down one step
+				highScore.remove(10); // This list keeps ten high scores, the 11th gets removed
 				return true;
 			}
 		}
