@@ -126,4 +126,12 @@ public class Battlefield
 	{
 		zones[x][y].setClear();
 	}
+
+	/**
+	 * 
+	 */
+	public Zone[][] getZones()
+	{
+		return zones;
+	}
 }
