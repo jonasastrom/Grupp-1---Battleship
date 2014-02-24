@@ -48,27 +48,22 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	private ArrayList<JRadioButton> jRadioButtonArray = new ArrayList<JRadioButton>();
 	private ArrayList<String> zoneName = new ArrayList<String>();
 	private GameEngine gameEngine;
-	private Human player;
+	private Human human;
+	private Fleet fleet;
 	private String ship;
 	private int sizeOnShip = 0;
 	private int[] x;
 	private int[] y;
 
 	/**
-	 *  Constructor
+	 *  Constructor for Gui
 	 */
-	public Gui(GameEngine gameEngine, Human player){
+	public Gui(GameEngine gameEngine, Human human){
 		this.gameEngine = gameEngine;
-		this.player = player;
-		Fleet fleet = player.getFleet();
+		this.human = human;
+		this.fleet = human.getFleet();
 		shipArray = fleet.getShips();
 		makeGUIFrame();
-
-		for(int i = 0; i < shipArray.size(); i++){
-			Ship ship = shipArray.get(i);
-			System.out.println(ship.getName());
-		}
-		System.out.println("" + jRadioButtonArray.size() + shipArray.size());
 	}
 
 	/**
@@ -79,7 +74,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		setLayout(new BorderLayout(10, 10));
 
 		/**
-		 *  Add the buttons to the left in the frame
+		 *  Add the buttons to the left in the frame, add them in a group of button, and add actionListeners
 		 */
 		ButtonGroup buttonGroup = new ButtonGroup();
 
@@ -102,6 +97,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		buttonGroup.add(destroyer);
 
 		JPanel radioButtonPanel = new JPanel(new GridLayout(0, 1));
+		
 		radioButtonPanel.add(carrier);
 		radioButtonPanel.add(battleship);
 		radioButtonPanel.add(submarine);
@@ -138,18 +134,19 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		add(colorPanel, BorderLayout.NORTH);
 
 		/**
-		 * Add something to the bottom of the frame
+		 * Add a empty JLabel to the bottom of the frame, the text of the label can be change 
+		 * by calling a method changeInformationText with a String as parameter
 		 */
 		informatioText = new JLabel(" ");
 		add(informatioText, BorderLayout.SOUTH);
 
 		/**
-		 * Add a text to the right of the frame
+		 * Add a empty text-label to the right of the frame
 		 */
 		add(new JLabel("   "), BorderLayout.EAST);
 
 		/**
-		 * Add the zones in the middle of the frame. 
+		 * Add the zones in the middle of the frame. Create two JPanel and add them to a third one and add that one to the frame.
 		 */
 		JPanel centerFrame = new JPanel(new GridLayout(1, 2, 50, 0));
 		JPanel leftGamePanel  = new JPanel(new GridLayout(11, 11, 2, 2));
@@ -172,7 +169,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 
 		/**
 		 * Add all the zones to the left frame, and then to the right frame.
-		 * Only add actionListeners to the left frames zones, and setEnable false for the right frames zones.
+		 * Add actionListeners to every zones, and setEnable false for the left frames zones.
+		 * Add all the left zone in one array, and the right ones to another array.
 		 */
 		Zone zone = null;
 		for(int i = 0; i < 11; i++){
@@ -213,15 +211,21 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 *  This method creates the menu bar for the GUI.
 	 */
 	private void makeMenuBar(){
-		// Add the menuBar to the frame
+		/**
+		 *  Add the menuBar to the frame
+		 */
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		// Add the menu button on the menuBar
+		/**
+		 *  Add the menu button on the menuBar
+		 */
 		JMenu menu = new JMenu("Menu");
 		menuBar.add(menu);
 
-		// Add the sub-buttons to the menu-button
+		/**
+		 *  Add the sub-buttons to the menu-button
+		 */
 		newGame = new JMenuItem("New Game");
 		menu.add(newGame);
 		newGame.addActionListener(this);
@@ -230,11 +234,15 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		menu.add(quit);
 		quit.addActionListener(this);
 
-		// Add the help button to the menuBar
+		/**
+		 * Add the help button to the menuBar
+		 */
 		JMenu help = new JMenu("Help");
 		menuBar.add(help);
 
-		// Add the sub-buttons to the help-button
+		/**
+		 *  Add the sub-buttons to the help-button
+		 */
 		about = new JMenuItem("About");
 		help.add(about);
 		about.addActionListener(this);
@@ -243,11 +251,15 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		help.add(rules);
 		rules.addActionListener(this);
 
-		// Add the difficulty button to the menuBar
+		/**
+		 *  Add the difficulty button to the menuBar
+		 */
 		JMenu difficulty = new JMenu("Difficulty");
 		menuBar.add(difficulty);
 
-		// Add the sub-buttons to the difficulty-button
+		/**
+		 *  Add the sub-buttons to the difficulty-button
+		 */
 		training = new JMenuItem("Training");
 		difficulty.add(training);
 		training.addActionListener(this);
@@ -383,18 +395,21 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				y[sizeOnShip] = tempZone.y - 1;
 
 				if(sizeOnShip == 0){
-					// ship.skicka iväg det till någon
 					for(int j = 0; j < x.length; j++){
 						System.out.print(zoneName.get(j) + " ");
 						System.out.print(x[j] + " ");
 						System.out.println(y[j] + "");
 					}
-					//player.placeShip(ship, x, y);
+					human.placeShip(ship, x, y);
 
 					for(int i = 0; i < shipArray.size(); i++){
 						Ship ship = shipArray.get(i);
 						if(ship.isPlaced() == false){
 							jRadioButtonArray.get(i).setEnabled(true);
+						}
+						if(fleet.isPlaced()){
+							changeBattlefield();
+//							gameEngine.setPlayerTurn();
 						}
 					}
 					sizeOnShip = 0;
@@ -461,7 +476,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	}
 
 	/**
-	 * This method listen to updates
+	 * This method listen to updates from class ZoneListener
 	 */
 	@Override
 	public void update(Observable observable, Object object) {
