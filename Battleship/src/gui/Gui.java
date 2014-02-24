@@ -38,6 +38,7 @@ import game.ZoneListener;
  */
 public class Gui extends JFrame implements ActionListener, Observer {
 
+	private static final long serialVersionUID = -508235750073237690L;
 	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane, playerWins, playerLose, ATOMBOMB;
 	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
 	private JLabel informatioText;
@@ -97,7 +98,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		buttonGroup.add(destroyer);
 
 		JPanel radioButtonPanel = new JPanel(new GridLayout(0, 1));
-		
+
 		radioButtonPanel.add(carrier);
 		radioButtonPanel.add(battleship);
 		radioButtonPanel.add(submarine);
@@ -299,7 +300,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	}
 
 	/**
-	 * Change battlefield so the left one becomes click-able and the right one dont get clickable
+	 * Change battlefield so the left one becomes click-able and the right one dont get click-able
 	 */
 	private void changeBattlefield(){
 		for(int i = 0; i < 100; i++){
@@ -320,7 +321,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	}
 
 	/**
-	 * When this method gets called, set the string to the bottom of the frame
+	 * When this method gets called, set the string (parameter) to the bottom of the frame.
 	 */
 	public void changeInformationText(String string){
 		informatioText.setText(string);
@@ -385,7 +386,13 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() == insane){
 			System.out.println("insane");
 		}else if(e.getSource() instanceof Zone){
+			/**
+			 * This is when the user has click on a zone
+			 */
 			Zone tempZone = (Zone) e.getSource();
+			/**
+			 * When the user choose to select his battleships, this if-statement will get true.
+			 */
 			if( sizeOnShip != 0){
 				tempZone.changeColor(Color.BLACK);
 				tempZone.setEnabled(false);
@@ -394,6 +401,10 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				x[sizeOnShip] = tempZone.x - 1;
 				y[sizeOnShip] = tempZone.y - 1;
 
+				/**
+				 * sizeOnShip is 0 when the user has selected all his spot for the battlefield,
+				 * then call human.placeShip with the selected zones. If all ships are done, start the game.
+				 */
 				if(sizeOnShip == 0){
 					for(int j = 0; j < x.length; j++){
 						System.out.print(zoneName.get(j) + " ");
@@ -401,7 +412,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 						System.out.println(y[j] + "");
 					}
 					human.placeShip(ship, x, y);
-
+					
 					for(int i = 0; i < shipArray.size(); i++){
 						Ship ship = shipArray.get(i);
 						if(ship.isPlaced() == false){
@@ -409,15 +420,17 @@ public class Gui extends JFrame implements ActionListener, Observer {
 						}
 						if(fleet.isPlaced()){
 							changeBattlefield();
-//							gameEngine.setPlayerTurn();
+							// gameEngine.setPlayerTurn();
 						}
 					}
 					sizeOnShip = 0;
 					x = null;
 					y = null;
-					// Nollställ alla variabler och call changeBattlefield();
 				}
 			}
+			/**
+			 * This if-statement is when it is the players turn
+			 */
 			if( GameEngine.isPlayerTurn() == true){
 				tempZone.setEnabled(false);
 				gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
@@ -428,6 +441,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			x = new int[sizeOnShip];
 			y = new int[sizeOnShip];
 
+			carrier.setEnabled(false);
 			battleship.setEnabled(false);
 			submarine.setEnabled(false);
 			cruiser.setEnabled(false);
@@ -439,6 +453,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			y = new int[sizeOnShip];
 
 			carrier.setEnabled(false);
+			battleship.setEnabled(false);
 			submarine.setEnabled(false);
 			cruiser.setEnabled(false);
 			destroyer.setEnabled(false);
@@ -450,6 +465,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 
 			carrier.setEnabled(false);
 			battleship.setEnabled(false);
+			submarine.setEnabled(false);
 			cruiser.setEnabled(false);
 			destroyer.setEnabled(false);
 		}else if(e.getSource() == cruiser){
@@ -461,6 +477,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			carrier.setEnabled(false);
 			battleship.setEnabled(false);
 			submarine.setEnabled(false);
+			cruiser.setEnabled(false);
 			destroyer.setEnabled(false);
 		}else if(e.getSource() == destroyer){
 			ship = "destroyer";
@@ -472,6 +489,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			battleship.setEnabled(false);
 			submarine.setEnabled(false);
 			cruiser.setEnabled(false);
+			destroyer.setEnabled(false);
 		}
 	}
 
