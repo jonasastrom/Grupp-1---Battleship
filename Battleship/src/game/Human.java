@@ -51,7 +51,7 @@ public class Human extends Player
 		System.out.print("First");
 		boolean error = false;
 		int [] savedX = x;
-		int savedY[] = y;
+		int [] savedY = y;
 		
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
