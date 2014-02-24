@@ -107,20 +107,15 @@ public class Human extends Player
 		}
 
 		if (error) {
-			//Debug
-			System.out.println("Human error");
-
-			for (int i = 0; i < length; i++) {
+			for (int i = 0; i < length; i++) 
+			{
 				battlefield.setClear(x[i],y[i]);
 			}
 			return false;
 		}
-
 		else {
-			//Debug
-			System.out.println("Human not error");
-
-			for (int i = 0; i < length; i++) {
+			for (int i = 0; i < length; i++) 
+			{
 				battlefield.setShip(x[i],y[i],ship);
 			}
 
