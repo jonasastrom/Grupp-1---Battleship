@@ -65,9 +65,6 @@ public class Battlefield
 	 */
 	public boolean hasShip(int x, int y)
 	{
-		// Debug
-		System.out.println("Battlefield.hasShip: "+x+","+y+" (x,y)");
-
 		return zones[x][y].hasShip();
 	}
 
@@ -90,9 +87,6 @@ public class Battlefield
 	 */
 	public void setShip(int x, int y, Ship ship)
 	{
-		// Debug
-		System.out.println("Battlefield.setShip: "+x+","+y+" (x,y)");
-
 		zones[x][y].setShip(ship);
 	}
 
@@ -111,7 +105,8 @@ public class Battlefield
 	}
 	
 	/**
-	 * 
+	 * Show all ships on this battlefield
+	 * if they are hidden
 	 */
 	public void showShips()
 	{
@@ -120,5 +115,15 @@ public class Battlefield
 				zone.showShip();
 			}
 		}
+	}
+	
+	/**
+	 * Sets the specified zone to be cleared
+	 * @param x The x-coordinate of the zone
+	 * @param y The y-coordinate of the zone
+	 */
+	public void setClear(int x, int y)
+	{
+		zones[x][y].setClear();
 	}
 }

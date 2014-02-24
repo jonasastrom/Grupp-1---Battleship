@@ -86,7 +86,7 @@ public class Zone
 	}
 	
 	/**
-	 * Sets the ship of the zone to be sunked
+	 * Sets the ship of the zone to be sinked
 	 */
 	public void setSunk()
 	{
@@ -102,5 +102,13 @@ public class Zone
 		{
 			zoneListener.update(xPos, yPos, side, "ship");
 		}
+	}
+	
+	/**
+	 * Clears this zone
+	 */
+	public void setClear()
+	{
+		zoneListener.update(xPos, yPos, side, "sea");
 	}
 }

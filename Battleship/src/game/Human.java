@@ -48,10 +48,11 @@ public class Human extends Player
 	 */
 	public boolean placeShip(String name, int[] x, int[] y)
 	{
+		boolean error = false;
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
 
-		while (it.hasNext()){
+		while (it.hasNext()) {
 			ship = it.next();
 			if (ship.getName().equals(name)) break;
 		}
@@ -75,8 +76,8 @@ public class Human extends Player
 			if (y[0] != y[i])
 				yEquals = false;
 		}
-
-		if (!xEquals && !yEquals) return false;
+		
+		if (!xEquals && !yEquals) error = true;
 
 		int[] c;
 		if (xEquals) c = x;
@@ -86,13 +87,23 @@ public class Human extends Player
 
 		for (int i = 0; i < length; i++) {
 			if (c[i]+1 != c[i+1])
-				return false;
+				error = true;
 		}
-
-		for (int i = 0; i < length; i++) {
-			battlefield.setShip(x[i],y[i],ship);
+		
+		if (error) {
+			for (int i = 0; i < length; i++) {
+				battlefield.setClear(x[i],y[i]);
+			}
+			return false;
 		}
-
-		return true;
+		
+		else {
+			for (int i = 0; i < length; i++) {
+				battlefield.setShip(x[i],y[i],ship);
+			}
+			
+			ship.setPlaced();
+			return true;
+		}
 	}
 }
