@@ -49,6 +49,7 @@ public class Human extends Player
 	public boolean placeShip(String name, int[] x, int[] y)
 	{
 		boolean error = false;
+		
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
 
@@ -91,6 +92,9 @@ public class Human extends Player
 		}
 		
 		if (error) {
+			//Debug
+			System.out.println("Human error");
+			
 			for (int i = 0; i < length; i++) {
 				battlefield.setClear(x[i],y[i]);
 			}
@@ -98,6 +102,9 @@ public class Human extends Player
 		}
 		
 		else {
+			//Debug
+			System.out.println("Human not error");
+			
 			for (int i = 0; i < length; i++) {
 				battlefield.setShip(x[i],y[i],ship);
 			}

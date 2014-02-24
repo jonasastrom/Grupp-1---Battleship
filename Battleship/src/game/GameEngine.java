@@ -29,11 +29,12 @@ public class GameEngine {
 	private boolean aiLastHit;
 	private static ZoneListener listener;
 	private HighScore highScore;
+	private int difficulty;
 	
 	
 	public GameEngine(ZoneListener listener){
 		// Creates a new object of GUI (for creating a frame)
-		int difficulty = 0;	//0 because we don't need more difficulties for now
+		difficulty = 0;	//0 because we don't need more difficulties for now
 		//difficulty = gui.selectDifficultyWindow()	//This actually lets you select a difficulty,when that's implemented
 		player = new Human(listener);
 		gui = new Gui(this, player); //so gui can be able to place the boats
@@ -78,7 +79,8 @@ public class GameEngine {
 		winPlayer = false;
 		playerLastHit = false;
 		aiLastHit = false;
-		player.placeShips(); //milstolpe 2
+		if(difficulty != 0)
+			player.placeShips(); //milstolpe 2
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
 
@@ -204,7 +206,7 @@ public class GameEngine {
 			gameOver();
 		}
 		*/
-		setPlayerTurn();
+		setPlayerTurn(); // is needed becuz AI's turn is over, it's time to attack AI again.. 
 	}
 	
 	/**
@@ -223,11 +225,19 @@ public class GameEngine {
 		ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 		try {newHighScore = (HighScore) objectInputStream.readObject();} catch (ClassNotFoundException e) {}
 		if(newHighScore != null)
-			highScore.compHighScore(newHighScore);
+			changed = highScore.compHighScore(newHighScore);
 		inputStream.close();
-		//DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-		//ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+		if(changed){
+			DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+			objectOutputStream.writeObject(highScore);
+			outputStream.close();
+		}
 		
+	}
+	
+	public void setDifficulty(int newDifficulty) {
+		this.difficulty = newDifficulty;
 	}
 	
 	
