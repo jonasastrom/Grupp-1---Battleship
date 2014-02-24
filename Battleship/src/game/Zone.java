@@ -80,12 +80,9 @@ public class Zone
 	 */
 	public void setShip(Ship ship)
 	{
-		if(side.equals("right")){zoneListener.update(xPos, yPos, side, "ship");}
 		this.ship = ship;
+		if(side.equals("right")){zoneListener.update(xPos, yPos, side, "ship");}
 		hasShip = true;
-		
-		//Debug
-		System.out.println("Zone.setShip"+xPos+","+yPos);
 	}
 	
 	/**
@@ -113,8 +110,5 @@ public class Zone
 	public void setClear()
 	{
 		zoneListener.update(xPos, yPos, side, "sea");
-		
-		//Debug
-		System.out.println("Zone.setClear"+xPos+","+yPos);
 	}
 }
