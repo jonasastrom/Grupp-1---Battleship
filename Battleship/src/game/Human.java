@@ -1,5 +1,6 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -45,8 +46,9 @@ public class Human extends Player
 	 * @return true if the placement is valid,
 	 *         false otherwise
 	 */
-	public boolean placeShip(String name, int[] x, int[] y)
+	public boolean placeShip(String name, int[] x, int[] y, ArrayList<String> ShipIDs)
 	{
+		
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
 		boolean tmp = false;
