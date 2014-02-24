@@ -60,11 +60,11 @@ public class Human extends Player
 
 		int length = ship.getLength();
 
-		//if (x.length != length || y.length != length) {
+		if (x.length != length || y.length != length) {
 			// The provided coordinates doesn't
 			// match the length of the ship
-			//return false;
-	//	}
+			return false;
+		}
 
 		boolean xEquals = true;
 		for (int i = 1; i < length; i++) {
@@ -74,15 +74,9 @@ public class Human extends Player
 			}
 		}
 
-		//boolean yEquals = true;
 		for (int i = 1; i < length; i++) {
-			if (y[0] != y[i])
-				System.out.println("Yequals false");
-			//yEquals = false;
+			if (y[0] != y[i]);
 		}
-
-		//if (!xEquals && !yEquals) error = true;
-		//boolean tst = false;
 		
 		int[] c = new int[x.length];
 
