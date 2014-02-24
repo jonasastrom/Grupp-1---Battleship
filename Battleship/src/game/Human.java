@@ -74,11 +74,11 @@ public class Human extends Player
 				xEquals = false;
 		}
 
-		boolean yEquals = true;
+		//boolean yEquals = true;
 		for (int i = 1; i < length; i++) {
 			if (y[0] != y[i])
 				System.out.println("Yequals false");
-				yEquals = false;
+				//yEquals = false;
 		}
 		
 		//if (!xEquals && !yEquals) error = true;
@@ -95,9 +95,9 @@ public class Human extends Player
 		}
 
 		for (int i = 0; i < length-1; i++) {
-			if (c[i]+1 != c[i+1])
+			if (c[i]+1 != c[i+1]){
 				System.out.println("error = true");
-				error = true;
+				error = true;}
 		}
 		
 		if (error) {
