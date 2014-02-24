@@ -18,11 +18,11 @@ public class Fleet
 	public Fleet()
 	{
 		ships = new ArrayList<>();
-		ships.add(new Ship(5, "Carrier"));
-		ships.add(new Ship(4, "Battleship"));
-		ships.add(new Ship(3, "Submarine"));
-		ships.add(new Ship(3, "Cruiser"));
-		ships.add(new Ship(2, "Destroyer"));
+		ships.add(new Ship(5, "carrier"));
+		ships.add(new Ship(4, "battleship"));
+		ships.add(new Ship(3, "submarine"));
+		ships.add(new Ship(3, "cruiser"));
+		ships.add(new Ship(2, "destroyer"));
 	}
 
 	/**

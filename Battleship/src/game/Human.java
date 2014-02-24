@@ -1,6 +1,6 @@
 package game;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -46,12 +46,10 @@ public class Human extends Player
 	 * @return true if the placement is valid,
 	 *         false otherwise
 	 */
-	public boolean placeShip(String name, int[] x, int[] y, ArrayList<String> ShipIDs)
+	public boolean placeShip(String name, int[] x, int[] y)
 	{
-		
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
-		boolean tmp = false;
 
 		while (it.hasNext()){
 			ship = it.next();
@@ -60,39 +58,41 @@ public class Human extends Player
 
 		int length = ship.getLength();
 
-		// Throw an exception if the provided coordinates
-		// doesn't match the length of the ship
 		if (x.length != length || y.length != length) {
-			throw new IllegalArgumentException();
+			// The provided coordinates doesn't
+			// match the length of the ship
+			return false;
 		}
 
+		boolean xEquals = true;
 		for (int i = 1; i <= length; i++) {
-			if (x[0] == x[i]) {
-				for (int j = 0; j <= length; j++) {
-					if (y[j]+1 == y[j+1]) {
-						for (int k = 0; k < 10; k++) {	
-							for (int l = 0; l < 10; l++) {
-								battlefield.setShip(k,l,ship);
-							}
-						}
-						tmp = true;
-					}
-				}
-			}
-			if (y[0] == y[i]) {
-				for (int j = 1; j <= length; j++) {
-					if (x[j] == x[j+1]+1) {
-						for (int k = 0; k < 10; k++) {	
-							for (int l = 0; l < 10; l++) {
-								battlefield.setShip(k,l,ship);
-							}
-						}
-						tmp = true;
-					}
-				}
-			}
+			if (x[0] != x[i])
+				xEquals = false;
 		}
-		if(tmp){return true;}
-		else {return false;}
+
+		boolean yEquals = true;
+		for (int i = 1; i <= length; i++) {
+			if (y[0] != y[i])
+				yEquals = false;
+		}
+
+		if (!xEquals && !yEquals) return false;
+
+		int[] c;
+		if (xEquals) c = x;
+		else c = y;
+
+		Arrays.sort(c);
+
+		for (int i = 0; i <= length; i++) {
+			if (c[i]+1 != c[i+1])
+				return false;
+		}
+
+		for (int i = 0; i <= length; i++) {
+			battlefield.setShip(x[i],y[i],ship);
+		}
+
+		return true;
 	}
 }
