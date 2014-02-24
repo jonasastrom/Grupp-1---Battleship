@@ -204,6 +204,7 @@ public class GameEngine {
 			gameOver();
 		}
 		*/
+		setPlayerTurn();
 	}
 	
 	/**
