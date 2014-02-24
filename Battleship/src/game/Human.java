@@ -48,23 +48,14 @@ public class Human extends Player
 	 */
 	public boolean placeShip(String name, int[] x, int[] y)
 	{
-		
-		for(int l=0; l<3; l++)
-		{
-			System.out.print(""+x[l]);
-		}
-		
-		
-		for(int a=0; a<3; a++)
-		{
-			System.out.println(""+y[a]);
-		}
-		
+
+
+
 		System.out.print("First");
 		boolean error = false;
-		int [] savedX = x;
-		int [] savedY = y;
-		
+		//int [] savedX = x;
+		//int [] savedY = y;
+
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
 
@@ -85,24 +76,36 @@ public class Human extends Player
 		for (int i = 1; i < length; i++) {
 			if (x[0] != x[i])
 				System.out.println("xEquals false");
-				xEquals = false;
+			xEquals = false;
 		}
 
 		//boolean yEquals = true;
 		for (int i = 1; i < length; i++) {
 			if (y[0] != y[i])
 				System.out.println("Yequals false");
-				//yEquals = false;
+			//yEquals = false;
 		}
-		
+
 		//if (!xEquals && !yEquals) error = true;
-
-		int[] c;
-		if (xEquals) c = y;
-		else c = x;
-
-		Arrays.sort(c);
+		//boolean tst = false;
 		
+		int[] c = new int[x.length];
+
+		if (xEquals)
+		{
+			
+			for(int a=0; a < x.length; a++)
+			{
+				c[a] = x[a];
+			}
+		}
+		else{
+			for(int a=0; a < y.length; a++)
+			{
+				c[a] = y[a];
+			}
+		}
+
 		for(int k=0; k<length; k++)
 		{
 			System.out.println(""+c[k]);
@@ -113,25 +116,25 @@ public class Human extends Player
 				System.out.println("error = true");
 				error = true;}
 		}
-		
+
 		if (error) {
 			//Debug
 			System.out.println("Human error");
-			
+
 			for (int i = 0; i < length; i++) {
-				battlefield.setClear(savedX[i],savedY[i]);
+				battlefield.setClear(x[i],y[i]);
 			}
 			return false;
 		}
-		
+
 		else {
 			//Debug
 			System.out.println("Human not error");
-			
+
 			for (int i = 0; i < length; i++) {
-				battlefield.setShip(savedX[i],savedY[i],ship);
+				battlefield.setShip(x[i],y[i],ship);
 			}
-			
+
 			ship.setPlaced();
 			return true;
 		}
