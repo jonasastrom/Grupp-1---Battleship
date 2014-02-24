@@ -68,9 +68,10 @@ public class GameEngine {
 		winPlayer = false;
 		playerLastHit = false;
 		aiLastHit = false;
-		// player.placeShips(); milstolpe 2
+		player.placeShips(); //milstolpe 2
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
+		
 		playerTurn = true; 
 	}
 
@@ -87,7 +88,7 @@ public class GameEngine {
 			if (winPlayer)
 				winText = "won";
 			else {
-				ai.getBattlefield().showShips();
+				ai.getBattlefield().showShips(); // AI's ships will be visible 
 				winText = "lost";
 			}
 			if (gui.gameOverText(winText)) { // gameOverText returns a boolean
@@ -182,6 +183,7 @@ public class GameEngine {
 			gameOver();
 		}
 	/*	int[] aiAttack = ai.attack(aiLastHit);
+	 	if(aiAttack 
 		aiLastHit = player.bomb(aiAttack[0], aiAttack[1]);
 		if(aiLastHit){gui.changeInformationText("Admiral Akbar Hit!");}
 		else{gui.changeInformationText("Admiral Akbar Missed!");}
