@@ -85,7 +85,7 @@ public class Human extends Player
 
 		Arrays.sort(c);
 
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < length-1; i++) {
 			if (c[i]+1 != c[i+1])
 				error = true;
 		}
