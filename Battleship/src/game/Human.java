@@ -48,6 +48,7 @@ public class Human extends Player
 	 */
 	public boolean placeShip(String name, int[] x, int[] y)
 	{
+		System.out.print("First");
 		boolean error = false;
 		
 		Iterator<Ship> it = fleet.getShips().iterator();
