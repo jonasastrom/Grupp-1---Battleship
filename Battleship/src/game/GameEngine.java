@@ -66,6 +66,7 @@ public class GameEngine {
 		playerTurn = true;
 	}
 	
+	 
 	/**
 	 *  Sets a new game up by saying that the game is not over
 	 *  and making the players place their ships.
@@ -80,9 +81,10 @@ public class GameEngine {
 		player.placeShips(); //milstolpe 2
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
-		
-		//playerTurn = true; dont think this will be needed anymore
+
 	}
+	
+	
 
 	/**
 	 *  Ends the game, pops a prompt to the player, and cleans variables
@@ -202,7 +204,6 @@ public class GameEngine {
 			gameOver();
 		}
 		*/
-		playerTurn = true;			// Player's turn again
 	}
 	
 	/**
