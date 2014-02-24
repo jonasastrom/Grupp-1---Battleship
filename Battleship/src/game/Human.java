@@ -65,13 +65,13 @@ public class Human extends Player
 		}
 
 		boolean xEquals = true;
-		for (int i = 1; i <= length; i++) {
+		for (int i = 1; i < length; i++) {
 			if (x[0] != x[i])
 				xEquals = false;
 		}
 
 		boolean yEquals = true;
-		for (int i = 1; i <= length; i++) {
+		for (int i = 1; i < length; i++) {
 			if (y[0] != y[i])
 				yEquals = false;
 		}
@@ -84,12 +84,12 @@ public class Human extends Player
 
 		Arrays.sort(c);
 
-		for (int i = 0; i <= length; i++) {
+		for (int i = 0; i < length; i++) {
 			if (c[i]+1 != c[i+1])
 				return false;
 		}
 
-		for (int i = 0; i <= length; i++) {
+		for (int i = 0; i < length; i++) {
 			battlefield.setShip(x[i],y[i],ship);
 		}
 
