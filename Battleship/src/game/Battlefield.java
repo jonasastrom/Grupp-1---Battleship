@@ -128,7 +128,7 @@ public class Battlefield
 	}
 
 	/**
-	 * 
+	 * @return Matrix with all the zones
 	 */
 	public Zone[][] getZones()
 	{

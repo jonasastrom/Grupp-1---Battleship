@@ -48,8 +48,8 @@ public class Human extends Player
 	 */
 	public boolean placeShip(String name, int[] x, int[] y)
 	{
-		System.out.print("First");
 		boolean error = false;
+		int length;
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
 
@@ -57,29 +57,41 @@ public class Human extends Player
 			ship = it.next();
 			if (ship.getName().equals(name)) break;
 		}
+		length = ship.getLength();
 
-		int length = ship.getLength();
+		/*
+		 * The provided coordinates doesn't 
+		 * match the length of the ship
+		 */
+		if (x.length != length || y.length != length) return false;
 
-		if (x.length != length || y.length != length) {
-			// The provided coordinates doesn't
-			// match the length of the ship
-			return false;
-		}
-
+		/*
+		 * Checks if position 0 in x is equal to all the other positions
+		 * If so, set xEquals to false
+		 */
 		boolean xEquals = true;
-		for (int i = 1; i < length; i++) {
-			if (x[0] != x[i]){
-				System.out.println("xEquals false");
-				xEquals = false;
-			}
+		for (int i = 1; i < length; i++) 
+		{
+			if (x[0] != x[i]) xEquals = false;
 		}
 
-		for (int i = 1; i < length; i++) {
-			if (y[0] != y[i]);
+		/*
+		 * Checks if position 0 in y is equal to all the other positions
+		 * If so, set yEquals to false 
+		 */
+		boolean yEquals = true;
+		for (int i = 1; i < length; i++) 
+		{
+			if (y[0] != y[i]) yEquals = false;
 		}
-		
+
 		int[] c = new int[x.length];
 
+		/*
+		 * Checks if xEqual is true. If it is not all the entries in x[] are 
+		 * the same and the for loop is executed and fills the c[] with
+		 * all the entries in x[]
+		 */
 		if (!xEquals)
 		{
 			for(int a=0; a < x.length; a++)
@@ -87,25 +99,34 @@ public class Human extends Player
 				c[a] = x[a];
 			}
 		}
-		else{
+		/*
+		 * Checks if yEqual is true. If it is not all the entries in y[] are 
+		 * the same and the for loop is executed and fills the c[] with
+		 * all the entries in y[]
+		 */
+		else if (!yEquals){
 			for(int a=0; a < y.length; a++)
 			{
 				c[a] = y[a];
 			}
 		}
+
 		Arrays.sort(c);
-		
-		for(int k=0; k<length; k++)
+
+		/*
+		 * Checks if c of one position incremented with one is equal to 
+		 * c of the next position. If all the y-coordinates is after each other
+		 * If they are not, set error = true
+		 */
+		for (int i = 0; i < length-1; i++) 
 		{
-			System.out.println(""+c[k]);
+			if (c[i]+1 != c[i+1]) error = true;
 		}
 
-		for (int i = 0; i < length-1; i++) {
-			if (c[i]+1 != c[i+1]){
-				System.out.println("error = true");
-				error = true;}
-		}
-
+		/*
+		 * If error was set, go thru every coordinate and set it clear
+		 * else set ship to all the coordinates
+		 */
 		if (error) {
 			for (int i = 0; i < length; i++) 
 			{
@@ -118,7 +139,6 @@ public class Human extends Player
 			{
 				battlefield.setShip(x[i],y[i],ship);
 			}
-
 			ship.setPlaced();
 			return true;
 		}
