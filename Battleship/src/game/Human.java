@@ -48,6 +48,18 @@ public class Human extends Player
 	 */
 	public boolean placeShip(String name, int[] x, int[] y)
 	{
+		
+		for(int l=0; l<3; l++)
+		{
+			System.out.print(""+x[l]);
+		}
+		
+		
+		for(int a=0; a<3; a++)
+		{
+			System.out.println(""+y[a]);
+		}
+		
 		System.out.print("First");
 		boolean error = false;
 		int [] savedX = x;
