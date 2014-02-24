@@ -152,10 +152,12 @@ public class GameEngine {
 						// I do this because I think the GC is lazy
 		try {Thread.sleep(150);} catch (InterruptedException e2) {}
 		int difficulty = 0;
-		gui = new Gui(this);
+		
 		listener = new ZoneListener();
-		listener.addObserver(gui);
 		player = new Human(listener);
+		gui = new Gui(this,player);
+		listener.addObserver(gui);
+		
 		// difficulty = gui.selectDifficultyWindow()
 		ai = new AI(difficulty, player.getBattlefield(), listener);
 		newGame();
