@@ -38,8 +38,10 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	private ArrayList<Zone> leftZoneArray = new ArrayList<Zone>();
 	private ArrayList<Zone> rightZoneArray = new ArrayList<Zone>();
 	private GameEngine gameEngine;
-	private ArrayList<String> ship = new ArrayList<String>();
+	private String ship;
 	private int sizeOnShip = 0;
+	private int[] x;
+	private int[] y;
 
 	/**
 	 *  Constructor
@@ -55,6 +57,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	private void makeGUIFrame(){
 		setTitle("BattleShip");
 		setLayout(new BorderLayout(10, 10));
+
 		/**
 		 *  Add the buttons to the left in the frame
 		 */
@@ -175,6 +178,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 		setSize(850, 400);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
@@ -334,50 +338,73 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() instanceof Zone){
 			Zone tempZone = (Zone) e.getSource();
 			if( sizeOnShip != 0){
-				ship.add(tempZone.name);
+				tempZone.setEnabled(false);
 				sizeOnShip = sizeOnShip - 1;
+				x[sizeOnShip] = tempZone.x - 1;
+				y[sizeOnShip] = tempZone.y - 1;
+				
 				if(sizeOnShip == 0){
-					for(int i = 0; i < ship.size(); i++){
-						System.out.println(ship.get(i));
+					// ship.skicka iväg det till n¨ågon
+					for(int i = 0; i < 5; i++){
+						System.out.print("" + x[i]);
+						System.out.println("" + y[i]);
 					}
+//					if(placeShips(ship, x, y) == false){
+//						// Sätt de kordinaterna från x[] och y[] tillbaka till blåa och göra de klickbara igen
+//					}
 				}
 			}
 			if( GameEngine.isPlayerTurn() == true){
-				
+
 				tempZone.setEnabled(false);
 				gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
 			}
 		}else if(e.getSource() == carrier){
-			ship.add("carrier");
+			ship = "carrier";
 			sizeOnShip = 5;
+			x = new int[sizeOnShip];
+			y = new int[sizeOnShip];
+
 			battleship.setEnabled(false);
 			submarine.setEnabled(false);
 			cruiser.setEnabled(false);
 			destroyer.setEnabled(false);
 		}else if(e.getSource() == battleship){
-			ship.add("battleship");
+			ship= "battleship";
 			sizeOnShip = 4;
+			x = new int[sizeOnShip];
+			y = new int[sizeOnShip];
+
 			carrier.setEnabled(false);
 			submarine.setEnabled(false);
 			cruiser.setEnabled(false);
 			destroyer.setEnabled(false);
 		}else if(e.getSource() == submarine){
-			ship.add("submarine");
+			ship = "submarine";
 			sizeOnShip = 3;
+			x = new int[sizeOnShip];
+			y = new int[sizeOnShip];
+
 			carrier.setEnabled(false);
 			battleship.setEnabled(false);
 			cruiser.setEnabled(false);
 			destroyer.setEnabled(false);
 		}else if(e.getSource() == cruiser){
-			ship.add("cruiser");
+			ship = "cruiser";
 			sizeOnShip = 3;
+			x = new int[sizeOnShip];
+			y = new int[sizeOnShip];
+
 			carrier.setEnabled(false);
 			battleship.setEnabled(false);
 			submarine.setEnabled(false);
 			destroyer.setEnabled(false);
 		}else if(e.getSource() == destroyer){
-			ship.add("destroyer");
+			ship = "destroyer";
 			sizeOnShip = 2;
+			x = new int[sizeOnShip];
+			y = new int[sizeOnShip];
+
 			carrier.setEnabled(false);
 			battleship.setEnabled(false);
 			submarine.setEnabled(false);
@@ -407,6 +434,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 					zone.changeColor(new Color(222, 49, 99));
 				}else if(Game.ZoneLink.state.equals("ship")){
 					zone.changeColor(Color.BLACK);
+				}else if(Game.ZoneLink.state.equals("sea")){
+					zone.changeColor(Color.BLUE);
 				}
 			}catch (NullPointerException e){
 				e.printStackTrace();
