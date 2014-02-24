@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import game.GameEngine;
+import game.Human;
 import game.ZoneLink;
 import game.ZoneListener;
 
@@ -42,6 +43,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	private ArrayList<Zone> leftZoneArray = new ArrayList<Zone>();
 	private ArrayList<Zone> rightZoneArray = new ArrayList<Zone>();
 	private GameEngine gameEngine;
+	private Human player;
 	private String ship;
 	private int sizeOnShip = 0;
 	private int[] x;
@@ -50,8 +52,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	/**
 	 *  Constructor
 	 */
-	public Gui(GameEngine gameEngine){
+	public Gui(GameEngine gameEngine, Human player){
 		this.gameEngine = gameEngine;
+		this.player = player;
 		makeGUIFrame();
 	}
 
@@ -353,9 +356,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 						System.out.print("" + x[i]);
 						System.out.println("" + y[i]);
 					}
-//					if(placeShips(ship, x, y) == false){
-//						// Sätt de kordinaterna från x[] och y[] tillbaka till blåa och göra de klickbara igen
-//					}
+					if(placeShips(ship, x, y) == false){
+						// Sätt de kordinaterna från x[] och y[] tillbaka till blåa och göra de klickbara igen
+					}
 				}
 			}
 			if( GameEngine.isPlayerTurn() == true){
