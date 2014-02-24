@@ -48,14 +48,8 @@ public class Human extends Player
 	 */
 	public boolean placeShip(String name, int[] x, int[] y)
 	{
-
-
-
 		System.out.print("First");
 		boolean error = false;
-		//int [] savedX = x;
-		//int [] savedY = y;
-
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
 
@@ -66,17 +60,18 @@ public class Human extends Player
 
 		int length = ship.getLength();
 
-		if (x.length != length || y.length != length) {
+		//if (x.length != length || y.length != length) {
 			// The provided coordinates doesn't
 			// match the length of the ship
-			return false;
-		}
+			//return false;
+	//	}
 
 		boolean xEquals = true;
 		for (int i = 1; i < length; i++) {
-			if (x[0] != x[i])
+			if (x[0] != x[i]){
 				System.out.println("xEquals false");
-			xEquals = false;
+				xEquals = false;
+			}
 		}
 
 		//boolean yEquals = true;
@@ -91,9 +86,8 @@ public class Human extends Player
 		
 		int[] c = new int[x.length];
 
-		if (xEquals)
+		if (!xEquals)
 		{
-			
 			for(int a=0; a < x.length; a++)
 			{
 				c[a] = x[a];
@@ -105,14 +99,15 @@ public class Human extends Player
 				c[a] = y[a];
 			}
 		}
-
+		Arrays.sort(c);
+		
 		for(int k=0; k<length; k++)
 		{
 			System.out.println(""+c[k]);
 		}
 
 		for (int i = 0; i < length-1; i++) {
-			if (c[i]+1 == c[i+1]){
+			if (c[i]+1 != c[i+1]){
 				System.out.println("error = true");
 				error = true;}
 		}
