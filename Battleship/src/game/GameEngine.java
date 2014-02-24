@@ -25,12 +25,13 @@ public class GameEngine {
 	private boolean winPlayer;
 	private boolean gameOver;
 	private static boolean playerTurn;
-	private boolean playerLastHit;
-	private boolean aiLastHit;
+	private LastShot playerLastShot;
+	private LastShot aiLastShot;
 	private static ZoneListener listener;
 	private HighScore highScore;
 	private int difficulty;
 	
+	public enum LastShot {MISS, HIT, SUNK}
 	
 	public GameEngine(ZoneListener listener){
 		// Creates a new object of GUI (for creating a frame)
@@ -77,8 +78,8 @@ public class GameEngine {
 							// turn
 		gameOver = false;
 		winPlayer = false;
-		playerLastHit = false;
-		aiLastHit = false;
+		playerLastShot = LastShot.MISS;
+		aiLastShot = LastShot.MISS;
 		if(difficulty != 0)
 			player.placeShips(); //milstolpe 2
 		ai.placeShips();
@@ -187,9 +188,11 @@ public class GameEngine {
 	public void coordinates (int x, int y ){
 		playerTurn = false;			// Player's turn is over
 		System.out.println("Coordinates called");
-		playerLastHit = ai.bomb(x, y);
-		if(playerLastHit){gui.changeInformationText("You Hit!");}
-		else{gui.changeInformationText("You Missed!");}
+		//playerLastShot = ai.bomb(x, y);	//Uncomment when bomb has been updated
+		if(playerLastShot == LastShot.SUNK){gui.changeInformationText("You Sunk a Ship!");}
+		else if(playerLastShot == LastShot.HIT){gui.changeInformationText("You Hit!");}
+		else if(playerLastShot == LastShot.MISS){gui.changeInformationText("You Missed!");}
+		
 		if (!ai.hasShips()) {
 			winPlayer = true;
 			gameOver = true;
@@ -198,8 +201,9 @@ public class GameEngine {
 	/*	int[] aiAttack = ai.attack(aiLastHit);
 	 	if(aiAttack 
 		aiLastHit = player.bomb(aiAttack[0], aiAttack[1]);
-		if(aiLastHit){gui.changeInformationText("Admiral Akbar Hit!");}
-		else{gui.changeInformationText("Admiral Akbar Missed!");}
+		if(aiLastShot == LastShot.SUNK){gui.changeInformationText("Admiral Akbar Sunk One of Your Ships!");}
+		else if(aiLastShot == LastShot.HIT){gui.changeInformationText("Admiral Akbar Hit!");}
+		else if(aiLastShot == LastShot.MISS){gui.changeInformationText("Admiral Akbar Missed!");}
 		if (!player.hasShips()) {
 			winPlayer = false;
 			gameOver = true;
