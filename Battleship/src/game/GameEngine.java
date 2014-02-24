@@ -70,11 +70,7 @@ public class GameEngine {
 		aiLastHit = false;
 		// player.placeShips(); milstolpe 2
 		ai.placeShips();
-		try {
-			Thread.sleep(20);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		try {Thread.sleep(20);} catch (InterruptedException e) {}
 		playerTurn = true; 
 	}
 
