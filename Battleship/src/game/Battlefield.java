@@ -109,4 +109,16 @@ public class Battlefield
 			}
 		}
 	}
+	
+	/**
+	 * 
+	 */
+	public void showShips()
+	{
+		for (Zone[] array : zones) {
+			for (Zone zone : array) {
+				zone.showShip();
+			}
+		}
+	}
 }

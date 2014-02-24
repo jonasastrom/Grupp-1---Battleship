@@ -80,9 +80,11 @@ public class Zone
 	 */
 	public void setShip(Ship ship)
 	{
+		if(side.equals("right")){zoneListener.update(xPos, yPos, side, "ship");}
 		this.ship = ship;
 		hasShip = true;
 	}
+	
 	/**
 	 * Sets the ship of the zone to be sunked
 	 */
@@ -90,4 +92,15 @@ public class Zone
 	{
 		zoneListener.update(xPos, yPos, side, "sunk");
 	}	
+	
+	/**
+	 * Method for showing enemy ships after game over
+	 */
+	public void showShip()
+	{
+		if(hasShip && !isBombed)
+		{
+			zoneListener.update(xPos, yPos, side, "ship");
+		}
+	}
 }
