@@ -111,4 +111,22 @@ public class Zone
 	{
 		zoneListener.update(xPos, yPos, side, "sea");
 	}
+	
+	/**
+	 * 
+	 * @return x-coordinate
+	 */
+	public int getX()
+	{
+		return xPos;
+	}
+	
+	/**
+	 * 
+	 * @return y-coordinate
+	 */
+	public int getY()
+	{
+		return yPos;
+	}
 }
