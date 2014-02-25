@@ -30,6 +30,8 @@ public class GameEngine {
 	private static ZoneListener listener;
 	private HighScore highScore;
 	private int difficulty;
+	private String playerName;
+	private long points;
 	
 	public enum LastShot {MISS, HIT, SUNK}
 	
@@ -98,6 +100,9 @@ public class GameEngine {
 	public void gameOver() {
 
 		String winText;
+		boolean newHighScore;
+		
+		newHighScore = highScore.addScore(points, playerName);
 		if (gameOver) {
 			if (winPlayer)
 				winText = "won";
@@ -210,7 +215,7 @@ public class GameEngine {
 			gameOver();
 		}
 		*/
-		setPlayerTurn(); // is needed becuz AI's turn is over, it's time to attack AI again.. 
+		setPlayerTurn(); // is needed because AI's turn is over, it's time to attack AI again.
 	}
 	
 	/**
@@ -240,6 +245,27 @@ public class GameEngine {
 		
 	}
 	
+	/**
+	 * This should make the gui print the high score list,
+	 * if it exists and isn't empty
+	 */
+	public void printHighScore() {
+		//if(highScore != null && !highScore.getHighScoreList().isEmpty())
+			//gui.highScoreWindow(highScore);
+	}
+	
+	/**
+	 * This pops up a text field via gui that allows the player to input its name
+	 */
+	private void inputPlayerName() {
+		//playerName = gui.inputPlayerNameWindow();
+	}
+	
+	/**
+	 * This lets the player change difficulty in the middle of a game.
+	 * Player still needs to start a new game to play on the new difficulty.
+	 * @param newDifficulty The new difficulty that has been chosen
+	 */
 	public void setDifficulty(int newDifficulty) {
 		this.difficulty = newDifficulty;
 	}
