@@ -32,6 +32,7 @@ public class GameEngine {
 	private int difficulty;
 	private String playerName;
 	private long points;
+	private boolean difficultyChanged;
 	
 	public enum LastShot {MISS, HIT, SUNK}
 	
@@ -54,8 +55,9 @@ public class GameEngine {
 	public static void main(String[] args) {
 		listener = new ZoneListener();
 		GameEngine gamE = new GameEngine(listener);
-		gamE.newGame();
 		listener.addObserver(gui);
+		gamE.newGame();
+		
 	}
 	
 	public static Gui getGui(){
@@ -81,10 +83,12 @@ public class GameEngine {
 							// turn
 		gameOver = false;
 		winPlayer = false;
+		difficultyChanged = false;
 		playerLastShot = LastShot.MISS;
 		aiLastShot = LastShot.MISS;
 		if(difficulty != 0)
-			player.placeShips(); 
+			player.placeShips();
+		try {Thread.sleep(20);} catch (InterruptedException e) {}
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
 			// This gives the GUI enough time to update, since it is apparently on a different thread(??)
@@ -188,8 +192,8 @@ public class GameEngine {
 		gui = new Gui(this,player);
 		listener.addObserver(gui);
 		inputPlayerName();
-		
-		difficulty = gui.selectDifficultyWIndow();
+		if(difficultyChanged == false)
+			difficulty = gui.selectDifficultyWIndow();
 		ai = new AI(difficulty, player.getBattlefield(), listener);
 		newGame();
 	}
@@ -274,11 +278,14 @@ public class GameEngine {
 	
 	/**
 	 * This lets the player change difficulty in the middle of a game.
-	 * Player still needs to start a new game to play on the new difficulty.
+	 * It also starts a new game with that difficulty.
 	 * @param newDifficulty The new difficulty that has been chosen
 	 */
 	public void setDifficulty(int newDifficulty) {
 		this.difficulty = newDifficulty;
+		difficultyChanged = true;
+		resetGame();
+		
 	}
 	
 	public int getDifficulty() {
