@@ -32,7 +32,6 @@ public class GameEngine {
 	private int difficulty;
 	private String playerName;
 	private long points;
-	private boolean difficultyChanged = false;
 	
 	public enum LastShot {MISS, HIT, SUNK}
 	
@@ -55,8 +54,9 @@ public class GameEngine {
 	public static void main(String[] args) {
 		listener = new ZoneListener();
 		GameEngine gamE = new GameEngine(listener);
-		gamE.newGame();
 		listener.addObserver(gui);
+		gamE.newGame();
+		
 	}
 	
 	public static Gui getGui(){
@@ -85,7 +85,8 @@ public class GameEngine {
 		playerLastShot = LastShot.MISS;
 		aiLastShot = LastShot.MISS;
 		if(difficulty != 0)
-			player.placeShips(); 
+			player.placeShips();
+		try {Thread.sleep(20);} catch (InterruptedException e) {}
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
 			// This gives the GUI enough time to update, since it is apparently on a different thread(??)
@@ -182,15 +183,12 @@ public class GameEngine {
 						// This keeps the program from ever taking up too much memory
 						// I do this because I think the GC is lazy
 		try {Thread.sleep(150);} catch (InterruptedException e2) {}
-		int difficulty = 0;
 		
 		listener = new ZoneListener();
 		player = new Human(listener);
 		gui = new Gui(this,player);
 		listener.addObserver(gui);
 		inputPlayerName();
-		if(difficultyChanged = false)
-			difficulty = gui.selectDifficultyWIndow();
 		ai = new AI(difficulty, player.getBattlefield(), listener);
 		newGame();
 	}
@@ -215,18 +213,19 @@ public class GameEngine {
 			gameOver = true;
 			gameOver();
 		}
-	/*	int[] aiAttack = ai.attack(aiLastHit);
-	 	if(aiAttack 
-		aiLastHit = player.bomb(aiAttack[0], aiAttack[1]);
-		if(aiLastShot == LastShot.SUNK){gui.changeInformationText("Admiral Akbar Sunk One of Your Ships!");}
-		else if(aiLastShot == LastShot.HIT){gui.changeInformationText("Admiral Akbar Hit!");}
-		else if(aiLastShot == LastShot.MISS){gui.changeInformationText("Admiral Akbar Missed!");}
-		if (!player.hasShips()) {
-			winPlayer = false;
-			gameOver = true;
-			gameOver();
+	 	
+		if(difficulty != 0){
+			int[] aiAttack = ai.attack(aiLastShot);
+			aiLastShot = player.bomb(aiAttack[0], aiAttack[1]);
+			if(aiLastShot == LastShot.SUNK){gui.changeInformationText("Admiral Akbar Sunk One of Your Ships!");}
+			else if(aiLastShot == LastShot.HIT){gui.changeInformationText("Admiral Akbar Hit!");}
+			else if(aiLastShot == LastShot.MISS){gui.changeInformationText("Admiral Akbar Missed!");}
+			if (!player.hasShips()) {
+				winPlayer = false;
+				gameOver = true;
+				gameOver();
+			}
 		}
-		*/
 		setPlayerTurn(); // is needed because AI's turn is over, it's time to attack AI again.
 	}
 	
@@ -270,7 +269,7 @@ public class GameEngine {
 	 * This pops up a text field via gui that allows the player to input its name
 	 */
 	private void inputPlayerName() {
-		//playerName = gui.inputPlayerNameWindow();
+		playerName = gui.enterName();
 	}
 	
 	/**
@@ -280,7 +279,6 @@ public class GameEngine {
 	 */
 	public void setDifficulty(int newDifficulty) {
 		this.difficulty = newDifficulty;
-		difficultyChanged = true;
 		resetGame();
 		
 	}

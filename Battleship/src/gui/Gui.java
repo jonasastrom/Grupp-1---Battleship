@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -236,7 +237,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		highscore = new JMenuItem("Highscore");
 		menu.add(highscore);
 		highscore.addActionListener(this);
-		
+
 		quit = new JMenuItem("Quit");
 		menu.add(quit);
 		quit.addActionListener(this);
@@ -361,19 +362,57 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 * @return	True if yes has been answered, false if not
 	 */
 	public boolean gameOverText(String winText) {
-		return (JOptionPane.showConfirmDialog(	null, "You have " + winText + "!\n Would you like to play again?", "GAME OVER",
+		return (JOptionPane.showConfirmDialog(null, "You have " + winText + "!\n Would you like to play again?", "GAME OVER",
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
 	}
 	
 	/**
-	 * This method create a
+	 * This method asks for the users name, and return it as a string.
+	 */
+	public String enterName(){
+		String name = JOptionPane.showInputDialog("Enter your name, sir");
+		return name;
+	}
+
+	/**
+	 * This method create a frame with the highscore
 	 */
 	public void showHighscore(ArrayList<Score> list){
-		String string = "Namn:\n";
+		JFrame frame = new JFrame("Highscore");
+		frame.setLayout(new GridLayout(11, 2, 50, 0));
+
+		int size = 30;
+		JLabel nameLabel = new JLabel("Name:");
+		JLabel pointLabel = new JLabel("Points:");
+
+		nameLabel.setFont(new Font("Serif", Font.PLAIN, size));
+		pointLabel.setFont(new Font("Serif", Font.PLAIN, size));
+		pointLabel.setHorizontalAlignment(JLabel.RIGHT);
+
+		frame.add(nameLabel);
+		frame.add(pointLabel);	
+
+		/**
+		 * Iterate through the list, and add it to the frame, with a text-size that get smaller for every loop
+		 */
 		for(Score score : list){
-			string = string + score.getName();
+			JLabel name = new JLabel(score.getName());
+			name.setFont(new Font("Serif", Font.PLAIN, size));
+
+			JLabel points = new JLabel(score.getPoints() + "");
+			points.setHorizontalAlignment(JLabel.RIGHT);
+			points.setFont(new Font("Serif", Font.PLAIN, size));
+
+			frame.add(name);
+			frame.add(points);
+
+			size = size - 2;
 		}
-		JOptionPane.showMessageDialog(null, string);
+
+		frame.pack();
+		frame.setSize(500, 600);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -417,6 +456,13 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			 */
 			Zone tempZone = (Zone) e.getSource();
 			/**
+			 * This if-statement is when it is the players turn
+			 */
+			if( GameEngine.isPlayerTurn() == true){
+				tempZone.setEnabled(false);
+				gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
+			}
+			/**
 			 * When the user choose to select his battleships, this if-statement will get true.
 			 */
 			if( sizeOnShip != 0){
@@ -456,13 +502,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 					x = null;
 					y = null;
 				}
-			}
-			/**
-			 * This if-statement is when it is the players turn
-			 */
-			if( GameEngine.isPlayerTurn() == true){
-				tempZone.setEnabled(false);
-				gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
 			}
 			/**
 			 * Here are the if-statement when the user click on battleship button to the left.
@@ -532,7 +571,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 */
 	@Override
 	public void update(Observable observable, Object object) {
-		System.out.println("kom hit kanske");
 		/**
 		 * This if-statement check if the class that send gui the update was ZoneListener, and the object was a ZoneLink
 		 */
@@ -561,7 +599,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				}else if(ZoneLink.state.equals("ship")){
 					zone.changeColor(Color.BLACK);
 				}else if(game.ZoneLink.state.equals("sea")){
-					System.out.println("apa");
 					zone.changeColor(Color.BLUE);
 					zone.setEnabled(true);
 				}
