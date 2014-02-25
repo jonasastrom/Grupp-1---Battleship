@@ -277,6 +277,10 @@ public class GameEngine {
 		this.difficulty = newDifficulty;
 	}
 	
+	public int getDifficulty() {
+		return difficulty;
+	}
+	
 	
 	/**
 	 * Returns if it's the players turn
