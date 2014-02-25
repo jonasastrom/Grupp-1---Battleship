@@ -88,7 +88,7 @@ public class ScoreCalculator {
 							// was a MISS
 	}
 	
-	public void testCalculator(){
+	public static void testCalculator(){
 		comboCounter();
 		points += addScore(GameEngine.LastShot.MISS); //2 points
 		comboCounter(); 
