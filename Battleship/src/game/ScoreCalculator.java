@@ -10,7 +10,7 @@ public class ScoreCalculator {
 	private static boolean preHit;
 	private static boolean sunkShip;
 	private static long points;
-	
+
 	private static final int ONE = 1;
 	private static final int TWO = 2;
 	private static final int THREE = 3;
@@ -19,8 +19,8 @@ public class ScoreCalculator {
 	private static final int SIXTY_ONE_K = 61000;
 
 	/**
-	 * Construktor for the calculator, sets the init for the instances. 
-	 * Created by gameEngine maybe?
+	 * Construktor for the calculator, sets the init for the instances. Created
+	 * by gameEngine maybe?
 	 * 
 	 * @param score
 	 */
@@ -31,40 +31,27 @@ public class ScoreCalculator {
 	}
 
 	/**
-	 * Called by gameEngine after each attack from the player. Updates the new
-	 * score to class Score
+	 * Called by gameEngine after each attack from the player. 
+	 * Calculates the score point for the current attack.
 	 * 
 	 * @param hit
 	 *            gives us the information if the attack succeeded or not
 	 */
 	public static long updateScore(GameEngine.LastShot hit) {
 		comboCounter();
-		return addScore(hit);
-	}
-
-	/**
-	 * Adds the new points to the current score, scores varies if the previous
-	 * shot was a hit or not
-	 * 
-	 * @param hit
-	 *            the information that tells us if the attack was a MISS or HIT
-	 *            or SUNK
-	 */
-	private static long addScore(GameEngine.LastShot hit) {
-
 		switch (hit) {
 		case MISS: // if miss just add 2 points to the current score, no combo
 			preHit = false;
 			sunkShip = false;
 			return TWO;
-		case HIT: 
+		case HIT:
 			preHit = true;
 			sunkShip = false;
-			return FIVEK*combo;
+			return FIVEK * combo;
 		case SUNK:
 			preHit = true;
 			sunkShip = true;
-			return SIXTY_ONE_K*combo;
+			return SIXTY_ONE_K * combo;
 		default:
 			System.out.println("Invalid Action");
 			return 1;
@@ -78,35 +65,26 @@ public class ScoreCalculator {
 	private static void comboCounter() {
 		if (preHit && !sunkShip) // if the previous attack was a hit and not
 									// sunk
-			combo = THREE;
+			combo *= THREE;
 		else if (preHit && sunkShip) // if the previous attack sunk the ship
-			combo = FIVE;
+			combo *= FIVE;
 		else
 			combo = ONE; // if the current attack was a SUNK but the previous
 							// attack was a MISS
 							// or the current attack was a hit but the previous
 							// was a MISS
 	}
-	
-	public static void testCalculator(){
-		comboCounter();
-		points += addScore(GameEngine.LastShot.MISS); //2 points
-		comboCounter(); 
-		points += addScore(GameEngine.LastShot.HIT); //5000 points
-		comboCounter();
-		points += addScore(GameEngine.LastShot.HIT); //5000 + 5000*3 points
-		comboCounter();
-		points += addScore(GameEngine.LastShot.HIT); //20 000 + 5000*3
-		comboCounter();
-		points += addScore(GameEngine.LastShot.SUNK); // omg math.... -____-'
-		comboCounter();
-		points += addScore(GameEngine.LastShot.SUNK);
-		comboCounter();
-		points += addScore(GameEngine.LastShot.MISS);
-		comboCounter();
-		points += addScore(GameEngine.LastShot.SUNK);
+
+	public static void testCalculator() {
+		points += updateScore(GameEngine.LastShot.MISS); // 2 points
+		points += updateScore(GameEngine.LastShot.HIT); // 5000 points
+		points += updateScore(GameEngine.LastShot.HIT); // 5000 + 5000*3 points
+		points += updateScore(GameEngine.LastShot.HIT); // 20 000 + 5000*3
+		points += updateScore(GameEngine.LastShot.SUNK); // omg math.... -____-'
+		points += updateScore(GameEngine.LastShot.SUNK);
+		points += updateScore(GameEngine.LastShot.MISS);
+		points += updateScore(GameEngine.LastShot.SUNK);
 		System.out.println("Congratz you got: " + points);
-		
-	
+
 	}
 }
