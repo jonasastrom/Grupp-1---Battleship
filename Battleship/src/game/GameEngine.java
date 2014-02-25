@@ -143,7 +143,7 @@ public class GameEngine {
 	}
 	
 	public void testCalculator() {
-		//ScoreCalculator.testCalculator();
+		ScoreCalculator.testCalculator();
 	}
 	
 	/**
