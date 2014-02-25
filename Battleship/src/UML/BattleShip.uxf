@@ -4,8 +4,8 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>800</x>
-      <y>20</y>
+      <x>560</x>
+      <y>0</y>
       <w>210</w>
       <h>150</h>
     </coordinates>
@@ -24,7 +24,7 @@ _+ isPlayerTurn() : boolean_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>400</x>
+      <x>310</x>
       <y>10</y>
       <w>160</w>
       <h>70</h>
@@ -38,7 +38,7 @@ Human
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>400</x>
+      <x>280</x>
       <y>90</y>
       <w>210</w>
       <h>100</h>
@@ -55,7 +55,7 @@ AI
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>750</x>
-      <y>230</y>
+      <y>290</y>
       <w>240</w>
       <h>130</h>
     </coordinates>
@@ -108,22 +108,22 @@ Player
     <coordinates>
       <x>190</x>
       <y>20</y>
-      <w>230</w>
+      <w>140</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;30;210;30</additional_attributes>
+    <additional_attributes>30;30;120;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>190</x>
       <y>90</y>
-      <w>230</w>
+      <w>110</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;30;100;30;190;30;210;30</additional_attributes>
+    <additional_attributes>30;30;90;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -143,34 +143,34 @@ Player
       <x>150</x>
       <y>110</y>
       <w>620</w>
-      <h>170</h>
+      <h>210</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
-    <additional_attributes>30;30;30;90;530;90;530;150;600;150</additional_attributes>
+    <additional_attributes>30;30;30;90;530;90;530;190;600;190</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>580</x>
+      <x>460</x>
       <y>90</y>
-      <w>240</w>
+      <w>120</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
 </panel_attributes>
-    <additional_attributes>220;30;30;30</additional_attributes>
+    <additional_attributes>100;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>530</x>
+      <x>440</x>
       <y>10</y>
-      <w>290</w>
-      <h>90</h>
+      <w>140</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
 </panel_attributes>
-    <additional_attributes>270;70;220;70;220;30;30;30</additional_attributes>
+    <additional_attributes>120;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -244,8 +244,8 @@ Ship
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>540</x>
-      <y>310</y>
+      <x>500</x>
+      <y>320</y>
       <w>180</w>
       <h>140</h>
     </coordinates>
@@ -307,24 +307,24 @@ GUI
       <x>560</x>
       <y>200</y>
       <w>210</w>
-      <h>110</h>
+      <h>130</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>30;30;80;30;80;90;190;90</additional_attributes>
+    <additional_attributes>30;30;90;30;90;110;140;110;190;110</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>560</x>
       <y>220</y>
-      <w>90</w>
-      <h>110</h>
+      <w>80</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1= 1
 m2=100
 </panel_attributes>
-    <additional_attributes>30;30;70;30;70;90</additional_attributes>
+    <additional_attributes>30;30;60;30;60;100</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -342,38 +342,38 @@ m2=5</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>530</x>
+      <x>440</x>
       <y>30</y>
-      <w>380</w>
-      <h>220</h>
+      <w>350</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>360;200;360;170;200;170;200;30;30;30</additional_attributes>
+    <additional_attributes>330;260;330;160;90;160;90;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>580</x>
-      <y>110</y>
-      <w>310</w>
-      <h>140</h>
+      <x>460</x>
+      <y>140</y>
+      <w>350</w>
+      <h>170</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>290;120;290;100;140;100;140;30;30;30</additional_attributes>
+    <additional_attributes>330;150;330;30;260;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>690</x>
-      <y>330</y>
-      <w>220</w>
-      <h>90</h>
+      <x>650</x>
+      <y>390</y>
+      <w>210</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
 m1= 1
 m2=100
 </panel_attributes>
-    <additional_attributes>200;30;200;70;30;70</additional_attributes>
+    <additional_attributes>190;30;190;50;30;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -404,10 +404,52 @@ m2=100</panel_attributes>
     <coordinates>
       <x>400</x>
       <y>380</y>
-      <w>160</w>
+      <w>120</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>30;30;140;30</additional_attributes>
+    <additional_attributes>30;30;100;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>800</x>
+      <y>20</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Package::Game
+HighScore
+--
++ placeShips() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>850</x>
+      <y>100</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Package::Game
+HighScore
+--
++ placeShips() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>820</x>
+      <y>190</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Package::Game
+HighScore
+--
++ placeShips() : void</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
