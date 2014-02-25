@@ -143,7 +143,7 @@ public class GameEngine {
 	}
 	
 	public void testCalculator() {
-		//ScoreCalculator.testCalculator();
+		ScoreCalculator.testCalculator();
 	}
 	
 	/**
@@ -275,6 +275,10 @@ public class GameEngine {
 	 */
 	public void setDifficulty(int newDifficulty) {
 		this.difficulty = newDifficulty;
+	}
+	
+	public int getDifficulty() {
+		return difficulty;
 	}
 	
 	
