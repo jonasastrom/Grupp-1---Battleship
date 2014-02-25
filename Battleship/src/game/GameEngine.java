@@ -32,7 +32,7 @@ public class GameEngine {
 	private int difficulty;
 	private String playerName;
 	private long points;
-	private boolean difficultyChanged = false;
+	private boolean difficultyChanged;
 	
 	public enum LastShot {MISS, HIT, SUNK}
 	
@@ -55,8 +55,9 @@ public class GameEngine {
 	public static void main(String[] args) {
 		listener = new ZoneListener();
 		GameEngine gamE = new GameEngine(listener);
-		gamE.newGame();
 		listener.addObserver(gui);
+		gamE.newGame();
+		
 	}
 	
 	public static Gui getGui(){
@@ -82,10 +83,12 @@ public class GameEngine {
 							// turn
 		gameOver = false;
 		winPlayer = false;
+		difficultyChanged = false;
 		playerLastShot = LastShot.MISS;
 		aiLastShot = LastShot.MISS;
 		if(difficulty != 0)
-			player.placeShips(); 
+			player.placeShips();
+		try {Thread.sleep(20);} catch (InterruptedException e) {}
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
 			// This gives the GUI enough time to update, since it is apparently on a different thread(??)
@@ -189,7 +192,7 @@ public class GameEngine {
 		gui = new Gui(this,player);
 		listener.addObserver(gui);
 		inputPlayerName();
-		if(difficultyChanged = false)
+		if(difficultyChanged == false)
 			difficulty = gui.selectDifficultyWIndow();
 		ai = new AI(difficulty, player.getBattlefield(), listener);
 		newGame();
