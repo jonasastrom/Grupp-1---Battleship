@@ -38,9 +38,9 @@ public class GameEngine {
 	public GameEngine(ZoneListener listener){
 		// Creates a new object of GUI (for creating a frame)
 		difficulty = 0;	// Training mode gets to be the default difficulty
-		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty,when that's implemented
 		player = new Human(listener);
 		gui = new Gui(this, player); //so gui can place the boats
+		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty,when that's implemented
 		ai = new AI(difficulty, player.getBattlefield(), listener); //ai can use a isSunk bool to keep track if the fleet got sunk
 		highScore = new HighScore();
 		inputPlayerName();
