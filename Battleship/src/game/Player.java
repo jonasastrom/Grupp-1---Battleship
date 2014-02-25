@@ -1,5 +1,7 @@
 package game;
 
+import game.GameEngine.LastShot;
+
 /**
  * The base class for all players
  * 
@@ -27,18 +29,24 @@ public abstract class Player
 	public abstract void placeShips();
 
 	/**
-	 * Bomb this player's battlefield
-	 * @return true if a ship was hit,
-	 *         false otherwise
+	 * Bomb a zone on this player's battlefield
+	 * @param x The x-coordinate of the zone
+	 * @param y The y-coordinate of the zone
+	 * @return MISS, HIT or SUNK
 	 */
-	public boolean bomb(int x, int y)
+	public LastShot bomb(int x, int y)
 	{
-		if (!battlefield.isBombed(x, y)) {
-			if (battlefield.setBomb(x, y)) {
-				return true;
+		try {
+			if (battlefield.isBombed(x, y)) {
+				// The zone has already been bombed
+				throw new IllegalArgumentException();
 			}
 		}
-		return false;
+		catch (IllegalArgumentException e) {
+			System.exit(-1);
+		}
+		
+		return battlefield.setBomb(x, y);
 	}
 
 	/**
