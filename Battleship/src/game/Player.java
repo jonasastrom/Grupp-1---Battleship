@@ -36,14 +36,9 @@ public abstract class Player
 	 */
 	public LastShot bomb(int x, int y)
 	{
-		try {
-			if (battlefield.isBombed(x, y)) {
-				// The zone has already been bombed
-				throw new IllegalArgumentException();
-			}
-		}
-		catch (IllegalArgumentException e) {
-			System.exit(-1);
+		if (battlefield.isBombed(x, y)) {
+			throw new IllegalArgumentException(
+					"The zone has already been bombed");
 		}
 		
 		return battlefield.setBomb(x, y);

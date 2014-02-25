@@ -50,6 +50,7 @@ public class Human extends Player
 	{
 		boolean error = false;
 		int length;
+		
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
 
@@ -57,13 +58,13 @@ public class Human extends Player
 			ship = it.next();
 			if (ship.getName().equals(name)) break;
 		}
+		
 		length = ship.getLength();
 
-		/*
-		 * The provided coordinates doesn't 
-		 * match the length of the ship
-		 */
-		if (x.length != length || y.length != length) return false;
+		if (x.length != length || y.length != length) {
+			throw new IllegalArgumentException(
+					"The provided coordinates doesn't match the length of the ship");
+		}
 
 		/*
 		 * Checks if position 0 in x is equal to all the other positions
