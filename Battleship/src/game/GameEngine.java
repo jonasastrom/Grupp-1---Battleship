@@ -218,9 +218,9 @@ public class GameEngine {
 			gameOver = true;
 			gameOver();
 		}
-	/*	int[] aiAttack = ai.attack(aiLastHit);
-	 	if(aiAttack 
-		aiLastHit = player.bomb(aiAttack[0], aiAttack[1]);
+		int[] aiAttack = ai.attack(aiLastShot);
+	 	
+		aiLastShot = player.bomb(aiAttack[0], aiAttack[1]);
 		if(aiLastShot == LastShot.SUNK){gui.changeInformationText("Admiral Akbar Sunk One of Your Ships!");}
 		else if(aiLastShot == LastShot.HIT){gui.changeInformationText("Admiral Akbar Hit!");}
 		else if(aiLastShot == LastShot.MISS){gui.changeInformationText("Admiral Akbar Missed!");}
@@ -229,7 +229,7 @@ public class GameEngine {
 			gameOver = true;
 			gameOver();
 		}
-		*/
+		
 		setPlayerTurn(); // is needed because AI's turn is over, it's time to attack AI again.
 	}
 	
@@ -273,7 +273,7 @@ public class GameEngine {
 	 * This pops up a text field via gui that allows the player to input its name
 	 */
 	private void inputPlayerName() {
-		//playerName = gui.inputPlayerNameWindow();
+		playerName = gui.enterName();
 	}
 	
 	/**
