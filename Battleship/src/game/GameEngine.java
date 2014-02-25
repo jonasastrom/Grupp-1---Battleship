@@ -143,7 +143,7 @@ public class GameEngine {
 	}
 	
 	public void testCalculator() {
-		ScoreCalculator.testCalculator();
+		points = ScoreCalculator.testCalculator();
 	}
 	
 	/**
@@ -258,7 +258,7 @@ public class GameEngine {
 	 */
 	public void printHighScore() {
 		//if(highScore != null && !highScore.getHighScoreList().isEmpty())
-			//gui.highScoreWindow(highScore);
+			//gui.showHighScore(highScore);
 	}
 	
 	/**
