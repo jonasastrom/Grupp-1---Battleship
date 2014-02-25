@@ -144,6 +144,10 @@ public class GameEngine {
 	
 	public void testCalculator() {
 		points = ScoreCalculator.testCalculator();
+		highScore.addScore(points, "PROMLG");
+		highScore.addScore(5001, "Stefan");
+		highScore.addScore(-199, "Jimmie");
+		gui.showHighscore(highScore.getHighScoreList());
 	}
 	
 	/**
@@ -257,8 +261,8 @@ public class GameEngine {
 	 * if it exists and isn't empty
 	 */
 	public void printHighScore() {
-		//if(highScore != null && !highScore.getHighScoreList().isEmpty())
-			//gui.showHighScore(highScore);
+		if(highScore != null && !highScore.getHighScoreList().isEmpty())
+			gui.showHighscore(highScore.getHighScoreList());
 	}
 	
 	/**
