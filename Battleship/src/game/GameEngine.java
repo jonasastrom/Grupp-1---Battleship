@@ -32,6 +32,7 @@ public class GameEngine {
 	private int difficulty;
 	private String playerName;
 	private long points;
+	private boolean difficultyChanged = false;
 	
 	public enum LastShot {MISS, HIT, SUNK}
 	
@@ -188,8 +189,8 @@ public class GameEngine {
 		gui = new Gui(this,player);
 		listener.addObserver(gui);
 		inputPlayerName();
-		
-		difficulty = gui.selectDifficultyWIndow();
+		if(difficultyChanged = false)
+			difficulty = gui.selectDifficultyWIndow();
 		ai = new AI(difficulty, player.getBattlefield(), listener);
 		newGame();
 	}
@@ -274,11 +275,14 @@ public class GameEngine {
 	
 	/**
 	 * This lets the player change difficulty in the middle of a game.
-	 * Player still needs to start a new game to play on the new difficulty.
+	 * It also starts a new game with that difficulty.
 	 * @param newDifficulty The new difficulty that has been chosen
 	 */
 	public void setDifficulty(int newDifficulty) {
 		this.difficulty = newDifficulty;
+		difficultyChanged = true;
+		resetGame();
+		
 	}
 	
 	public int getDifficulty() {
