@@ -17,6 +17,8 @@ public class AI extends Player {
 	int difficulties;
 	// Random list of attack-coords
 	private List<int[]> firingSolution;
+	private ArrayList<int[]> cheat;
+	private ArrayList<int[]> neighbours;
 	// List of coordinates to attack while searching
 	private List<int[]> huntSolution;
 	private boolean shipsPlaced;
@@ -45,6 +47,10 @@ public class AI extends Player {
 		this.opponent = opponent;
 		firingSolution = new ArrayList<>();
 		createFiringSolution();
+
+		cheat = new ArrayList<>();
+		neighbours = new ArrayList<>();
+
 		// Create the last attacked coordinate and set it to something innocuous
 		lastAttack = new int[2];
 		lastAttack[0] = -1;
@@ -330,7 +336,7 @@ public class AI extends Player {
 				// Create the list of coordinates to attack around the last 
 				// hit we made, set searching to true and return the first 
 				// hunting coordinate
-//				huntSolution = lookForNeighbour();
+				huntSolution = lookForNeighbour();
 				search = true;
 			} else {
 				// Return random coordinate to attack and pop that off the 
@@ -377,9 +383,59 @@ public class AI extends Player {
 		// Randomize the hitlist
 		Collections.shuffle(firingSolution, new Random());
 	}
-
+	
 	/**
-	 * @return Wether the AI has placed its ships or not.
+	 * Make a list, where the opponent's ship is set.
+	 * @return cheat
+	 */
+	private ArrayList<int[]> cheatList(){
+		Zone[][] countZones = opponent.getZones(); // got the zones
+		int[] pos = new int[2];
+		pos[0] = 0;
+		pos[1] = 0;
+		for(int i = 0; i < 10; i++){	//look through the zone
+			for(int j = 0; j<10; j++){
+				if(countZones != null && countZones[i][j].hasShip()==true ){ //if something is there on that zone
+					pos[0] = countZones[i][j].getX();	//take out the x coordinate from zone
+					pos[1] = countZones[i][j].getY();	//take out the y coordinate from zone
+					cheat.add(pos);	//add to cheat list
+				}
+			}
+		}
+		return cheat;
+	}
+	
+	/**
+	 * look for the neighbor coordinates
+	 * if coordinate already hit or does not exist, do not put it in list 
+	 * put it in a list
+	 * @param x
+	 * @param y
+	 * @return neighbors 
+	 */
+	private ArrayList<int[]> lookForNeighbour(int x, int y){
+		int[] pos = new int[2];		
+		if(x < 9){
+			pos[0]=x+1;
+			neighbours.add(pos);
+		}
+		if(x > 0){
+			pos[0]=x-1;
+			neighbours.add(pos);
+		}
+		if(y < 9){
+			pos[1]=y-1;
+			neighbours.add(pos);
+		}
+		if(y > 0){
+			pos[1]=y+1;
+			neighbours.add(pos);
+		}
+		return neighbours;
+	}
+	
+	/**
+	 * @return Whether the AI has placed its ships or not.
 	 */
 	public boolean isShipsPlaced() {
 		return shipsPlaced;
