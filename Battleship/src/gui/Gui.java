@@ -298,7 +298,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		ATOMBOMB = new JMenuItem("Döda alla!");
 		debug.add(ATOMBOMB);
 		ATOMBOMB.addActionListener(this);
-		
+
 		allPoints = new JMenuItem("Få alla poäng");
 		debug.add(allPoints);
 		allPoints.addActionListener(this);
@@ -317,6 +317,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	/**
 	 * Show an input dialog where the user can select a difficulty
 	 */
+	// VAD HÄNDER OM MAN KRYSSAR NER RUTAN UTAN ATT FYLLA I NÅGON SVÅRIGHETSGRAD?!
 	public int selectDifficultyWIndow(){
 		Object[] options = {"Training", "Easy", "Normal", "Hard", "Insane"};
 		int difficulty = JOptionPane.showOptionDialog(null, "Select which difficulty you want:", "Difficulty",
@@ -445,6 +446,11 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				tempZone.setEnabled(false);
 				gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
 			}
+			/**
+			 * Here are the if-statement when the user click on battleship button to the left.
+			 * This methods disable all buttons, and keep the pressed one selected.
+			 * Save the selected ships size, and name, and initialize the int-arrays x and y to the size of the ship.
+			 */
 		}else if(e.getSource() == carrier){
 			ship = "carrier";
 			sizeOnShip = 5;
@@ -513,7 +519,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		 * This if-statement check if the class that send gui the update was ZoneListener, and the object was a ZoneLink
 		 */
 		if( observable instanceof ZoneListener && object instanceof ZoneLink){
-			
+
 			Zone zone = null;
 			/**
 			 * Check if it is the left or right battlefield that was hit
