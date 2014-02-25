@@ -1,5 +1,7 @@
 package game;
 
+import gui.Gui;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -8,8 +10,6 @@ import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
-import gui.Gui;
 
 /**
  * class GameEngine
@@ -141,6 +141,11 @@ public class GameEngine {
 			gameOver();
 		}
 	}
+	
+	public void testCalculator() {
+		//ScoreCalculator.testCalculator();
+	}
+	
 	/**
 	 * Test method. Not going to be accessible by normal players
 	 * This bombs every single square on the battlefield
