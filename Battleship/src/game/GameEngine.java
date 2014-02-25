@@ -32,7 +32,6 @@ public class GameEngine {
 	private int difficulty;
 	private String playerName;
 	private long points;
-	private boolean difficultyChanged;
 	
 	public enum LastShot {MISS, HIT, SUNK}
 	
@@ -185,15 +184,12 @@ public class GameEngine {
 						// This keeps the program from ever taking up too much memory
 						// I do this because I think the GC is lazy
 		try {Thread.sleep(150);} catch (InterruptedException e2) {}
-		int difficulty = 0;
 		
 		listener = new ZoneListener();
 		player = new Human(listener);
 		gui = new Gui(this,player);
 		listener.addObserver(gui);
 		inputPlayerName();
-		if(difficultyChanged == false)
-			difficulty = gui.selectDifficultyWIndow();
 		ai = new AI(difficulty, player.getBattlefield(), listener);
 		newGame();
 	}
@@ -218,18 +214,19 @@ public class GameEngine {
 			gameOver = true;
 			gameOver();
 		}
-		int[] aiAttack = ai.attack(aiLastShot);
 	 	
-		aiLastShot = player.bomb(aiAttack[0], aiAttack[1]);
-		if(aiLastShot == LastShot.SUNK){gui.changeInformationText("Admiral Akbar Sunk One of Your Ships!");}
-		else if(aiLastShot == LastShot.HIT){gui.changeInformationText("Admiral Akbar Hit!");}
-		else if(aiLastShot == LastShot.MISS){gui.changeInformationText("Admiral Akbar Missed!");}
-		if (!player.hasShips()) {
-			winPlayer = false;
-			gameOver = true;
-			gameOver();
+		if(difficulty != 0){
+			int[] aiAttack = ai.attack(aiLastShot);
+			aiLastShot = player.bomb(aiAttack[0], aiAttack[1]);
+			if(aiLastShot == LastShot.SUNK){gui.changeInformationText("Admiral Akbar Sunk One of Your Ships!");}
+			else if(aiLastShot == LastShot.HIT){gui.changeInformationText("Admiral Akbar Hit!");}
+			else if(aiLastShot == LastShot.MISS){gui.changeInformationText("Admiral Akbar Missed!");}
+			if (!player.hasShips()) {
+				winPlayer = false;
+				gameOver = true;
+				gameOver();
+			}
 		}
-		
 		setPlayerTurn(); // is needed because AI's turn is over, it's time to attack AI again.
 	}
 	
@@ -283,7 +280,6 @@ public class GameEngine {
 	 */
 	public void setDifficulty(int newDifficulty) {
 		this.difficulty = newDifficulty;
-		difficultyChanged = true;
 		resetGame();
 		
 	}
