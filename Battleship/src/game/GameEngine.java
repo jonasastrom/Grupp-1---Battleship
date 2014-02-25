@@ -82,7 +82,6 @@ public class GameEngine {
 							// turn
 		gameOver = false;
 		winPlayer = false;
-		difficultyChanged = false;
 		playerLastShot = LastShot.MISS;
 		aiLastShot = LastShot.MISS;
 		if(difficulty != 0)
