@@ -75,7 +75,7 @@ public class ScoreCalculator {
 							// was a MISS
 	}
 
-	public static void testCalculator() {
+	public static long testCalculator() {
 		points += updateScore(GameEngine.LastShot.HIT);
 		points += updateScore(GameEngine.LastShot.SUNK);
 		
@@ -97,6 +97,7 @@ public class ScoreCalculator {
 		points += updateScore(GameEngine.LastShot.HIT);
 		points += updateScore(GameEngine.LastShot.HIT);
 		points += updateScore(GameEngine.LastShot.SUNK);
+		
 
 		// points += updateScore(GameEngine.LastShot.MISS); // 2 points
 		// points += updateScore(GameEngine.LastShot.HIT); // 5000 points
@@ -108,7 +109,8 @@ public class ScoreCalculator {
 		// points += updateScore(GameEngine.LastShot.SUNK);
 		// points += updateScore(GameEngine.LastShot.MISS);
 		// points += updateScore(GameEngine.LastShot.SUNK);
-		System.out.println("Congratz you got: " + points);
+		System.out.println("Congratz you got: " + points + "points");
+		return points;
 
 	}
 }
