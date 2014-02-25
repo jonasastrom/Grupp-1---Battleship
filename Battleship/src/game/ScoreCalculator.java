@@ -31,8 +31,8 @@ public class ScoreCalculator {
 	}
 
 	/**
-	 * Called by gameEngine after each attack from the player. 
-	 * Calculates the score point for the current attack.
+	 * Called by gameEngine after each attack from the player. Calculates the
+	 * score point for the current attack.
 	 * 
 	 * @param hit
 	 *            gives us the information if the attack succeeded or not
@@ -76,14 +76,38 @@ public class ScoreCalculator {
 	}
 
 	public static void testCalculator() {
-		points += updateScore(GameEngine.LastShot.MISS); // 2 points
-		points += updateScore(GameEngine.LastShot.HIT); // 5000 points
-		points += updateScore(GameEngine.LastShot.HIT); // 5000 + 5000*3 points
-		points += updateScore(GameEngine.LastShot.HIT); // 20 000 + 5000*3
-		points += updateScore(GameEngine.LastShot.SUNK); // omg math.... -____-'
+		points += updateScore(GameEngine.LastShot.HIT);
 		points += updateScore(GameEngine.LastShot.SUNK);
-		points += updateScore(GameEngine.LastShot.MISS);
+		
+		points += updateScore(GameEngine.LastShot.HIT);
+		points += updateScore(GameEngine.LastShot.HIT);
 		points += updateScore(GameEngine.LastShot.SUNK);
+		
+		points += updateScore(GameEngine.LastShot.HIT);
+		points += updateScore(GameEngine.LastShot.HIT);
+		points += updateScore(GameEngine.LastShot.SUNK);
+		
+		points += updateScore(GameEngine.LastShot.HIT);
+		points += updateScore(GameEngine.LastShot.HIT);
+		points += updateScore(GameEngine.LastShot.HIT);
+		points += updateScore(GameEngine.LastShot.SUNK);
+		
+		points += updateScore(GameEngine.LastShot.HIT);
+		points += updateScore(GameEngine.LastShot.HIT);
+		points += updateScore(GameEngine.LastShot.HIT);
+		points += updateScore(GameEngine.LastShot.HIT);
+		points += updateScore(GameEngine.LastShot.SUNK);
+
+		// points += updateScore(GameEngine.LastShot.MISS); // 2 points
+		// points += updateScore(GameEngine.LastShot.HIT); // 5000 points
+		// points += updateScore(GameEngine.LastShot.HIT); // 5000 + 5000*3
+		// points
+		// points += updateScore(GameEngine.LastShot.HIT); // 20 000 + 5000*3
+		// points += updateScore(GameEngine.LastShot.SUNK); // omg math....
+		// -____-'
+		// points += updateScore(GameEngine.LastShot.SUNK);
+		// points += updateScore(GameEngine.LastShot.MISS);
+		// points += updateScore(GameEngine.LastShot.SUNK);
 		System.out.println("Congratz you got: " + points);
 
 	}
