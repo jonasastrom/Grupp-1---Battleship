@@ -15,10 +15,19 @@ import java.util.ListIterator;
  */
 public class AI extends Player {
 	int difficulties;
+	// Random list of attack-coords
 	private List<int[]> firingSolution;
+	// List of coordinates to attack while searching
+	private List<int[]> huntSolution;
 	private boolean shipsPlaced;
+	
+	// Tells us that we are searching for the boat we hit last time
 	private boolean search;
+	
 	private Battlefield opponent;
+	
+	// The last coordinates this AI attacked
+	private int[] lastAttack;
 
 	private boolean DEBUG = true;
 	private boolean DEBUG_PLACE = true;
@@ -35,6 +44,10 @@ public class AI extends Player {
 		// battlefield.
 		this.opponent = opponent;
 		firingSolution = new ArrayList<>();
+		// Create the last attacked coordinate and set it to something innocuous
+		lastAttack = new int[2];
+		lastAttack[0] = -1;
+		lastAttack[1] = -1;
 		// Ships have not been placed yet.
 		shipsPlaced = false;
 	}
@@ -266,11 +279,10 @@ public class AI extends Player {
 	/**
 	 * AIs turn to attack
 	 * 
-	 * @param lastHit
-	 * Whether the last attack was a hit or a miss
+	 * @param lastShot An enum telling us what happened on the last shot
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
-	public int[] attack(boolean lastHit) {
+	public int[] attack(GameEngine.LastShot lastShot) {
 		/**
 		 * 
 		 * Attack the player using the prepared list of random zones to hit.
@@ -286,6 +298,9 @@ public class AI extends Player {
 				target = hits.next();
 				// Remove the last square to be hit from the list permanently
 				hits.remove();
+			} else if (difficulties == 3) {
+				// Check to see if last attack resulted in a hit
+				// Go to hunt if that is the case, else do random attack
 			}
 		} else if (difficulties == 5) {
 			// Will only shoot where a hit is guaranteed. This looks as if it 
@@ -297,6 +312,51 @@ public class AI extends Player {
 		}
 			
 		return target;
+	}
+	
+	/**
+	 * A method to handle attacks when we are searching for a boat we already 
+	 * hit once. If we do not have a list of zones to try, this method will
+	 * @return
+	 */
+	private int[] huntingAttack(boolean lastHit) {
+		int[] attackCoord = new int[2];
+
+		// If we aren't in the middle of a hunt, check to see if we should
+		// create the list of hunting coordinates
+		if (!search) {
+			if (lastHit)	{
+				// Create the list of coordinates to attack around the last 
+				// hit we made, set searching to true and return the first 
+				// hunting coordinate
+//				huntSolution = lookForNeighbour();
+				search = true;
+			} else {
+				// Return random coordinate to attack and pop that off the 
+				// random list
+				Iterator<int[]> iter = firingSolution.iterator();
+				attackCoord = iter.next();
+				firingSolution.remove(attackCoord);
+				return attackCoord;
+			}
+		}
+
+		if (huntSolution.size() > 1) {
+			// Pop a huntcoordinate from the list and return it
+			Iterator<int[]> iter = huntSolution.iterator();
+			attackCoord = iter.next();
+			huntSolution.remove(attackCoord);
+			return attackCoord;
+		} else {
+			// set search to false to signal that we are out of coordinates
+			// to hunt in
+			// return next hunting coordinate
+			Iterator<int[]> iter = huntSolution.iterator();
+			attackCoord = iter.next();
+			huntSolution.remove(attackCoord);
+			search = false;
+			return attackCoord;
+		}
 	}
 
 	/**
