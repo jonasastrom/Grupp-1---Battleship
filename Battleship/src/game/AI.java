@@ -44,6 +44,7 @@ public class AI extends Player {
 		// battlefield.
 		this.opponent = opponent;
 		firingSolution = new ArrayList<>();
+		createFiringSolution();
 		// Create the last attacked coordinate and set it to something innocuous
 		lastAttack = new int[2];
 		lastAttack[0] = -1;
