@@ -326,7 +326,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	// VAD HÄNDER OM MAN KRYSSAR NER RUTAN UTAN ATT FYLLA I NÅGON SVÅRIGHETSGRAD?!
 	public int selectDifficultyWIndow(){
 		Object[] options = {"Training", "Easy", "Normal", "Hard", "Insane"};
-		int difficulty = JOptionPane.showOptionDialog(null, "Select which difficulty you want:", "Difficulty",
+		int difficulty = 0;
+		difficulty = JOptionPane.showOptionDialog(null, "Select which difficulty you want:", "Difficulty",
 				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
 				null, options, options[0]);
 		return difficulty;
@@ -365,7 +366,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		return (JOptionPane.showConfirmDialog(null, "You have " + winText + "!\n Would you like to play again?", "GAME OVER",
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
 	}
-	
+
 	/**
 	 * This method asks for the users name, and return it as a string.
 	 */
@@ -437,7 +438,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() == highscore){
 			gameEngine.printHighScore();
 		}else if(e.getSource() == about){
-			JOptionPane.showMessageDialog(null, "Hej! \nVi är 7 coola kids från DAT055 och vi gör ett spel.", "About", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Hej! \nVi är 7 coola kids från DAT055 och vi gör ett spel " +
+					"som utspelar sig år 1944 i Stilla Havet.", "About", JOptionPane.INFORMATION_MESSAGE);
 		}else if(e.getSource() == rules){
 			openURIForRules();
 		}else if(e.getSource() == training){
@@ -461,11 +463,10 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			if( GameEngine.isPlayerTurn() == true){
 				tempZone.setEnabled(false);
 				gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
-			}
-			/**
-			 * When the user choose to select his battleships, this if-statement will get true.
-			 */
-			if( sizeOnShip != 0){
+			}else if( sizeOnShip != 0){
+				/**
+				 * When the user choose to select his battleships, this if-statement will get true.
+				 */
 				tempZone.changeColor(Color.BLACK);
 				tempZone.setEnabled(false);
 				zoneName.add(tempZone.name);
@@ -479,11 +480,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				 */
 				if(sizeOnShip == 0){
 					buttonGroup.clearSelection();
-					for(int j = 0; j < x.length; j++){
-						System.out.print(zoneName.get(j) + " ");
-						System.out.print(x[j] + " ");
-						System.out.println(y[j] + "");
-					}
 					human.placeShip(ship, x, y);
 
 					for(int i = 0; i < shipArray.size(); i++){
@@ -585,9 +581,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			}else if(ZoneLink.leftOrRight.equals("left")){
 				zone = leftZoneArray.get(((ZoneLink.y) * 10) + ZoneLink.x);
 			}
-			// TESTA ATT SKICKA MED EN RIKTING SOM INTE ÄR RIGHT ELLER LEFT! och en som inte är miss hit sunk ship
 			/**
-			 * Change the color of the zone to gray, green, cerise, black och blue, depends on the input
+			 * Change the color of the zone to gray, green, cerise, black or blue, depends on the input
 			 */
 			try{
 				if(ZoneLink.state.equals("miss")){
