@@ -85,14 +85,16 @@ public class Human extends Player
 			if (y[0] != y[i]) yEquals = false;
 		}
 
+		if(!xEquals && !yEquals) error = true;
+		
 		int[] c = new int[x.length];
-
+		
 		/*
 		 * Checks if xEqual is true. If it is not all the entries in x[] are 
 		 * the same and the for loop is executed and fills the c[] with
 		 * all the entries in x[]
 		 */
-		if (!xEquals)
+		if (yEquals)
 		{
 			for(int a=0; a < x.length; a++)
 			{
@@ -104,7 +106,7 @@ public class Human extends Player
 		 * the same and the for loop is executed and fills the c[] with
 		 * all the entries in y[]
 		 */
-		else if (!yEquals){
+		else if (xEquals){
 			for(int a=0; a < y.length; a++)
 			{
 				c[a] = y[a];

@@ -1,5 +1,7 @@
 package game;
 
+import game.GameEngine.LastShot;
+
 /**
  * Handles the battlefield for a player
  * 
@@ -45,14 +47,17 @@ public class Battlefield
 	 * @return true if a ship was hit,
 	 *         false otherwise
 	 */
-	public boolean setBomb(int x, int y)
+	public LastShot setBomb(int x, int y)
 	{	
 		if (zones[x][y].setBomb()) {
 			Ship ship = zones[x][y].getShip();
-			if (ship.isSunk()) sinkShip(ship);
-			return true;
+			if (ship.isSunk()){
+				sinkShip(ship);
+				return LastShot.SUNK;
+			}
+			return LastShot.HIT;
 		}
-		return false;
+		return LastShot.MISS;
 	}
 
 	/**
