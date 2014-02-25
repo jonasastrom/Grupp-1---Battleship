@@ -414,6 +414,7 @@ public class AI extends Player {
 	 * @return neighbors 
 	 */
 	private ArrayList<int[]> lookForNeighbour(int x, int y){
+		Iterator<int[]> it = neighbours.iterator();
 		int[] pos = new int[2];		
 		if(x < 9){
 			pos[0]=x+1;
@@ -430,6 +431,13 @@ public class AI extends Player {
 		if(y > 0){
 			pos[1]=y+1;
 			neighbours.add(pos);
+		}
+		
+		while(it.hasNext()){
+			int[] notThere = it.next();
+			if(!firingSolution.contains(notThere) ){
+				neighbours.remove(notThere);
+			}
 		}
 		return neighbours;
 	}
