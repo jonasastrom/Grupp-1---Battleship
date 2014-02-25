@@ -39,7 +39,7 @@ import game.ZoneListener;
 public class Gui extends JFrame implements ActionListener, Observer {
 
 	private static final long serialVersionUID = -508235750073237690L;
-	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane, playerWins, playerLose, ATOMBOMB;
+	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane, playerWins, playerLose, ATOMBOMB, allPoints;
 	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
 	private JLabel informatioText;
 	private ArrayList<String> letters = new ArrayList<String>();
@@ -298,6 +298,10 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		ATOMBOMB = new JMenuItem("Döda alla!");
 		debug.add(ATOMBOMB);
 		ATOMBOMB.addActionListener(this);
+		
+		allPoints = new JMenuItem("Få alla poäng");
+		debug.add(allPoints);
+		allPoints.addActionListener(this);
 	}
 
 	/**
@@ -360,7 +364,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e){
-		if(e.getSource() == playerWins){
+		if(e.getSource() == allPoints){
+			gameEngine.testCalculator();
+		}else if(e.getSource() == playerWins){
 			gameEngine.testGameOver(true);
 			System.out.println("debug player wins");
 		}else if(e.getSource() == playerLose){
@@ -502,14 +508,25 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 */
 	@Override
 	public void update(Observable observable, Object object) {
+		System.out.println("kom hit kanske");
+		/**
+		 * This if-statement check if the class that send gui the update was ZoneListener, and the object was a ZoneLink
+		 */
 		if( observable instanceof ZoneListener && object instanceof ZoneLink){
+			
 			Zone zone = null;
+			/**
+			 * Check if it is the left or right battlefield that was hit
+			 */
 			if(ZoneLink.leftOrRight.equals("right")){
 				zone = rightZoneArray.get(((ZoneLink.y) * 10) + ZoneLink.x);
 			}else if(ZoneLink.leftOrRight.equals("left")){
 				zone = leftZoneArray.get(((ZoneLink.y) * 10) + ZoneLink.x);
 			}
 			// TESTA ATT SKICKA MED EN RIKTING SOM INTE ÄR RIGHT ELLER LEFT! och en som inte är miss hit sunk ship
+			/**
+			 * Change the color of the zone to gray, green, cerise, black och blue, depends on the input
+			 */
 			try{
 				if(ZoneLink.state.equals("miss")){
 					zone.changeColor(Color.GRAY);
@@ -520,6 +537,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				}else if(ZoneLink.state.equals("ship")){
 					zone.changeColor(Color.BLACK);
 				}else if(game.ZoneLink.state.equals("sea")){
+					System.out.println("apa");
 					zone.changeColor(Color.BLUE);
 					zone.setEnabled(true);
 				}
