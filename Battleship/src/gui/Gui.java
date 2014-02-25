@@ -26,6 +26,7 @@ import javax.swing.JRadioButton;
 import game.Fleet;
 import game.GameEngine;
 import game.Human;
+import game.Score;
 import game.Ship;
 import game.ZoneLink;
 import game.ZoneListener;
@@ -39,7 +40,7 @@ import game.ZoneListener;
 public class Gui extends JFrame implements ActionListener, Observer {
 
 	private static final long serialVersionUID = -508235750073237690L;
-	private JMenuItem newGame, quit, about, rules, training, easy, normal, hard, insane, playerWins, playerLose, ATOMBOMB, allPoints;
+	private JMenuItem newGame, quit, highscore, about, rules, training, easy, normal, hard, insane, playerWins, playerLose, ATOMBOMB, allPoints;
 	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
 	private JLabel informatioText;
 	private ArrayList<String> letters = new ArrayList<String>();
@@ -232,6 +233,10 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		menu.add(newGame);
 		newGame.addActionListener(this);
 
+		highscore = new JMenuItem("Highscore");
+		menu.add(highscore);
+		highscore.addActionListener(this);
+		
 		quit = new JMenuItem("Quit");
 		menu.add(quit);
 		quit.addActionListener(this);
@@ -359,9 +364,20 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		return (JOptionPane.showConfirmDialog(	null, "You have " + winText + "!\n Would you like to play again?", "GAME OVER",
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
 	}
+	
+	/**
+	 * This method create a
+	 */
+	public void showHighscore(ArrayList<Score> list){
+		String string = "Namn:\n";
+		for(Score score : list){
+			string = string + score.getName();
+		}
+		JOptionPane.showMessageDialog(null, string);
+	}
 
 	/**
-	 *  This method listen to the players actions.
+	 *  This method listen to the users actions.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e){
@@ -379,8 +395,10 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			gameEngine.gameOver();
 		}else if(e.getSource() == quit){
 			System.exit(0);
+		}else if(e.getSource() == highscore){
+			gameEngine.printHighScore();
 		}else if(e.getSource() == about){
-			JOptionPane.showMessageDialog(null, "Hej! \nVi ï¿½r 7 coola kids frï¿½n DAT055 och vi gï¿½r ett spel.", "About", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Hej! \nVi är 7 coola kids från DAT055 och vi gör ett spel.", "About", JOptionPane.INFORMATION_MESSAGE);
 		}else if(e.getSource() == rules){
 			openURIForRules();
 		}else if(e.getSource() == training){
