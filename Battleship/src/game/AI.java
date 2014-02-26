@@ -1,5 +1,7 @@
 package game;
 
+import game.GameEngine.LastShot;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -46,14 +48,18 @@ public class AI extends Player {
 		// battlefield.
 		this.opponent = opponent;
 		firingSolution = new ArrayList<>();
+		createFiringSolution();
+
 		cheat = new ArrayList<>();
 		neighbours = new ArrayList<>();
+
 		// Create the last attacked coordinate and set it to something innocuous
 		lastAttack = new int[2];
 		lastAttack[0] = -1;
 		lastAttack[1] = -1;
 		// Ships have not been placed yet.
 		shipsPlaced = false;
+		search = false;
 	}
 
 	//@Override
@@ -286,25 +292,22 @@ public class AI extends Player {
 	 * @param lastShot An enum telling us what happened on the last shot
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
-	public int[] attack(GameEngine.LastShot lastShot) {
-		/**
-		 * 
-		 * Attack the player using the prepared list of random zones to hit.
-		 * Give the AI the option of seeking out hit ships.
-		 */
-
-		search = false;
+	public int[] attack(LastShot lastShot) {
 		int[] target = new int[2];
-		// For 1.0
-		ListIterator<int[]> hits = firingSolution.listIterator();
-		if (difficulties < 5) {
+		// Has this changed? Is 5 still insane or is that 4 now?
+		if (difficulties < 4) {
 			if (difficulties == 1) {
-				target = hits.next();
-				// Remove the last square to be hit from the list permanently
-				hits.remove();
-			} else if (difficulties == 3) {
+				target = randomAttack();
+			} else if (difficulties == 2) {
 				// Check to see if last attack resulted in a hit
 				// Go to hunt if that is the case, else do random attack
+				if (lastShot == LastShot.HIT) {
+					// do the stuff for hunting attack
+					huntingAttack(true);
+				} else {
+					// New random attack
+					target = randomAttack();
+				}
 			}
 		} else if (difficulties == 5) {
 			// Will only shoot where a hit is guaranteed. This looks as if it 
@@ -316,6 +319,25 @@ public class AI extends Player {
 		}
 			
 		return target;
+	}
+	
+	/**
+	 * Pops a random attack from firingSolution and returns it
+	 * @return the next random coordinate to attack
+	 */
+	private int[] randomAttack() {
+		int[] tempCoord = new int[2];
+		if (firingSolution.size() > 0) {
+			Iterator<int[]> hits = firingSolution.iterator();
+			tempCoord = hits.next();
+			firingSolution.remove(tempCoord);
+		} else {
+			// We shouldn't ever end up here, but let's set something up just
+			// in case.
+			tempCoord[0] = 0;
+			tempCoord[1] = 0;
+		}
+		return tempCoord;
 	}
 	
 	/**
@@ -333,7 +355,7 @@ public class AI extends Player {
 				// Create the list of coordinates to attack around the last 
 				// hit we made, set searching to true and return the first 
 				// hunting coordinate
-//				huntSolution = lookForNeighbour();
+				huntSolution = lookForNeighbour(lastAttack[0], lastAttack[1]);
 				search = true;
 			} else {
 				// Return random coordinate to attack and pop that off the 
@@ -346,7 +368,7 @@ public class AI extends Player {
 		}
 
 		if (huntSolution.size() > 1) {
-			// Pop a huntcoordinate from the list and return it
+			// Pop a hunt coordinate from the list and return it
 			Iterator<int[]> iter = huntSolution.iterator();
 			attackCoord = iter.next();
 			huntSolution.remove(attackCoord);
