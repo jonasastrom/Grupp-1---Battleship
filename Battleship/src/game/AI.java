@@ -473,30 +473,33 @@ public class AI extends Player {
 	 * @return neighbors
 	 */
 	private ArrayList<int[]> lookForNeighbour(int x, int y) {
-		int[] pos = new int[2]; // put the neighbors into the list
-		if (x < 9) {
+		int[] pos; // put the neighbors into the list
+		
+		if (x>=0 && x < 9) {
+			pos = new int[2];
 			pos[0] = x + 1;
 			pos[1] = y;
 			neighbours.add(pos);
 		}
-		if (x > 0) {
+		if (x > 0 && x < 10) {
 			pos = new int[2];
 			pos[0] = x - 1;
 			pos[1] = y;
 			neighbours.add(pos);
 		}
-		if (y < 9) {
+		if (y>=0 && y < 9) {
 			pos = new int[2];
 			pos[1] = y + 1;
 			pos[0] = x;
 			neighbours.add(pos);
 		}
-		if (y > 0) {
+		if (y > 0 && y < 10) {
 			pos = new int[2];
 			pos[0] = x;
 			pos[1] = y - 1;
 			neighbours.add(pos);
 		}
+		
 		goThroughNeighbors();
 		return neighbours;
 	}
@@ -518,7 +521,7 @@ public class AI extends Player {
 
 	/**
 	 * remove the ones AI already shot on
-	 * 
+	 * compare the coordinates between firingSolution() and neighbours()
 	 * @param pos
 	 */
 	private void goThroughNeighbors() {

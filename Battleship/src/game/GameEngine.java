@@ -249,7 +249,7 @@ public class GameEngine{
 			if(( string = in.readLine()) != null){
 				splitString = string.split(" ");
 				for(int i = 0; i < splitString.length;){
-					highScore.addScore(Long.parseLong(splitString[i++]), splitString[i++]))
+					highScore.addScore(Long.parseLong(splitString[i++]), splitString[i++]);
 				}
 			}
 			in.close();
