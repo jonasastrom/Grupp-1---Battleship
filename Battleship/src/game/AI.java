@@ -463,7 +463,11 @@ public class AI extends Player {
 			pos[1]=y+1;
 			neighbours.add(pos);
 		}
-		
+		goThroughCheat();
+		return neighbours;
+	}
+	
+	private void goThroughCheat(){
 		Iterator<int[]> it = neighbours.iterator();	// create iterator here, not to confuse the iterator	
 		while(it.hasNext()){						//look for dead neighbors and take them away from the list
 			int[] notThere = it.next();	
@@ -471,7 +475,6 @@ public class AI extends Player {
 				neighbours.remove(notThere);
 			}
 		}
-		return neighbours;
 	}
 	
 	/**
