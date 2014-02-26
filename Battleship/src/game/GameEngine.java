@@ -17,8 +17,7 @@ import java.net.URLConnection;
  * @author Group 1 - DAT055 2014
  * @version 2.0
  */
-@SuppressWarnings("unused")		// Because yellow lines are annoying
-public class GameEngine extends Thread{
+public class GameEngine{
 	private static Gui gui;
 	private Human player;
 	private AI ai;
@@ -32,22 +31,12 @@ public class GameEngine extends Thread{
 	private int difficulty;
 	private String playerName;
 	private long points;
-	private static GameEngine game; // <---- is it even necessary.. ? added for debugging
 	
 	public enum LastShot {MISS, HIT, SUNK}
 	
 	public GameEngine(){
-		// Creates a new object of GUI (for creating a frame)
-		
-//		difficulty = 0;	// Training mode gets to be the default difficulty
-//		player = new Human(listener);
-//		gui = new Gui(this, player); //so gui can place the boats
-//		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty,when that's implemented
-//		ai = new AI(difficulty, player.getBattlefield(), listener); //ai can use a isSunk bool to keep track if the fleet got sunk
-		
 		highScore = new HighScore();
-		init(); //does exactly the same thing as above + creates a ZoneListener + addObservers + newGame is called
-		//inputPlayerName(); ask the name at the end instead?
+		init(); 
 	}
 	
 	/**
@@ -56,7 +45,7 @@ public class GameEngine extends Thread{
 	 * @param args Does absolutely nothing in this program
 	 */
 	public static void main(String[] args) {
-		game = new GameEngine(); //calls init and creates a HighScore object and asks for inputname
+		new GameEngine();
 	}
 	
 	public static Gui getGui(){
@@ -68,16 +57,16 @@ public class GameEngine extends Thread{
 		listener = new ZoneListener();
 		player = new Human(listener);
 		gui = new Gui(this, player); //so gui can place the boats
-		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty,when that's implemented
-		ai = new AI(difficulty, player.getBattlefield(), listener); //ai can use a isSunk bool to keep track if the fleet got sunk
+		inputPlayerName(); 
+		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty
+		ai = new AI(difficulty, player.getBattlefield(), listener);
 		listener.addObserver(gui);
 		Thread thread = new Thread(){
 			public void run(){
-				game.newGame();
+				newGame();
 			}
 		}; 
 		thread.start();
-		//newGame();
 	}
 	
 	/**
@@ -100,8 +89,11 @@ public class GameEngine extends Thread{
 		winPlayer = false;
 		playerLastShot = LastShot.MISS;
 		aiLastShot = LastShot.MISS;
-		if(difficulty != 0)
+		if (difficulty == 0)
+			playerTurn = true;
+		else {
 			player.placeShips();
+		}
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
@@ -119,10 +111,7 @@ public class GameEngine extends Thread{
 	public void gameOver() {
 
 		String winText;
-		boolean newHighScore;
-		
-		inputPlayerName(); //ask if the player wants to save his highscore
-		
+		boolean newHighScore = false;
 		newHighScore = highScore.addScore(points, playerName);
 		if (gameOver) {
 			if (winPlayer)
@@ -164,7 +153,7 @@ public class GameEngine extends Thread{
 	
 	public void testCalculator() {
 		points = ScoreCalculator.testCalculator();
-		highScore.addScore(points, "PROMLG");
+		highScore.addScore(points, playerName);
 		highScore.addScore(5001, "Stefan");
 		highScore.addScore(-199, "Jimmie");
 		gui.showHighscore(highScore.getHighScoreList());
@@ -198,22 +187,12 @@ public class GameEngine extends Thread{
 		player = null;
 		ai = null;
 		listener = null;
-		game = null; 	//maybe?
 		
 		System.gc();	// Calls GC here to make sure it does its job
 						// This keeps the program from ever taking up too much memory
 						// I do this because I think the GC is lazy
 		try {Thread.sleep(150);} catch (InterruptedException e2) {}
-//		listener = new ZoneListener();
-//		player = new Human(listener);
-//		gui = new Gui(this,player);
-//		//inputPlayerName(); 
-//		difficulty = gui.selectDifficultyWIndow(); //  new difficulty might be needed instead of the inputname, same player?
-//		ai = new AI(difficulty, player.getBattlefield(), listener);
-//		listener.addObserver(gui);
-//		newGame();
-		game = new GameEngine(); //necessary?
-		//init(); //does exactly the same thing as above
+		init();
 	}
 	
 	/**
@@ -225,19 +204,17 @@ public class GameEngine extends Thread{
 	 */
 	public void coordinates (int x, int y ){
 		playerTurn = false;			// Player's turn is over
-	//	System.out.println("Coordinates called");  // ---Not needed anymore, commented away
 		playerLastShot = ai.bomb(x, y);
 		if(playerLastShot == LastShot.SUNK){gui.changeInformationText("You Sunk a Ship!");}
 		else if(playerLastShot == LastShot.HIT){gui.changeInformationText("You Hit!");}
 		else if(playerLastShot == LastShot.MISS){gui.changeInformationText("You Missed!");}
-		
 		if (!ai.hasShips()) {
 			winPlayer = true;
 			gameOver = true;
 			gameOver();
 		}
 	 	
-		if(difficulty != 0){
+		if(difficulty != 0){		//Ai should only attack if it's not training mode
 			int[] aiAttack = ai.attack(aiLastShot);
 			aiLastShot = player.bomb(aiAttack[0], aiAttack[1]);
 			if(aiLastShot == LastShot.SUNK){gui.changeInformationText("Admiral Akbar Sunk One of Your Ships!");}
@@ -249,7 +226,7 @@ public class GameEngine extends Thread{
 				gameOver();
 			}
 		}
-		setPlayerTurn(); // is needed because AI's turn is over, it's time to attack AI again.
+		setPlayerTurn(); // Ai done, player's turn now
 	}
 	
 	/**

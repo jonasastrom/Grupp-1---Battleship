@@ -47,6 +47,8 @@ public class HighScore {
 	  * @return	True if the score was placed in the list
 	  */
 	public boolean addScore(long score, String name) {
+		if(name == null || name.isEmpty())
+			return false;
 		for(Score currentScore : highScore) {	// Check the high score list from the top
 			if(score > currentScore.getPoints()) {	// If the score is higher than the list's score,
 				highScore.add(highScore.indexOf(currentScore), new Score(score, name));	// then it should be inserted at the list's score's index, pushing all other scores down one step
