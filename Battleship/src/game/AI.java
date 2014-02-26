@@ -306,13 +306,13 @@ public class AI extends Player {
 				// Go to hunt if that is the case, else do random attack
 				if (lastShot == LastShot.HIT) {
 					// do the stuff for hunting attack
-					huntingAttack(true);
+					target = huntingAttack(true);
 				} else {
 					// New random attack
 					target = randomAttack();
 				}
 			}
-		} else if (difficulties == 5) {
+		} else if (difficulties == 4) {
 			// Will only shoot where a hit is guaranteed. This looks as if it 
 			// will require access to opponents battlefield.
 			Iterator<int[]> it = cheat.iterator(); //iterator for the created list
@@ -321,14 +321,15 @@ public class AI extends Player {
 				cheat.remove(it);			//don't forget to remove the used coordinate
 			}
 		} else {
-			// Game engine should never do anything with these
+			// Gameengine should never do anything with these, but we may end 
+			// up here if gameengine calls attack during difficulty 0
 			target[0] = 0;
 			target[1] = 0;
 		}
 			
 		// Completely frivolous pause to "think"
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(1000);
 		} catch (Exception e) {
 			System.out.println("Sleep in AI caused the following error: " 
 								+ e.toString());
