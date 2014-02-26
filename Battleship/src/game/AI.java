@@ -367,36 +367,36 @@ public class AI extends Player {
 
 		// If we aren't in the middle of a hunt, check to see if we should
 		// create the list of hunting coordinates
-		if (!search) {
+		if (!search || lastHit) {
 			if (lastHit) {
 				// Create the list of coordinates to attack around the last
 				// hit we made, set searching to true and return the first
 				// hunting coordinate
-				huntSolution = lookForNeighbour(lastAttack[0], lastAttack[1]);
+				lookForNeighbour(lastAttack[0], lastAttack[1]);
 				search = true;
 			} else {
 				// Return random coordinate to attack and pop that off the
 				// random list
 				Iterator<int[]> iter = firingSolution.iterator();
 				attackCoord = iter.next();
-				firingSolution.remove(attackCoord);
+				iter.remove();
 				return attackCoord;
 			}
 		}
 
-		if (huntSolution.size() > 1) {
+		if (neighbours.size() > 1) {
 			// Pop a hunt coordinate from the list and return it
-			Iterator<int[]> iter = huntSolution.iterator();
+			Iterator<int[]> iter = neighbours.iterator();
 			attackCoord = iter.next();
-			huntSolution.remove(attackCoord);
+			iter.remove();
 			return attackCoord;
 		} else {
 			// set search to false to signal that we are out of coordinates
 			// to hunt in
 			// return next hunting coordinate
-			Iterator<int[]> iter = huntSolution.iterator();
+			Iterator<int[]> iter = neighbours.iterator();
 			attackCoord = iter.next();
-			huntSolution.remove(attackCoord);
+			iter.remove();
 			search = false;
 			return attackCoord;
 		}
