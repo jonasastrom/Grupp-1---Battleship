@@ -150,6 +150,9 @@ public class GameEngine{
 		}
 	}
 
+	/**
+	 * @author Sebastian
+	 */
 	public void testCalculator() {
 		points = ScoreCalculator.testCalculator();
 		highScore.addScore(points, playerName);
