@@ -315,9 +315,13 @@ public class AI extends Player {
 		} else if (difficulties == 5) {
 			// Will only shoot where a hit is guaranteed. This looks as if it 
 			// will require access to opponents battlefield.
-			
+			Iterator<int[]> it = cheat.iterator(); //iterator for the created list
+			if(it.hasNext()){				//if there is a next coordinate shoot on it.
+				target = it.next();
+				cheat.remove(it);			//don't forget to remove the used coordinate
+			}
 		} else {
-			// Gameengine should never do anything with these
+			// Game engine should never do anything with these
 			target[0] = 0;
 			target[1] = 0;
 		}
@@ -433,6 +437,7 @@ public class AI extends Player {
 				}
 			}
 		}
+		Collections.shuffle(cheat, new Random());
 		return cheat;
 	}
 	
