@@ -300,18 +300,31 @@ public class AI extends Player {
 			if (difficulties == 1) {
 				target = randomAttack();
 			} else if (difficulties == 2 || difficulties == 3) {
-				// First of all, if this is difficulty 3, we have to decide if
-				// we're doing a cheat attack or following the pattern from
-				// difficulty 2
-				// Check to see if last attack resulted in a hit
-				// Go to hunt if that is the case, else do random attack
-				if (lastShot == LastShot.HIT || search) {
-					// do the stuff for hunting attack
-					target = huntingAttack(true);
-				} else {
-					// New random attack
+//				// First of all, if this is difficulty 3, we have to decide if
+//				// we're doing a cheat attack or following the pattern from
+//				// difficulty 2
+//				// Check to see if last attack resulted in a hit
+//				// Go to hunt if that is the case, else do random attack
+//				if (lastShot == LastShot.SUNK || lastShot == LastShot.HIT)
+//					search = false;
+//				if (lastShot == LastShot.HIT || search) {
+//					// do the stuff for hunting attack
+//					target = huntingAttack(true);
+//				} else {
+//					// New random attack
+//					target = randomAttack();
+//				}
+				if (lastShot == LastShot.HIT) {
+					lookForNeighbour(lastAttack[0], lastAttack[1]);
+					Iterator<int[]> iter = neighbours.iterator();
+					target = iter.next();
+					iter.remove();
+				} else if (lastShot == LastShot.MISS && neighbours.size() > 0) {
+					Iterator<int[]> iter = neighbours.iterator();
+					target = iter.next();
+					iter.remove();
+				} else 
 					target = randomAttack();
-				}
 			}
 		} else if (difficulties == 4) {
 			// Will only shoot where a hit is guaranteed. This looks as if it
@@ -367,7 +380,7 @@ public class AI extends Player {
 
 		// If we aren't in the middle of a hunt, check to see if we should
 		// create the list of hunting coordinates
-		if (!search || lastHit) {
+		if (!search) {
 			if (lastHit) {
 				// Create the list of coordinates to attack around the last
 				// hit we made, set searching to true and return the first
@@ -379,7 +392,7 @@ public class AI extends Player {
 				// random list
 				Iterator<int[]> iter = firingSolution.iterator();
 				attackCoord = iter.next();
-				iter.remove();
+//				iter.remove();
 				return attackCoord;
 			}
 		}
@@ -396,7 +409,7 @@ public class AI extends Player {
 			// return next hunting coordinate
 			Iterator<int[]> iter = neighbours.iterator();
 			attackCoord = iter.next();
-			iter.remove();
+//			iter.remove();
 			search = false;
 			return attackCoord;
 		}
