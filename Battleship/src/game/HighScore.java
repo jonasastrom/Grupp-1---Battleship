@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class HighScore {
 	ArrayList<Score> highScore;
-	
+
 	public HighScore() {
 		highScore = new ArrayList<Score>();
 		highScore.add(0,new Score(10000, "Batman"));		// These are only the
@@ -24,7 +24,7 @@ public class HighScore {
 		highScore.add(8,new Score(2000, "Powerking"));
 		highScore.add(9,new Score(-89, "Resverk"));
 	}
-	
+
 	/**
 	 * This compares the current high score list to anew high score list and
 	 * updated the current one with new scores if they're higher
@@ -38,27 +38,32 @@ public class HighScore {
 		}							// then it could go from true to false which is very wrong
 		return changed;
 	}
-	
-	 /**
-	  * Adds a score to the high score list if it's greater than a score
-	  * currently on the list
-	  * @param score The score of the current player
-	  * @param name The name of the current player
-	  * @return	True if the score was placed in the list
-	  */
-	public boolean addScore(long score, String name) {
+
+	/**
+	 * Adds a score to the high score list if it's greater than a score
+	 * currently on the list
+	 * @param points The score of the current player
+	 * @param name The name of the current player
+	 * @return	True if the score was placed in the list
+	 */
+	public boolean addScore(long points, String name) {
 		if(name == null || name.isEmpty())
 			return false;
+		for(Score currentScore : highScore) {
+			if(points == currentScore.getPoints() && name.equals(currentScore.getName())){
+				return false;
+			}
+		}
 		for(Score currentScore : highScore) {	// Check the high score list from the top
-			if(score > currentScore.getPoints()) {	// If the score is higher than the list's score,
-				highScore.add(highScore.indexOf(currentScore), new Score(score, name));	// then it should be inserted at the list's score's index, pushing all other scores down one step
+			if(points > currentScore.getPoints()) {	// If the score is higher than the list's score,
+				highScore.add(highScore.indexOf(currentScore), new Score(points, name));	// then it should be inserted at the list's score's index, pushing all other scores down one step
 				highScore.remove(10); // This list keeps ten high scores, the 11th gets removed
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public ArrayList<Score> getHighScoreList() {
 		return this.highScore;
 	}

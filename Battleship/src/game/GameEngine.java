@@ -2,14 +2,13 @@ package game;
 
 import gui.Gui;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
 
 /**
  * class GameEngine
@@ -32,15 +31,15 @@ public class GameEngine{
 	private String playerName;
 	private long points;
 	private boolean difficultyChanged;
-	
+
 	public enum LastShot {MISS, HIT, SUNK}
-	
+
 	public GameEngine(){
 		highScore = new HighScore();
 		difficultyChanged = false;
 		init(); 
 	}
-	
+
 	/**
 	 * This is a main method.
 	 * It methods mains.
@@ -49,13 +48,13 @@ public class GameEngine{
 	public static void main(String[] args) {
 		new GameEngine();
 	}
-	
+
 	public static Gui getGui(){
 		return gui;
 	}
-		
+
 	public void init(){
-		
+
 		listener = new ZoneListener();
 		player = new Human(listener);
 		gui = new Gui(this, player); //so gui can place the boats
@@ -72,23 +71,23 @@ public class GameEngine{
 		}; 
 		thread.start();
 	}
-	
+
 	/**
 	 * Called by gui to say the whole fleet is now placed by the human player
 	 * The player can start attacking the enemy
 	 */
-	 public void setPlayerTurn(){
+	public void setPlayerTurn(){
 		playerTurn = true;
 	}
-	
-	 
+
+
 	/**
 	 *  Sets a new game up by saying that the game is not over
 	 *  and making the players place their ships.
 	 */
 	public void newGame() {
 		playerTurn = false; // before the ships are placed it's not the player's
-							// turn
+		// turn
 		gameOver = false;
 		winPlayer = false;
 		playerLastShot = LastShot.MISS;
@@ -97,10 +96,10 @@ public class GameEngine{
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
-			// This gives the GUI enough time to update, since it is apparently on a different thread(??)
+		// This gives the GUI enough time to update, since it is apparently on a different thread(??)
 	}
-	
-	
+
+
 
 	/**
 	 *  Ends the game, pops a prompt to the player, and cleans variables
@@ -121,18 +120,18 @@ public class GameEngine{
 				winText = "lost";
 			}
 			if (gui.gameOverText(winText)) { // gameOverText returns a boolean
-												// depending on which button got
-												// pressed
+				// depending on which button got
+				// pressed
 				winText = null; // If yes, then the game is reset and remade
 				resetGame();
 			} else
 				System.exit(0); // Else the game exits
 		} else
 			resetGame(); // If the game is not over but the menu option for a
-							// New Game has been chosen, then the win/lose
-							// messages won't be displayed.
+		// New Game has been chosen, then the win/lose
+		// messages won't be displayed.
 	}
-	
+
 	/**
 	 * Test method. Not going to be accessible by a normal player
 	 * This pops up a a game over screen where the player has won or lost
@@ -150,7 +149,7 @@ public class GameEngine{
 			gameOver();
 		}
 	}
-	
+
 	public void testCalculator() {
 		points = ScoreCalculator.testCalculator();
 		highScore.addScore(points, playerName);
@@ -160,7 +159,7 @@ public class GameEngine{
 		System.out.println("Testing server thingy");
 		testHighScoreServer();
 	}
-	
+
 	/**
 	 * Test method. Not going to be accessible by normal players
 	 * This bombs every single square on the battlefield
@@ -176,7 +175,7 @@ public class GameEngine{
 		System.out.println("Splash");
 		gui.changeInformationText("CHEATER!!!!!11!!1!!!");
 	}
-	
+
 	/**
 	 *	Empties the objects, cleans them away and recreates them for a new game 
 	 */
@@ -189,14 +188,14 @@ public class GameEngine{
 		player = null;
 		ai = null;
 		listener = null;
-		
+
 		System.gc();	// Calls GC here to make sure it does its job
-						// This keeps the program from ever taking up too much memory
-						// I do this because I think the GC is lazy
+		// This keeps the program from ever taking up too much memory
+		// I do this because I think the GC is lazy
 		try {Thread.sleep(150);} catch (InterruptedException e2) {}
 		init();
 	}
-	
+
 	/**
 	 * This is called by the gui once a square has been pressed
 	 * It takes the coordinates of that square and sends them to the ai to be bombed
@@ -215,7 +214,7 @@ public class GameEngine{
 			gameOver = true;
 			gameOver();
 		}
-	 	
+
 		if(difficulty != 0){		//Ai should only attack if it's not training mode
 			int[] aiAttack = ai.attack(aiLastShot);
 			aiLastShot = player.bomb(aiAttack[0], aiAttack[1]);
@@ -230,56 +229,87 @@ public class GameEngine{
 		}
 		setPlayerTurn(); // Ai done, player's turn now
 	}
-	
-	public void testHighScoreServer() {
-		try {updateHighScore("127.0.0.1\\gurka.dat");} catch (IOException e) {}
-	}
-	
+
 	/**
-	 * This fetches the high score from a server, updates the local one,
-	 * then uploads the new high score to the server.
-	 * If there is no high score on the server, creates one.
-	 * @param server The URL to the wanted server
+	 * test
 	 */
-	public void updateHighScore(String server) throws MalformedURLException, IOException {
-		boolean changed = false;
-		HighScore newHighScore = null;
-		URL url = new URL(server);
-		URLConnection connection = url.openConnection();
-		connection.connect();
-		
-		DataInputStream inputStream = new DataInputStream(connection.getInputStream());
-		ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-		try {newHighScore = (HighScore) objectInputStream.readObject();} catch (ClassNotFoundException e) {}
-		if(newHighScore != null)
-			changed = highScore.compHighScore(newHighScore);
-		inputStream.close();
-		if(changed || newHighScore == null){
-			System.out.println("Writing to file");
-			DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-			objectOutputStream.writeObject(highScore);
-			outputStream.close();
-		}
-		
+	public void testHighScoreServer() {
+		updateHighScore();
 	}
-	
+
+	/**
+	 * 
+	 */
+	public void updateHighScore(){
+		try {
+			BufferedReader in = new BufferedReader(new FileReader("highscore.txt"));
+			boolean changed = false;
+			String string = "";
+			String[] splitString = null;
+			if(( string = in.readLine()) != null){
+				splitString = string.split(" ");
+				for(int i = 0; i < splitString.length;){
+					if(highScore.addScore(Long.parseLong(splitString[i++]), splitString[i++])){
+						changed = true;
+					}
+				}
+			}
+			in.close();
+			if(changed == true){
+				writeHighScore();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e){
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * This method writes the highscore to a text-file
+	 */
+	public void writeHighScore(){
+		System.out.println("write något");
+
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter("highscore.txt"));
+			ArrayList<Score> list = highScore.getHighScoreList();
+			Score score = null;
+			for(int i = 0; i < 10; i++){
+				score = list.get(i);
+				out.write(score.getPoints() + " " + score.getName() + " ");
+			}
+			out.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+
 	/**
 	 * This should make the gui print the high score list,
 	 * if it exists and isn't empty
 	 */
 	public void printHighScore() {
+		updateHighScore();
 		if(highScore != null && !highScore.getHighScoreList().isEmpty())
 			gui.showHighscore(highScore.getHighScoreList());
 	}
-	
+
 	/**
 	 * This pops up a text field via gui that allows the player to input its name
 	 */
 	private void inputPlayerName() {
-		playerName = gui.enterName();
+		String string = gui.enterName();
+		String[] splitString = string.split(" ");
+		playerName = "";
+		for( String split : splitString){
+			playerName = playerName + split;
+		}
 	}
-	
+
 	/**
 	 * This lets the player change difficulty in the middle of a game.
 	 * It also starts a new game with that difficulty.
@@ -289,14 +319,13 @@ public class GameEngine{
 		this.difficulty = newDifficulty;
 		difficultyChanged = true;
 		resetGame();
-		
 	}
-	
+
 	public int getDifficulty() {
 		return difficulty;
 	}
-	
-	
+
+
 	/**
 	 * Returns if it's the players turn
 	 * @return returns true if it's the players turn
