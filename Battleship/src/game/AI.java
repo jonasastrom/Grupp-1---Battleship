@@ -59,6 +59,7 @@ public class AI extends Player {
 		lastAttack[1] = -1;
 		// Ships have not been placed yet.
 		shipsPlaced = false;
+		search = false;
 	}
 
 	//@Override
@@ -292,29 +293,20 @@ public class AI extends Player {
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
 	public int[] attack(LastShot lastShot) {
-		/**
-		 * 
-		 * Attack the player using the prepared list of random zones to hit.
-		 * Give the AI the option of seeking out hit ships.
-		 */
-
-		search = false;
 		int[] target = new int[2];
-		// For 1.0
-		ListIterator<int[]> hits = firingSolution.listIterator();
 		// Has this changed? Is 5 still insane or is that 4 now?
 		if (difficulties < 5) {
 			if (difficulties == 1) {
-				target = hits.next();
-				// Remove the last square to be hit from the list permanently
-				hits.remove();
+				target = randomAttack();
 			} else if (difficulties == 3) {
 				// Check to see if last attack resulted in a hit
 				// Go to hunt if that is the case, else do random attack
 				if (lastShot == LastShot.HIT) {
 					// do the stuff for hunting attack
+					huntingAttack(true);
 				} else {
 					// New random attack
+					target = randomAttack();
 				}
 			}
 		} else if (difficulties == 5) {
@@ -329,11 +321,21 @@ public class AI extends Player {
 		return target;
 	}
 	
+	/**
+	 * Pops a random attack from firingSolution and returns it
+	 * @return the next random coordinate to attack
+	 */
 	private int[] randomAttack() {
 		int[] tempCoord = new int[2];
 		if (firingSolution.size() > 0) {
 			Iterator<int[]> hits = firingSolution.iterator();
 			tempCoord = hits.next();
+			firingSolution.remove(tempCoord);
+		} else {
+			// We shouldn't ever end up here, but let's set something up just
+			// in case.
+			tempCoord[0] = 0;
+			tempCoord[1] = 0;
 		}
 		return tempCoord;
 	}
