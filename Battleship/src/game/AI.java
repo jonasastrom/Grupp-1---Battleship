@@ -300,6 +300,7 @@ public class AI extends Player {
 		int[] target = new int[2];
 		// For 1.0
 		ListIterator<int[]> hits = firingSolution.listIterator();
+		// Has this changed? Is 5 still insane or is that 4 now?
 		if (difficulties < 5) {
 			if (difficulties == 1) {
 				target = hits.next();
@@ -336,7 +337,7 @@ public class AI extends Player {
 				// Create the list of coordinates to attack around the last 
 				// hit we made, set searching to true and return the first 
 				// hunting coordinate
-				huntSolution = lookForNeighbour();
+				huntSolution = lookForNeighbour(lastAttack[0], lastAttack[1]);
 				search = true;
 			} else {
 				// Return random coordinate to attack and pop that off the 
@@ -349,7 +350,7 @@ public class AI extends Player {
 		}
 
 		if (huntSolution.size() > 1) {
-			// Pop a huntcoordinate from the list and return it
+			// Pop a hunt coordinate from the list and return it
 			Iterator<int[]> iter = huntSolution.iterator();
 			attackCoord = iter.next();
 			huntSolution.remove(attackCoord);
