@@ -318,7 +318,7 @@ public class AI extends Player {
 			Iterator<int[]> it = cheatList().iterator(); //iterator for the created list
 			if(it.hasNext()){				//if there is a next coordinate shoot on it.
 				target = it.next();
-				cheatList().remove(it);			//don't forget to remove the used coordinate
+				cheatList().remove(target);			//don't forget to remove the used coordinate
 			}
 		} else {
 			// Gameengine should never do anything with these, but we may end 
@@ -329,6 +329,8 @@ public class AI extends Player {
 		
 		// Retain these attack coordinates for reference next turn
 		lastAttack = target;
+		if(difficulties < 4)
+			removeFiringSolution(target);
 		return target;
 	}
 	
@@ -468,16 +470,42 @@ public class AI extends Player {
 			pos[1]=y-1;
 			neighbours.add(pos);
 		}
-		goThroughCheat();
+		goThroughNeighbors();
 		return neighbours;
 	}
 	
-	private void goThroughCheat(){
-		Iterator<int[]> it = neighbours.iterator();	// create iterator here, not to confuse the iterator	
-		while(it.hasNext()){						//look for dead neighbors and take them away from the list
-			int[] notThere = it.next();	
-			if(!(firingSolution.contains(notThere)) ){
-				neighbours.remove(notThere);
+	/**
+	 * remove from list if equal to pos.
+	 * @param pos
+	 */
+	private void removeFiringSolution(int[] pos){
+		for(int i=0; i<firingSolution.size(); i++){
+			int[] test = firingSolution.get(i);
+			if(test[0] == pos[0] && test[1] == pos[1]){
+				firingSolution.remove(i);
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * remove the ones AI already shot on
+	 * @param pos
+	 */
+	private void goThroughNeighbors(){
+		for(int[] neigh: neighbours){
+			boolean keep = false;
+			for(int i = 0; i<firingSolution.size(); i++){
+				int[] hit = firingSolution.get(i);
+				if(neigh[0] == hit[0] && neigh[1] == hit[1]){
+					keep = true;
+					break;
+				}
+				if(!keep){
+					neighbours.remove(neigh);
+					break;
+				}
+				
 			}
 		}
 	}
