@@ -93,11 +93,7 @@ public class GameEngine{
 		winPlayer = false;
 		playerLastShot = LastShot.MISS;
 		aiLastShot = LastShot.MISS;
-		if (difficulty == 0)
-			playerTurn = true;
-		else {
-			player.placeShips();
-		}
+		player.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
