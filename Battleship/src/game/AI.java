@@ -449,18 +449,22 @@ public class AI extends Player {
 		int[] pos = new int[2];				//put the neighbors into the list
 		if(x < 9){
 			pos[0]=x+1;
+			pos[1]= y;
 			neighbours.add(pos);
 		}
 		if(x > 0){
 			pos[0]=x-1;
+			pos[1]= y;
 			neighbours.add(pos);
 		}
 		if(y < 9){
-			pos[1]=y-1;
+			pos[1]=y+1;
+			pos[0]= x;
 			neighbours.add(pos);
 		}
 		if(y > 0){
-			pos[1]=y+1;
+			pos[0]= x;
+			pos[1]=y-1;
 			neighbours.add(pos);
 		}
 		goThroughCheat();
