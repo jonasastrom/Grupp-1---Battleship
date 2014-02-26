@@ -18,7 +18,7 @@ import java.net.URLConnection;
  * @version 2.0
  */
 @SuppressWarnings("unused")		// Because yellow lines are annoying
-public class GameEngine {
+public class GameEngine extends Thread{
 	private static Gui gui;
 	private Human player;
 	private AI ai;
@@ -32,6 +32,7 @@ public class GameEngine {
 	private int difficulty;
 	private String playerName;
 	private long points;
+	private static GameEngine game; // <---- is it even necessary.. ? added for debugging
 	
 	public enum LastShot {MISS, HIT, SUNK}
 	
@@ -44,10 +45,9 @@ public class GameEngine {
 //		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty,when that's implemented
 //		ai = new AI(difficulty, player.getBattlefield(), listener); //ai can use a isSunk bool to keep track if the fleet got sunk
 		
-		init(); //does exactly the same thing as above + creates a ZoneListener + addObservers + newGame is called
-		
 		highScore = new HighScore();
-		inputPlayerName();
+		init(); //does exactly the same thing as above + creates a ZoneListener + addObservers + newGame is called
+		//inputPlayerName(); ask the name at the end instead?
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class GameEngine {
 	 * @param args Does absolutely nothing in this program
 	 */
 	public static void main(String[] args) {
-		new GameEngine(); //calls init and creates a HighScore object and asks for inputname
+		game = new GameEngine(); //calls init and creates a HighScore object and asks for inputname
 	}
 	
 	public static Gui getGui(){
@@ -64,13 +64,20 @@ public class GameEngine {
 	}
 		
 	public void init(){
+		
 		listener = new ZoneListener();
 		player = new Human(listener);
 		gui = new Gui(this, player); //so gui can place the boats
 		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty,when that's implemented
 		ai = new AI(difficulty, player.getBattlefield(), listener); //ai can use a isSunk bool to keep track if the fleet got sunk
 		listener.addObserver(gui);
-		newGame();
+		Thread thread = new Thread(){
+			public void run(){
+				game.newGame();
+			}
+		}; 
+		thread.start();
+		//newGame();
 	}
 	
 	/**
@@ -113,6 +120,8 @@ public class GameEngine {
 
 		String winText;
 		boolean newHighScore;
+		
+		inputPlayerName(); //ask if the player wants to save his highscore
 		
 		newHighScore = highScore.addScore(points, playerName);
 		if (gameOver) {
@@ -181,6 +190,7 @@ public class GameEngine {
 	 *	Empties the objects, cleans them away and recreates them for a new game 
 	 */
 	private void resetGame() {
+		listener.deleteObservers();
 		gui.removeAll();
 		gui.setVisible(false);
 		gui = null;
@@ -188,11 +198,12 @@ public class GameEngine {
 		player = null;
 		ai = null;
 		listener = null;
+		game = null; 	//maybe?
+		
 		System.gc();	// Calls GC here to make sure it does its job
 						// This keeps the program from ever taking up too much memory
 						// I do this because I think the GC is lazy
 		try {Thread.sleep(150);} catch (InterruptedException e2) {}
-		
 //		listener = new ZoneListener();
 //		player = new Human(listener);
 //		gui = new Gui(this,player);
@@ -201,8 +212,8 @@ public class GameEngine {
 //		ai = new AI(difficulty, player.getBattlefield(), listener);
 //		listener.addObserver(gui);
 //		newGame();
-		
-		init(); //does exactly the same thing as above
+		game = new GameEngine(); //necessary?
+		//init(); //does exactly the same thing as above
 	}
 	
 	/**
