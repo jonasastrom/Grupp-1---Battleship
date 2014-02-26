@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.ListIterator;
+//import java.util.ListIterator;
 
 /**
  * class AI
@@ -315,10 +315,10 @@ public class AI extends Player {
 		} else if (difficulties == 4) {
 			// Will only shoot where a hit is guaranteed. This looks as if it 
 			// will require access to opponents battlefield.
-			Iterator<int[]> it = cheat.iterator(); //iterator for the created list
+			Iterator<int[]> it = cheatList().iterator(); //iterator for the created list
 			if(it.hasNext()){				//if there is a next coordinate shoot on it.
 				target = it.next();
-				cheat.remove(it);			//don't forget to remove the used coordinate
+				cheatList().remove(it);			//don't forget to remove the used coordinate
 			}
 		} else {
 			// Gameengine should never do anything with these, but we may end 
@@ -453,16 +453,19 @@ public class AI extends Player {
 			neighbours.add(pos);
 		}
 		if(x > 0){
+			pos = new int[2];
 			pos[0]=x-1;
 			pos[1]= y;
 			neighbours.add(pos);
 		}
 		if(y < 9){
+			pos = new int[2];
 			pos[1]=y+1;
 			pos[0]= x;
 			neighbours.add(pos);
 		}
 		if(y > 0){
+			pos = new int[2];
 			pos[0]= x;
 			pos[1]=y-1;
 			neighbours.add(pos);
