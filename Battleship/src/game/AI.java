@@ -326,15 +326,10 @@ public class AI extends Player {
 			target[0] = 0;
 			target[1] = 0;
 		}
-			
-		// Completely frivolous pause to "think"
-		try {
-			Thread.sleep(1000);
-		} catch (Exception e) {
-			System.out.println("Sleep in AI caused the following error: " 
-								+ e.toString());
-		}
 		
+		// Retain these attack coordinates for reference next turn
+		lastAttack = target;
+			
 		return target;
 	}
 	
