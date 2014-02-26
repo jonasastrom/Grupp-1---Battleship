@@ -31,11 +31,13 @@ public class GameEngine{
 	private int difficulty;
 	private String playerName;
 	private long points;
+	private boolean difficultyChanged;
 	
 	public enum LastShot {MISS, HIT, SUNK}
 	
 	public GameEngine(){
 		highScore = new HighScore();
+		difficultyChanged = false;
 		init(); 
 	}
 	
@@ -57,8 +59,10 @@ public class GameEngine{
 		listener = new ZoneListener();
 		player = new Human(listener);
 		gui = new Gui(this, player); //so gui can place the boats
-		inputPlayerName(); 
-		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty
+		inputPlayerName();
+		if(!difficultyChanged)
+			difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty
+		difficultyChanged = false;
 		ai = new AI(difficulty, player.getBattlefield(), listener);
 		listener.addObserver(gui);
 		Thread thread = new Thread(){
@@ -157,6 +161,8 @@ public class GameEngine{
 		highScore.addScore(5001, "Stefan");
 		highScore.addScore(-199, "Jimmie");
 		gui.showHighscore(highScore.getHighScoreList());
+		System.out.println("Testing server thingy");
+		testHighScoreServer();
 	}
 	
 	/**
@@ -229,6 +235,10 @@ public class GameEngine{
 		setPlayerTurn(); // Ai done, player's turn now
 	}
 	
+	public void testHighScoreServer() {
+		try {updateHighScore("127.0.0.1\\gurka.dat");} catch (IOException e) {}
+	}
+	
 	/**
 	 * This fetches the high score from a server, updates the local one,
 	 * then uploads the new high score to the server.
@@ -240,6 +250,7 @@ public class GameEngine{
 		HighScore newHighScore = null;
 		URL url = new URL(server);
 		URLConnection connection = url.openConnection();
+		connection.connect();
 		
 		DataInputStream inputStream = new DataInputStream(connection.getInputStream());
 		ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
@@ -247,7 +258,8 @@ public class GameEngine{
 		if(newHighScore != null)
 			changed = highScore.compHighScore(newHighScore);
 		inputStream.close();
-		if(changed){
+		if(changed || newHighScore == null){
+			System.out.println("Writing to file");
 			DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 			objectOutputStream.writeObject(highScore);
@@ -279,6 +291,7 @@ public class GameEngine{
 	 */
 	public void setDifficulty(int newDifficulty) {
 		this.difficulty = newDifficulty;
+		difficultyChanged = true;
 		resetGame();
 		
 	}
