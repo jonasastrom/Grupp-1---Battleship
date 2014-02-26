@@ -329,7 +329,6 @@ public class AI extends Player {
 		
 		// Retain these attack coordinates for reference next turn
 		lastAttack = target;
-			
 		return target;
 	}
 	
@@ -342,7 +341,6 @@ public class AI extends Player {
 		if (firingSolution.size() > 0) {
 			Iterator<int[]> hits = firingSolution.iterator();
 			tempCoord = hits.next();
-			firingSolution.remove(tempCoord);
 		} else {
 			// We shouldn't ever end up here, but let's set something up just
 			// in case.
@@ -478,7 +476,7 @@ public class AI extends Player {
 		Iterator<int[]> it = neighbours.iterator();	// create iterator here, not to confuse the iterator	
 		while(it.hasNext()){						//look for dead neighbors and take them away from the list
 			int[] notThere = it.next();	
-			if(!firingSolution.contains(notThere) ){
+			if(!(firingSolution.contains(notThere)) ){
 				neighbours.remove(notThere);
 			}
 		}
