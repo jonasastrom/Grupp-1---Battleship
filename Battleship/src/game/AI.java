@@ -382,7 +382,7 @@ public class AI extends Player {
 	}
 	
 	/**
-	 * Make a list, where the opponent's ship is set.
+	 * Create a list, where the opponent's ship is set.
 	 * @return cheat
 	 */
 	private ArrayList<int[]> cheatList(){
