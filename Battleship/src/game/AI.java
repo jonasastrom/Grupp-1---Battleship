@@ -298,7 +298,10 @@ public class AI extends Player {
 		if (difficulties < 4) {
 			if (difficulties == 1) {
 				target = randomAttack();
-			} else if (difficulties == 2) {
+			} else if (difficulties == 2 || difficulties == 3) {
+				// First of all, if this is difficulty 3, we have to decide if 
+				// we're doing a cheat attack or following the pattern from 
+				// difficulty 2
 				// Check to see if last attack resulted in a hit
 				// Go to hunt if that is the case, else do random attack
 				if (lastShot == LastShot.HIT) {
@@ -318,6 +321,14 @@ public class AI extends Player {
 			target[1] = 0;
 		}
 			
+		// Completely frivolous pause to "think"
+		try {
+			Thread.sleep(5000);
+		} catch (Exception e) {
+			System.out.println("Sleep in AI caused the following error: " 
+								+ e.toString());
+		}
+		
 		return target;
 	}
 	
