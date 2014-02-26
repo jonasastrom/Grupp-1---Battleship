@@ -305,7 +305,7 @@ public class AI extends Player {
 				// difficulty 2
 				// Check to see if last attack resulted in a hit
 				// Go to hunt if that is the case, else do random attack
-				if (lastShot == LastShot.HIT) {
+				if (lastShot == LastShot.HIT || search) {
 					// do the stuff for hunting attack
 					target = huntingAttack(true);
 				} else {
