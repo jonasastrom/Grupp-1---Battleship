@@ -415,7 +415,7 @@ public class AI extends Player {
 	}
 	
 	/**
-	 * Make a list, where the opponent's ship is set.
+	 * Create a list, where the opponent's ship is set.
 	 * @return cheat
 	 */
 	private ArrayList<int[]> cheatList(){
@@ -444,7 +444,6 @@ public class AI extends Player {
 	 * @return neighbors 
 	 */
 	private ArrayList<int[]> lookForNeighbour(int x, int y){
-		Iterator<int[]> it = neighbours.iterator();
 		int[] pos = new int[2];		
 		if(x < 9){
 			pos[0]=x+1;
@@ -463,6 +462,7 @@ public class AI extends Player {
 			neighbours.add(pos);
 		}
 		
+		Iterator<int[]> it = neighbours.iterator();	// create iterator here, not to confuse the iterator	
 		while(it.hasNext()){
 			int[] notThere = it.next();
 			if(!firingSolution.contains(notThere) ){
