@@ -41,7 +41,7 @@ import game.ZoneListener;
 public class Gui extends JFrame implements ActionListener, Observer {
 
 	private static final long serialVersionUID = -508235750073237690L;
-	private JMenuItem newGame, quit, highscore, about, rules, training, easy, normal, hard, insane, playerWins, playerLose, ATOMBOMB, allPoints;
+	private JMenuItem newGame, quit, highScore, about, rules, training, easy, normal, hard, insane, playerWins, playerLose, ATOMBOMB, allPoints;
 	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
 	private JLabel informatioText;
 	private ArrayList<String> letters = new ArrayList<String>();
@@ -78,7 +78,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		setLayout(new BorderLayout(10, 10));
 
 		/**
-		 *  Add the buttons to the left in the frame, add them in a group of button, and add actionListeners
+		 *  Add the buttons to the right in the frame, add them in a group of button, and add actionListeners
 		 */
 		buttonGroup = new ButtonGroup();
 
@@ -114,7 +114,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		jRadioButtonArray.add(cruiser);
 		jRadioButtonArray.add(destroyer);
 
-		add(radioButtonPanel, BorderLayout.WEST);
+		add(radioButtonPanel, BorderLayout.EAST);
 
 		/**
 		 * Add the color-description to the top of the frame
@@ -148,9 +148,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		add(informatioText, BorderLayout.SOUTH);
 
 		/**
-		 * Add a empty text-label to the right of the frame
+		 * Add a empty text-label to the left of the frame
 		 */
-		add(new JLabel("   "), BorderLayout.EAST);
+		add(new JLabel("   "), BorderLayout.WEST);
 
 		/**
 		 * Add the zones in the middle of the frame. Create two JPanel and add them to a third one and add that one to the frame.
@@ -237,9 +237,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		menu.add(newGame);
 		newGame.addActionListener(this);
 
-		highscore = new JMenuItem("Highscore");
-		menu.add(highscore);
-		highscore.addActionListener(this);
+		highScore = new JMenuItem("Highscore");
+		menu.add(highScore);
+		highScore.addActionListener(this);
 
 		quit = new JMenuItem("Quit");
 		menu.add(quit);
@@ -378,7 +378,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	}
 
 	/**
-	 * This method create a frame with the highscore
+	 * This method create a frame with the high score
 	 */
 	public void showHighscore(ArrayList<Score> list){
 		JFrame frame = new JFrame("Highscore");
@@ -437,7 +437,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 			gameEngine.gameOver();
 		}else if(e.getSource() == quit){
 			System.exit(0);
-		}else if(e.getSource() == highscore){
+		}else if(e.getSource() == highScore){
 			gameEngine.printHighScore();
 		}else if(e.getSource() == about){
 			JOptionPane.showMessageDialog(null, "Hej! \nVi är 7 coola kids från DAT055 och vi gör ett spel " +
@@ -445,15 +445,15 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() == rules){
 			openURIForRules();
 		}else if(e.getSource() == training){
-			System.out.println("training");
+			gameEngine.setDifficulty(0);
 		}else if(e.getSource() == easy){
-			System.out.println("easy");
+			gameEngine.setDifficulty(1);
 		}else if(e.getSource() == normal){
-			System.out.println("normal");
+			gameEngine.setDifficulty(2);
 		}else if(e.getSource() == hard){
-			System.out.println("hard");
+			gameEngine.setDifficulty(3);
 		}else if(e.getSource() == insane){
-			System.out.println("insane");
+			gameEngine.setDifficulty(4);
 		}else if(e.getSource() instanceof Zone){
 			/**
 			 * This is when the user has click on a zone
@@ -502,7 +502,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				}
 			}
 			/**
-			 * Here are the if-statements when the user click on battleship button to the left.
+			 * Here are the if-statements when the user click on battleship button to the right.
 			 * This methods disable all buttons, and keep the pressed one selected.
 			 * Save the selected ships size, and name, and initialize the int-arrays x and y to the size of the ship.
 			 */
