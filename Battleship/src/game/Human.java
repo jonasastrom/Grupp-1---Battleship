@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 /**
- * Handles the human player
+ * Handles the human player.
  * 
  * @author Group 1 - DAT055 2014
  * @version 2.0
@@ -16,7 +16,7 @@ public class Human extends Player
 	private Fleet fleet;
 
 	/**
-	 * Construct the human player
+	 * Construct the human player.
 	 */
 	public Human(ZoneListener zoneListener)
 	{
@@ -26,8 +26,8 @@ public class Human extends Player
 	}
 
 	/**
-	 * Called by the GameEngine when
-	 * this player should place it's ships
+	 * Called by the GameEngine when this
+	 * player should place it's ships.
 	 */
 	public void placeShips()
 	{
@@ -37,17 +37,15 @@ public class Human extends Player
 			catch (InterruptedException e) {}
 		}
 	}
-	
+
 	/**
 	 * A debug version of placeShips,
-	 * called by the GameEngine
+	 * called by the GameEngine.
 	 */
 	public void placeShipsDebug()
 	{
-		System.out.println("placeShipsDebug called");
-		
 		ArrayList<Ship> ships = fleet.getShips();
-		
+
 		// carrier
 		battlefield.setShip(0, 0, ships.get(0));
 		battlefield.setShip(1, 0, ships.get(0));
@@ -55,37 +53,35 @@ public class Human extends Player
 		battlefield.setShip(3, 0, ships.get(0));
 		battlefield.setShip(4, 0, ships.get(0));
 		ships.get(0).setPlaced();
-		
+
 		// battleship
 		battlefield.setShip(0, 1, ships.get(1));
 		battlefield.setShip(1, 1, ships.get(1));
 		battlefield.setShip(2, 1, ships.get(1));
 		battlefield.setShip(3, 1, ships.get(1));
 		ships.get(1).setPlaced();
-		
+
 		// submarine
 		battlefield.setShip(0, 2, ships.get(2));
 		battlefield.setShip(1, 2, ships.get(2));
 		battlefield.setShip(2, 2, ships.get(2));
 		ships.get(2).setPlaced();
-		
+
 		// cruiser
 		battlefield.setShip(0, 3, ships.get(3));
 		battlefield.setShip(1, 3, ships.get(3));
 		battlefield.setShip(2, 3, ships.get(3));
 		ships.get(3).setPlaced();
-		
+
 		// destroyer
 		battlefield.setShip(0, 4, ships.get(4));
 		battlefield.setShip(1, 4, ships.get(4));
 		ships.get(4).setPlaced();
-		
-		System.out.println("placeShipsDebug finished");
 	}
 
 	/**
 	 * Called by the GUI when a ship has been
-	 * placed on the battlefield
+	 * placed on the battlefield.
 	 * @param name The name of the ship
 	 * @param x An array with all x-coordinates
 	 * @param y An array with all y-coordinates
@@ -95,7 +91,7 @@ public class Human extends Player
 	public boolean placeShip(String name, int[] x, int[] y)
 	{
 		boolean error = false;
-		
+
 		Iterator<Ship> it = fleet.getShips().iterator();
 		Ship ship = null;
 
@@ -103,7 +99,7 @@ public class Human extends Player
 			ship = it.next();
 			if (ship.getName().equals(name)) break;
 		}
-		
+
 		int length = ship.getLength();
 
 		if (x.length != length || y.length != length)
@@ -125,9 +121,9 @@ public class Human extends Player
 		}
 
 		if (!xEquals && !yEquals) error = true;
-		
+
 		int[] c = new int[length];
-		
+
 		// Checks if xEqual is true. If it is not all
 		// the entries in x[] are the same and the for
 		// loop is executed and fills the c[] with
@@ -137,7 +133,7 @@ public class Human extends Player
 				c[i] = x[i];
 			}
 		}
-		
+
 		// Checks if yEqual is true. If it is not all
 		// the entries in y[] are the same and the for
 		// loop is executed and fills the c[] with
@@ -148,6 +144,7 @@ public class Human extends Player
 			}
 		}
 
+		// Sort the coordinates in numerical order
 		Arrays.sort(c);
 
 		// Checks if c of one position incremented with
@@ -165,8 +162,7 @@ public class Human extends Player
 				battlefield.setClear(x[i],y[i]);
 			}
 			return false;
-		}
-		else {
+		} else {
 			for (int i = 0; i < length; i++) {
 				battlefield.setShip(x[i],y[i],ship);
 			}

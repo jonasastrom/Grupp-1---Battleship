@@ -1,7 +1,7 @@
 package game;
 
 /**
- * Handles a ship
+ * Handles a single ship.
  * 
  * @author Group 1 - DAT055 2014
  * @version 1.0
@@ -16,7 +16,7 @@ public class Ship
 	private boolean isSunk = false;
 
 	/**
-	 * Construct a ship
+	 * Construct a ship.
 	 * @param length Length of this ship
 	 * @param name Name of this ship
 	 */
@@ -28,15 +28,17 @@ public class Ship
 	}
 
 	/**
-	 * Return the length of this ship
+	 * Get the length of this ship.
+	 * @return The length
 	 */
 	public int getLength()
 	{
 		return length;
 	}
-	
+
 	/**
-	 * Return the name of this ship
+	 * Get the name of this ship.
+	 * @return The name
 	 */
 	public String getName()
 	{
@@ -44,7 +46,7 @@ public class Ship
 	}
 
 	/**
-	 * Check the orientation of this ship
+	 * Check the orientation of this ship.
 	 * @return true if this ship is vertical,
 	 *         false if it is horizontal
 	 */
@@ -54,7 +56,7 @@ public class Ship
 	}
 
 	/**
-	 * Rotates the ship 90 degrees
+	 * Rotate this ship 90 degrees.
 	 */
 	public void rotate()
 	{
@@ -62,7 +64,7 @@ public class Ship
 	}
 
 	/**
-	 * Check if the ship has been placed
+	 * Check if the ship has been placed.
 	 * @return true if this ship is placed,
 	 *         false otherwise
 	 */
@@ -70,9 +72,9 @@ public class Ship
 	{
 		return isPlaced;
 	}
-	
+
 	/**
-	 * Set this ship as placed
+	 * Set this ship as placed.
 	 */
 	public void setPlaced()
 	{
@@ -80,7 +82,7 @@ public class Ship
 	}
 
 	/**
-	 * Check if the ship floats
+	 * Check if the ship is sunk.
 	 * @return true if the ship is sunk,
 	 *         false if it still floats
 	 */
@@ -91,7 +93,8 @@ public class Ship
 
 	/**
 	 * Hit this ship with a bomb and
-	 * decrease it's health
+	 * decrease it's health, set it to
+	 * sunk when the health reaches zero.
 	 */
 	public void hit()
 	{

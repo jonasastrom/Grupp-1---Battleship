@@ -3,7 +3,7 @@ package game;
 import game.GameEngine.LastShot;
 
 /**
- * Handles the battlefield for a player
+ * Handles the battlefield for a player.
  * 
  * @author Group 1 - DAT055 2014
  * @version 1.0
@@ -13,7 +13,7 @@ public class Battlefield
 	private Zone[][] zones;
 
 	/**
-	 * Construct the battlefield with 100 zones
+	 * Construct the battlefield with 100 zones.
 	 */
 	public Battlefield(String id, ZoneListener zoneListener)
 	{
@@ -27,8 +27,17 @@ public class Battlefield
 	}
 
 	/**
+	 * Get a matrix with all the zones.
+	 * @return The matrix
+	 */
+	public Zone[][] getZones()
+	{
+		return zones;
+	}
+
+	/**
 	 * Check if the zone with the specified
-	 * coordinates has been bombed
+	 * coordinates has been bombed.
 	 * @param x The x-coordinate of the zone
 	 * @param y The y-coordinate of the zone
 	 * @return true if the zone has been bombed,
@@ -41,11 +50,10 @@ public class Battlefield
 
 	/**
 	 * Bomb the zone with the specified coordinates
-	 * and sink the ship if it was sunk
+	 * and sink the ship if it was sunk.
 	 * @param x The x-coordinate of the zone
 	 * @param y The y-coordinate of the zone
-	 * @return true if a ship was hit,
-	 *         false otherwise
+	 * @return  MISS, HIT or SUNK
 	 */
 	public LastShot setBomb(int x, int y)
 	{	
@@ -62,10 +70,10 @@ public class Battlefield
 
 	/**
 	 * Check if the zone with the specified
-	 * coordinates is occupied by a ship
+	 * coordinates is occupied by a ship.
 	 * @param x The x-coordinate of the zone
 	 * @param y The y-coordinate of the zone
-	 * @return true if a ship occupies the zone
+	 * @return true if a ship occupies the zone,
 	 *         false if the zone is free
 	 */
 	public boolean hasShip(int x, int y)
@@ -74,7 +82,7 @@ public class Battlefield
 	}
 
 	/**
-	 * Return the ship at the specified coordinates
+	 * Return the ship at the specified coordinates.
 	 * @param x The x-coordinate of the zone
 	 * @param y The y-coordinate of the zone
 	 * @return Ship or null if there is no ship
@@ -85,7 +93,7 @@ public class Battlefield
 	}
 
 	/**
-	 * Place a ship at the specified coordinates
+	 * Place a ship at the specified coordinates.
 	 * @param x The x-coordinate of the zone
 	 * @param y The y-coordinate of the zone
 	 * @param ship The ship occupying the zone
@@ -96,7 +104,7 @@ public class Battlefield
 	}
 
 	/**
-	 * Sink a ship on the battlefield
+	 * Sink a ship on the battlefield.
 	 * @param ship The ship that shall be sunk
 	 */
 	public void sinkShip(Ship ship)
@@ -108,10 +116,10 @@ public class Battlefield
 			}
 		}
 	}
-	
+
 	/**
 	 * Show all ships on this battlefield
-	 * if they are hidden
+	 * that are hidden.
 	 */
 	public void showShips()
 	{
@@ -121,22 +129,15 @@ public class Battlefield
 			}
 		}
 	}
-	
+
 	/**
-	 * Sets the specified zone to be cleared
+	 * Clears the zone with the specified
+	 * coordinates in the GUI.
 	 * @param x The x-coordinate of the zone
 	 * @param y The y-coordinate of the zone
 	 */
 	public void setClear(int x, int y)
 	{
 		zones[x][y].setClear();
-	}
-
-	/**
-	 * @return Matrix with all the zones
-	 */
-	public Zone[][] getZones()
-	{
-		return zones;
 	}
 }
