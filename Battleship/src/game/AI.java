@@ -511,20 +511,20 @@ public class AI extends Player {
 	 * @param pos
 	 */
 	private void goThroughNeighbors() {
-		int nSize = neighbours.size();
-		for (int j = 0; j < nSize; j++) {
-			int[] neigh = neighbours.get(j);
+		for (int j = 0; j < firingSolution.size(); j++) {
+			Iterator<int[]> it = neighbours.iterator();
 			boolean keep = false;
-			for (int i = 0; i < firingSolution.size(); i++) {
-				int[] hit = firingSolution.get(i);
+			while (it.hasNext()) {
+				
+				int[] neigh = it.next();
+				int[] hit = firingSolution.get(j);
 				if (neigh[0] == hit[0] && neigh[1] == hit[1]) {
 					keep = true;
 					break;
 				}
 			}
 			if (!keep) {
-				neighbours.remove(neigh);
-				j--;
+				it.remove();
 				break;
 			}
 
