@@ -295,10 +295,10 @@ public class AI extends Player {
 	public int[] attack(LastShot lastShot) {
 		int[] target = new int[2];
 		// Has this changed? Is 5 still insane or is that 4 now?
-		if (difficulties < 5) {
+		if (difficulties < 4) {
 			if (difficulties == 1) {
 				target = randomAttack();
-			} else if (difficulties == 3) {
+			} else if (difficulties == 2) {
 				// Check to see if last attack resulted in a hit
 				// Go to hunt if that is the case, else do random attack
 				if (lastShot == LastShot.HIT) {
