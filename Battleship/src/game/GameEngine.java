@@ -27,7 +27,7 @@ public class GameEngine {
 	private static boolean playerTurn;
 	private LastShot playerLastShot;
 	private LastShot aiLastShot;
-	private static ZoneListener listener;
+	private ZoneListener listener;
 	private HighScore highScore;
 	private int difficulty;
 	private String playerName;
@@ -35,13 +35,17 @@ public class GameEngine {
 	
 	public enum LastShot {MISS, HIT, SUNK}
 	
-	public GameEngine(ZoneListener listener){
+	public GameEngine(){
 		// Creates a new object of GUI (for creating a frame)
-		difficulty = 0;	// Training mode gets to be the default difficulty
-		player = new Human(listener);
-		gui = new Gui(this, player); //so gui can place the boats
-		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty,when that's implemented
-		ai = new AI(difficulty, player.getBattlefield(), listener); //ai can use a isSunk bool to keep track if the fleet got sunk
+		
+//		difficulty = 0;	// Training mode gets to be the default difficulty
+//		player = new Human(listener);
+//		gui = new Gui(this, player); //so gui can place the boats
+//		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty,when that's implemented
+//		ai = new AI(difficulty, player.getBattlefield(), listener); //ai can use a isSunk bool to keep track if the fleet got sunk
+		
+		init(); //does exactly the same thing as above + creates a ZoneListener + addObservers + newGame is called
+		
 		highScore = new HighScore();
 		inputPlayerName();
 	}
@@ -52,17 +56,22 @@ public class GameEngine {
 	 * @param args Does absolutely nothing in this program
 	 */
 	public static void main(String[] args) {
-		listener = new ZoneListener();
-		GameEngine gamE = new GameEngine(listener);
-		listener.addObserver(gui);
-		gamE.newGame();
-		
+		new GameEngine(); //calls init and creates a HighScore object and asks for inputname
 	}
 	
 	public static Gui getGui(){
 		return gui;
 	}
 		
+	public void init(){
+		listener = new ZoneListener();
+		player = new Human(listener);
+		gui = new Gui(this, player); //so gui can place the boats
+		difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty,when that's implemented
+		ai = new AI(difficulty, player.getBattlefield(), listener); //ai can use a isSunk bool to keep track if the fleet got sunk
+		listener.addObserver(gui);
+		newGame();
+	}
 	
 	/**
 	 * Called by gui to say the whole fleet is now placed by the human player
@@ -184,14 +193,16 @@ public class GameEngine {
 						// I do this because I think the GC is lazy
 		try {Thread.sleep(150);} catch (InterruptedException e2) {}
 		
-		listener = new ZoneListener();
-		player = new Human(listener);
-		gui = new Gui(this,player);
-		listener.addObserver(gui);
-		//inputPlayerName(); 
-		difficulty = gui.selectDifficultyWIndow(); //  new difficulty might be needed instead of the inputname, same player?
-		ai = new AI(difficulty, player.getBattlefield(), listener);
-		newGame();
+//		listener = new ZoneListener();
+//		player = new Human(listener);
+//		gui = new Gui(this,player);
+//		//inputPlayerName(); 
+//		difficulty = gui.selectDifficultyWIndow(); //  new difficulty might be needed instead of the inputname, same player?
+//		ai = new AI(difficulty, player.getBattlefield(), listener);
+//		listener.addObserver(gui);
+//		newGame();
+		
+		init(); //does exactly the same thing as above
 	}
 	
 	/**
