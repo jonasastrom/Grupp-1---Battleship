@@ -66,7 +66,7 @@ public class GameEngine{
 		ai = new AI(difficulty, player.getBattlefield(), listener);
 		listener.addObserver(gui);
 		Thread thread = new Thread(){
-			public void run(){
+			public void run(){ //kill the thread?
 				newGame();
 			}
 		}; 
