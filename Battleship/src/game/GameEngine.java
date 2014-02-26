@@ -188,7 +188,8 @@ public class GameEngine {
 		player = new Human(listener);
 		gui = new Gui(this,player);
 		listener.addObserver(gui);
-		inputPlayerName();
+		//inputPlayerName(); 
+		difficulty = gui.selectDifficultyWIndow(); //  new difficulty might be needed instead of the inputname, same player?
 		ai = new AI(difficulty, player.getBattlefield(), listener);
 		newGame();
 	}
