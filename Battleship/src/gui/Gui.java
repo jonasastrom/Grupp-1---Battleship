@@ -82,11 +82,11 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		 */
 		buttonGroup = new ButtonGroup();
 
-		carrier = new JRadioButton("Carrier 5 Rutor");
-		battleship = new JRadioButton("Battleship 4 Rutor");
-		submarine = new JRadioButton("Submarine 3 Rutor");
-		cruiser = new JRadioButton("Cruiser 3 Rutor");
-		destroyer = new JRadioButton("Destroyer 2 Rutor ");
+		carrier = new JRadioButton("Carrier 5 Squares");
+		battleship = new JRadioButton("Battleship 4 Squares");
+		submarine = new JRadioButton("Submarine 3 Squares");
+		cruiser = new JRadioButton("Cruiser 3 Squares");
+		destroyer = new JRadioButton("Destroyer 2 Squares ");
 
 		carrier.addActionListener(this);
 		battleship.addActionListener(this);
@@ -124,16 +124,19 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		JLabel black = new JLabel("Black - Ship");
 		JLabel cerise = new JLabel("Cerise - Sunk");
 		JLabel gray = new JLabel("Gray - Miss");
+		JLabel blue = new JLabel("Blue - Sea");
 
 		green.setForeground(Color.GREEN);
 		black.setForeground(Color.BLACK);
 		cerise.setForeground(new Color(222, 49, 99));
 		gray.setForeground(Color.GRAY);
+		blue.setForeground(Color.BLUE);
 
 		colorPanel.add(green);
 		colorPanel.add(black);
 		colorPanel.add(cerise);
 		colorPanel.add(gray);
+		colorPanel.add(blue);
 
 		add(colorPanel, BorderLayout.NORTH);
 
@@ -141,7 +144,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		 * Add a empty JLabel to the bottom of the frame, the text of the label can be change 
 		 * by calling a method changeInformationText with a String as parameter
 		 */
-		informatioText = new JLabel(" ");
+		informatioText = new JLabel("Place your ship on the right side. Bomb on the left side");
 		add(informatioText, BorderLayout.SOUTH);
 
 		/**
@@ -323,7 +326,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	/**
 	 * Show an input dialog where the user can select a difficulty
 	 */
-	// VAD HÄNDER OM MAN KRYSSAR NER RUTAN UTAN ATT FYLLA I NÅGON SVÅRIGHETSGRAD?!
 	public int selectDifficultyWIndow(){
 		Object[] options = {"Training", "Easy", "Normal", "Hard", "Insane"};
 		int difficulty = 0;
@@ -500,7 +502,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				}
 			}
 			/**
-			 * Here are the if-statement when the user click on battleship button to the left.
+			 * Here are the if-statements when the user click on battleship button to the left.
 			 * This methods disable all buttons, and keep the pressed one selected.
 			 * Save the selected ships size, and name, and initialize the int-arrays x and y to the size of the ship.
 			 */
@@ -574,7 +576,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 
 			Zone zone = null;
 			/**
-			 * Check if it is the left or right battlefield that was hit
+			 * Check if it is the left or right battlefield that should be modified
 			 */
 			if(ZoneLink.leftOrRight.equals("right")){
 				zone = rightZoneArray.get(((ZoneLink.y) * 10) + ZoneLink.x);
@@ -582,7 +584,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				zone = leftZoneArray.get(((ZoneLink.y) * 10) + ZoneLink.x);
 			}
 			/**
-			 * Change the color of the zone to gray, green, cerise, black or blue, depends on the input
+			 * Change the color of the zone to gray, green, pink, black or blue, depends on the input
 			 */
 			try{
 				if(ZoneLink.state.equals("miss")){
