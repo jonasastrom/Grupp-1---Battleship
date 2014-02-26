@@ -238,41 +238,32 @@ public class GameEngine{
 	}
 
 	/**
-	 * 
+	 * This reads the high scores from a file, adds it to the current
+	 * high scores and if there's been a change, then writes 
 	 */
 	public void updateHighScore(){
 		try {
 			BufferedReader in = new BufferedReader(new FileReader("highscore.txt"));
-			boolean changed = false;
 			String string = "";
 			String[] splitString = null;
 			if(( string = in.readLine()) != null){
 				splitString = string.split(" ");
 				for(int i = 0; i < splitString.length;){
-					if(highScore.addScore(Long.parseLong(splitString[i++]), splitString[i++])){
-						changed = true;
-					}
+					highScore.addScore(Long.parseLong(splitString[i++]), splitString[i++]))
 				}
 			}
 			in.close();
-			if(changed == true){
-				writeHighScore();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e){
-			e.printStackTrace();
-		}
+			writeHighScore();
+		} 	
+		catch (FileNotFoundException e){e.printStackTrace();}
+		catch (IOException e){e.printStackTrace();}
+		catch (NullPointerException e){e.printStackTrace();}
 	}
 
 	/**
 	 * This method writes the highscore to a text-file
 	 */
 	public void writeHighScore(){
-		System.out.println("write något");
-
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter("highscore.txt"));
 			ArrayList<Score> list = highScore.getHighScoreList();
@@ -282,15 +273,13 @@ public class GameEngine{
 				out.write(score.getPoints() + " " + score.getName() + " ");
 			}
 			out.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+		} 
+		catch (IOException e){e.printStackTrace();}		
 	}
 
 	/**
-	 * This should make the gui print the high score list,
-	 * if it exists and isn't empty
+	 * This updates the current high score list
+	 * and makes the gui print it
 	 */
 	public void printHighScore() {
 		updateHighScore();
@@ -300,6 +289,7 @@ public class GameEngine{
 
 	/**
 	 * This pops up a text field via gui that allows the player to input its name
+	 * If the name contains spaces, they're removed.
 	 */
 	private void inputPlayerName() {
 		String string = gui.enterName();
@@ -320,7 +310,10 @@ public class GameEngine{
 		difficultyChanged = true;
 		resetGame();
 	}
-
+	
+	/**
+	 * @return 0 if training, 1 if easy, 2 if normal, 3 if hard, 4 if impossible
+	 */
 	public int getDifficulty() {
 		return difficulty;
 	}
