@@ -202,7 +202,7 @@ public class GameEngine {
 	 */
 	public void coordinates (int x, int y ){
 		playerTurn = false;			// Player's turn is over
-		System.out.println("Coordinates called");
+	//	System.out.println("Coordinates called");  // ---Not needed anymore, commented away
 		playerLastShot = ai.bomb(x, y);
 		if(playerLastShot == LastShot.SUNK){gui.changeInformationText("You Sunk a Ship!");}
 		else if(playerLastShot == LastShot.HIT){gui.changeInformationText("You Hit!");}
