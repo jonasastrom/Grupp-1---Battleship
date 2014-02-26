@@ -315,6 +315,7 @@ public class AI extends Player {
 		} else if (difficulties == 5) {
 			// Will only shoot where a hit is guaranteed. This looks as if it 
 			// will require access to opponents battlefield.
+			
 		} else {
 			// Gameengine should never do anything with these
 			target[0] = 0;
@@ -444,7 +445,7 @@ public class AI extends Player {
 	 * @return neighbors 
 	 */
 	private ArrayList<int[]> lookForNeighbour(int x, int y){
-		int[] pos = new int[2];		
+		int[] pos = new int[2];				//put the neighbors into the list
 		if(x < 9){
 			pos[0]=x+1;
 			neighbours.add(pos);
@@ -463,8 +464,8 @@ public class AI extends Player {
 		}
 		
 		Iterator<int[]> it = neighbours.iterator();	// create iterator here, not to confuse the iterator	
-		while(it.hasNext()){
-			int[] notThere = it.next();
+		while(it.hasNext()){						//look for dead neighbors and take them away from the list
+			int[] notThere = it.next();	
 			if(!firingSolution.contains(notThere) ){
 				neighbours.remove(notThere);
 			}
