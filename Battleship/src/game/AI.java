@@ -1,5 +1,7 @@
 package game;
 
+import game.GameEngine.LastShot;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -289,7 +291,7 @@ public class AI extends Player {
 	 * @param lastShot An enum telling us what happened on the last shot
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
-	public int[] attack(GameEngine.LastShot lastShot) {
+	public int[] attack(LastShot lastShot) {
 		/**
 		 * 
 		 * Attack the player using the prepared list of random zones to hit.
@@ -309,6 +311,11 @@ public class AI extends Player {
 			} else if (difficulties == 3) {
 				// Check to see if last attack resulted in a hit
 				// Go to hunt if that is the case, else do random attack
+				if (lastShot == LastShot.HIT) {
+					// do the stuff for hunting attack
+				} else {
+					// New random attack
+				}
 			}
 		} else if (difficulties == 5) {
 			// Will only shoot where a hit is guaranteed. This looks as if it 
@@ -320,6 +327,15 @@ public class AI extends Player {
 		}
 			
 		return target;
+	}
+	
+	private int[] randomAttack() {
+		int[] tempCoord = new int[2];
+		if (firingSolution.size() > 0) {
+			Iterator<int[]> hits = firingSolution.iterator();
+			tempCoord = hits.next();
+		}
+		return tempCoord;
 	}
 	
 	/**
