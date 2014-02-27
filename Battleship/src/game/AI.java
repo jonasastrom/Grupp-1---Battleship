@@ -494,15 +494,23 @@ public class AI extends Player {
 	}
 
 	/**
-	 * remove from list if equal to pos.
-	 * 
-	 * @param pos
+	 * Remove given coordinate from both the random list of coordinates and
+	 * the list of cheating coordinates.
+	 * @param pos coordinates to remove from lists
 	 */
 	private void removeFiringSolution(int[] pos) {
 		for (int i = 0; i < firingSolution.size(); i++) {
 			int[] test = firingSolution.get(i);
 			if (test[0] == pos[0] && test[1] == pos[1]) {
 				firingSolution.remove(i);
+				break;
+			}
+		}
+		
+		for (int i = 0; i < cheat.size(); i++) {
+			int[] test = cheat.get(i);
+			if (test[0] == pos[0] && test[1] == pos[1]) {
+				cheat.remove(i);
 				break;
 			}
 		}
