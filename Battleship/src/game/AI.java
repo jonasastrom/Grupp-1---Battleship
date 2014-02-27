@@ -294,48 +294,30 @@ public class AI extends Player {
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
 	public int[] attack(LastShot lastShot) {
+		boolean doNotCheat = true;
 		int[] target = new int[2];
-		// Has this changed? Is 5 still insane or is that 4 now?
+		// If the list of cheating coordinates is empty, populate it.
+		if(cheat.isEmpty()){
+			cheatList();
+		}
+		
 		if (difficulties < 4) {
+			// If we are diff 3, random doNotCheat
 			if (difficulties == 1) {
 				target = randomAttack();
-			} else if (difficulties == 2 || difficulties == 3) {
-//				// First of all, if this is difficulty 3, we have to decide if
-//				// we're doing a cheat attack or following the pattern from
-//				// difficulty 2
-//				// Check to see if last attack resulted in a hit
-//				// Go to hunt if that is the case, else do random attack
-//				if (lastShot == LastShot.SUNK || lastShot == LastShot.HIT)
-//					search = false;
-//				if (lastShot == LastShot.HIT || search) {
-//					// do the stuff for hunting attack
-//					target = huntingAttack(true);
-//				} else {
-//					// New random attack
-//					target = randomAttack();
-//				}
-				if (lastShot == LastShot.HIT) {
-					lookForNeighbour(lastAttack[0], lastAttack[1]);
-					Iterator<int[]> iter = neighbours.iterator();
-					target = iter.next();
-					iter.remove();
-				} else if (lastShot == LastShot.MISS && neighbours.size() > 0) {
-					Iterator<int[]> iter = neighbours.iterator();
-					target = iter.next();
-					iter.remove();
-				} else 
-					target = randomAttack();
+			} else if (difficulties == 2) {
+				target = normalAttack(lastShot);
+			} else if (difficulties == 3) {
+				if (((new Random()).nextInt(2) > 0) && lastShot != LastShot.HIT) {
+					// Do cheating attack
+					target = insaneAttack();
+				} else
+					target = normalAttack(lastShot);
 			}
 		} else if (difficulties == 4) {
 			// Will only shoot where a hit is guaranteed. This looks as if it
 			// will require access to opponents battlefield.
-			Iterator<int[]> it = cheatList().iterator(); // iterator for the
-															// created list
-			if (it.hasNext()) { // if there is a next coordinate shoot on it.
-				target = it.next();
-				cheatList().remove(target); // don't forget to remove the used
-											// coordinate
-			}
+			target = insaneAttack();
 		} else {
 			// Gameengine should never do anything with these, but we may end
 			// up here if gameengine calls attack during difficulty 0
@@ -345,8 +327,47 @@ public class AI extends Player {
 
 		// Retain these attack coordinates for reference next turn
 		lastAttack = target;
-		if (difficulties < 4)
-			removeFiringSolution(target);
+		// Remove target from both lists of coordinates
+		removeFiringSolution(target);
+		return target;
+	}
+	
+	/**
+	 * Give the next cheating coordinates to attack
+	 * @return Coordinates to attack
+	 */
+	private int[] insaneAttack() {
+		int[] target;
+		Iterator<int[]> it = cheat.iterator();
+		if (it.hasNext()) {
+			// Take the next coordinate from the list
+			target = it.next();
+			// removal of coordinates from the cheat list has been moved 
+			// to removeFiringSolution
+		} else {
+			target = new int[2];
+		}
+		return target;
+	}
+	
+	/**
+	 * 
+	 * @param lastShot status of our last attack
+	 * @return coordinates to attack
+	 */
+	private int[] normalAttack(LastShot lastShot) {
+		int[] target;
+		if (lastShot == LastShot.HIT) {
+			lookForNeighbour(lastAttack[0], lastAttack[1]);
+			Iterator<int[]> iter = neighbours.iterator();
+			target = iter.next(); //better check if the iter.hasNext before going to next one in the list
+			iter.remove();			//error appeared
+		} else if (lastShot == LastShot.MISS && neighbours.size() > 0) {
+			Iterator<int[]> iter = neighbours.iterator();
+			target = iter.next();
+			iter.remove();
+		} else 
+			target = randomAttack();
 		return target;
 	}
 
@@ -373,7 +394,7 @@ public class AI extends Player {
 	 * A method to handle attacks when we are searching for a boat we already
 	 * hit once. If we do not have a list of zones to try, this method will
 	 * 
-	 * @return
+	 * @return coordinates to attack
 	 */
 	private int[] huntingAttack(boolean lastHit) {
 		int[] attackCoord = new int[2];
@@ -392,7 +413,7 @@ public class AI extends Player {
 				// random list
 				Iterator<int[]> iter = firingSolution.iterator();
 				attackCoord = iter.next();
-//				iter.remove();
+				// iter.remove();
 				return attackCoord;
 			}
 		}
@@ -409,7 +430,7 @@ public class AI extends Player {
 			// return next hunting coordinate
 			Iterator<int[]> iter = neighbours.iterator();
 			attackCoord = iter.next();
-//			iter.remove();
+			// iter.remove();
 			search = false;
 			return attackCoord;
 		}
@@ -438,11 +459,9 @@ public class AI extends Player {
 	 * 
 	 * @return cheat
 	 */
-	private ArrayList<int[]> cheatList() {
+	private void cheatList() {
 		Zone[][] countZones = opponent.getZones(); // got the zones
-		int[] pos = new int[2];
-		pos[0] = 0;
-		pos[1] = 0;
+		int[] pos;
 		for (int i = 0; i < 10; i++) { // look through the zone
 			for (int j = 0; j < 10; j++) {
 				if (countZones != null && countZones[i][j].hasShip() == true) { // if
@@ -452,6 +471,7 @@ public class AI extends Player {
 																				// on
 																				// that
 																				// zone
+					pos = new int[2];
 					pos[0] = countZones[i][j].getX(); // take out the x
 														// coordinate from zone
 					pos[1] = countZones[i][j].getY(); // take out the y
@@ -461,7 +481,6 @@ public class AI extends Player {
 			}
 		}
 		Collections.shuffle(cheat, new Random());
-		return cheat;
 	}
 
 	/**
@@ -474,8 +493,10 @@ public class AI extends Player {
 	 */
 	private ArrayList<int[]> lookForNeighbour(int x, int y) {
 		int[] pos; // put the neighbors into the list
-		
-		if (x>=0 && x < 9) {
+
+		neighbours.clear();
+
+		if (x >= 0 && x < 9) {
 			pos = new int[2];
 			pos[0] = x + 1;
 			pos[1] = y;
@@ -487,7 +508,7 @@ public class AI extends Player {
 			pos[1] = y;
 			neighbours.add(pos);
 		}
-		if (y>=0 && y < 9) {
+		if (y >= 0 && y < 9) {
 			pos = new int[2];
 			pos[1] = y + 1;
 			pos[0] = x;
@@ -499,15 +520,18 @@ public class AI extends Player {
 			pos[1] = y - 1;
 			neighbours.add(pos);
 		}
-		
+
 		goThroughNeighbors();
+		Collections.shuffle(neighbours, new Random());
 		return neighbours;
 	}
 
 	/**
-	 * remove from list if equal to pos.
+	 * Remove given coordinate from both the random list of coordinates and the
+	 * list of cheating coordinates.
 	 * 
 	 * @param pos
+	 *            coordinates to remove from lists
 	 */
 	private void removeFiringSolution(int[] pos) {
 		for (int i = 0; i < firingSolution.size(); i++) {
@@ -517,31 +541,29 @@ public class AI extends Player {
 				break;
 			}
 		}
+
+		for (int i = 0; i < cheat.size(); i++) {
+			int[] test = cheat.get(i);
+			if (test[0] == pos[0] && test[1] == pos[1]) {
+				cheat.remove(i);
+				break;
+			}
+		}
 	}
 
 	/**
-	 * remove the ones AI already shot on
-	 * compare the coordinates between firingSolution() and neighbours()
+	 * remove the ones AI already shot on compare the coordinates between
+	 * firingSolution() and neighbours()
+	 * 
 	 * @param pos
 	 */
 	private void goThroughNeighbors() {
-		for (int j = 0; j < firingSolution.size(); j++) {
-			Iterator<int[]> it = neighbours.iterator();
-			boolean keep = false;
-			while (it.hasNext()) {
-				
-				int[] neigh = it.next();
-				int[] hit = firingSolution.get(j);
-				if (neigh[0] == hit[0] && neigh[1] == hit[1]) {
-					keep = true;
-					break;
-				}
-			}
-			if (!keep) {
-				it.remove();
-				break;
-			}
+		Iterator<int[]> test = neighbours.iterator();
 
+		while (test.hasNext()) {
+			int[] neigh = test.next();
+			if (opponent.isBombed(neigh[0], neigh[1]))
+				test.remove();
 		}
 	}
 
