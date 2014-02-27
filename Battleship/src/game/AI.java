@@ -429,9 +429,7 @@ public class AI extends Player {
 	 */
 	private void cheatList() {
 		Zone[][] countZones = opponent.getZones(); // got the zones
-		int[] pos = new int[2];
-		pos[0] = 0;
-		pos[1] = 0;
+		int[] pos;
 		for (int i = 0; i < 10; i++) { // look through the zone
 			for (int j = 0; j < 10; j++) {
 				if (countZones != null && countZones[i][j].hasShip() == true) { // if
@@ -441,6 +439,7 @@ public class AI extends Player {
 																				// on
 																				// that
 																				// zone
+					pos= new int[2];
 					pos[0] = countZones[i][j].getX(); // take out the x
 														// coordinate from zone
 					pos[1] = countZones[i][j].getY(); // take out the y
