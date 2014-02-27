@@ -1,3 +1,5 @@
+package highscore;
+
 import javax.swing.JOptionPane;
 
 /**
