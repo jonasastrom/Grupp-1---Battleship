@@ -409,7 +409,7 @@ public class AI extends Player {
 				// random list
 				Iterator<int[]> iter = firingSolution.iterator();
 				attackCoord = iter.next();
-//				iter.remove();
+				// iter.remove();
 				return attackCoord;
 			}
 		}
@@ -426,7 +426,7 @@ public class AI extends Player {
 			// return next hunting coordinate
 			Iterator<int[]> iter = neighbours.iterator();
 			attackCoord = iter.next();
-//			iter.remove();
+			// iter.remove();
 			search = false;
 			return attackCoord;
 		}
@@ -467,7 +467,7 @@ public class AI extends Player {
 																				// on
 																				// that
 																				// zone
-					pos= new int[2];
+					pos = new int[2];
 					pos[0] = countZones[i][j].getX(); // take out the x
 														// coordinate from zone
 					pos[1] = countZones[i][j].getY(); // take out the y
@@ -489,10 +489,10 @@ public class AI extends Player {
 	 */
 	private ArrayList<int[]> lookForNeighbour(int x, int y) {
 		int[] pos; // put the neighbors into the list
-		
+
 		neighbours.clear();
-		
-		if (x>=0 && x < 9) {
+
+		if (x >= 0 && x < 9) {
 			pos = new int[2];
 			pos[0] = x + 1;
 			pos[1] = y;
@@ -504,7 +504,7 @@ public class AI extends Player {
 			pos[1] = y;
 			neighbours.add(pos);
 		}
-		if (y>=0 && y < 9) {
+		if (y >= 0 && y < 9) {
 			pos = new int[2];
 			pos[1] = y + 1;
 			pos[0] = x;
@@ -516,15 +516,17 @@ public class AI extends Player {
 			pos[1] = y - 1;
 			neighbours.add(pos);
 		}
-		
+
 		goThroughNeighbors();
 		return neighbours;
 	}
 
 	/**
-	 * Remove given coordinate from both the random list of coordinates and
-	 * the list of cheating coordinates.
-	 * @param pos coordinates to remove from lists
+	 * Remove given coordinate from both the random list of coordinates and the
+	 * list of cheating coordinates.
+	 * 
+	 * @param pos
+	 *            coordinates to remove from lists
 	 */
 	private void removeFiringSolution(int[] pos) {
 		for (int i = 0; i < firingSolution.size(); i++) {
@@ -534,7 +536,7 @@ public class AI extends Player {
 				break;
 			}
 		}
-		
+
 		for (int i = 0; i < cheat.size(); i++) {
 			int[] test = cheat.get(i);
 			if (test[0] == pos[0] && test[1] == pos[1]) {
@@ -545,13 +547,14 @@ public class AI extends Player {
 	}
 
 	/**
-	 * remove the ones AI already shot on
-	 * compare the coordinates between firingSolution() and neighbours()
+	 * remove the ones AI already shot on compare the coordinates between
+	 * firingSolution() and neighbours()
+	 * 
 	 * @param pos
 	 */
 	private void goThroughNeighbors() {
 		Iterator<int[]> test = neighbours.iterator();
-		
+
 		while (test.hasNext()) {
 			int[] neigh = test.next();
 			if (opponent.isBombed(neigh[0], neigh[1]))
