@@ -300,20 +300,6 @@ public class AI extends Player {
 			if (difficulties == 1) {
 				target = randomAttack();
 			} else if (difficulties == 2 || difficulties == 3) {
-//				// First of all, if this is difficulty 3, we have to decide if
-//				// we're doing a cheat attack or following the pattern from
-//				// difficulty 2
-//				// Check to see if last attack resulted in a hit
-//				// Go to hunt if that is the case, else do random attack
-//				if (lastShot == LastShot.SUNK || lastShot == LastShot.HIT)
-//					search = false;
-//				if (lastShot == LastShot.HIT || search) {
-//					// do the stuff for hunting attack
-//					target = huntingAttack(true);
-//				} else {
-//					// New random attack
-//					target = randomAttack();
-//				}
 				if (lastShot == LastShot.HIT) {
 					lookForNeighbour(lastAttack[0], lastAttack[1]);
 					Iterator<int[]> iter = neighbours.iterator();
@@ -475,6 +461,8 @@ public class AI extends Player {
 	private ArrayList<int[]> lookForNeighbour(int x, int y) {
 		int[] pos; // put the neighbors into the list
 		
+		neighbours.clear();
+		
 		if (x>=0 && x < 9) {
 			pos = new int[2];
 			pos[0] = x + 1;
@@ -525,23 +513,12 @@ public class AI extends Player {
 	 * @param pos
 	 */
 	private void goThroughNeighbors() {
-		for (int j = 0; j < firingSolution.size(); j++) {
-			Iterator<int[]> it = neighbours.iterator();
-			boolean keep = false;
-			while (it.hasNext()) {
-				
-				int[] neigh = it.next();
-				int[] hit = firingSolution.get(j);
-				if (neigh[0] == hit[0] && neigh[1] == hit[1]) {
-					keep = true;
-					break;
-				}
-			}
-			if (!keep) {
-				it.remove();
-				break;
-			}
-
+		Iterator<int[]> test = neighbours.iterator();
+		
+		while (test.hasNext()) {
+			int[] neigh = test.next();
+			if (opponent.isBombed(neigh[0], neigh[1]))
+				test.remove();
 		}
 	}
 
