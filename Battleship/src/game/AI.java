@@ -294,15 +294,26 @@ public class AI extends Player {
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
 	public int[] attack(LastShot lastShot) {
+		boolean doNotCheat = true;
 		int[] target = new int[2];
+		// If the list of cheating coordinates is empty, populate it.
 		if(cheat.isEmpty()){
 			cheatList();
 		}
-		// Has this changed? Is 5 still insane or is that 4 now?
+		
 		if (difficulties < 4) {
+			// If we are diff 3, random doNotCheat
+			if (difficulties == 3) {
+				Random rand = new Random();
+				int test = rand.nextInt(2);
+				if (test == 0)
+					doNotCheat = false;
+			}
 			if (difficulties == 1) {
 				target = randomAttack();
-			} else if (difficulties == 2 || difficulties == 3) {
+			} else if (doNotCheat || lastShot == LastShot.HIT) {
+				// This is will run if we are at diff = 2 because doNotCheat
+				// will not be randomized
 				if (lastShot == LastShot.HIT) {
 					lookForNeighbour(lastAttack[0], lastAttack[1]);
 					Iterator<int[]> iter = neighbours.iterator();
