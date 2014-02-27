@@ -63,22 +63,17 @@ public class SocketHandler extends Thread
 			}
 
 			if (request instanceof Score) {
-				server.update((Score)request);
+				boolean added = server.update((Score)request);
+				try {
+					output.writeObject(added);
+				} catch (IOException e) { e.printStackTrace(); }
 				
 			} else if (request instanceof String) {
 				if (request.equals("load")) {
 					try {
 						output.writeObject(server.getHighScores());
 					} catch (IOException e) { e.printStackTrace(); }
-				} else {
-					try {
-						output.writeObject("Illegal string");
-					} catch (IOException e) { e.printStackTrace(); }
 				}
-			} else {
-				try {
-					output.writeObject("Illegal request");
-				} catch (IOException e) { e.printStackTrace(); }
 			}
 		}
 	}
