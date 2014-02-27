@@ -45,7 +45,7 @@ public class AI extends Player {
 	public AI(int difficulties, Battlefield opponent, ZoneListener listener) {
 		super("ai", listener);
 		this.difficulties = difficulties;
-		// This is new as of 2014-02-20, Vickie needs to give us the players
+		// This is new as of 2014-02-20, Vickie needs to give us te players
 		// battlefield.
 		this.opponent = opponent;
 		firingSolution = new ArrayList<>();
@@ -303,39 +303,21 @@ public class AI extends Player {
 		
 		if (difficulties < 4) {
 			// If we are diff 3, random doNotCheat
-			if (difficulties == 3) {
-				Random rand = new Random();
-				int test = rand.nextInt(2);
-				if (test == 0)
-					doNotCheat = false;
-			}
 			if (difficulties == 1) {
 				target = randomAttack();
-			} else if (doNotCheat || lastShot == LastShot.HIT) {
-				// This is will run if we are at diff = 2 because doNotCheat
-				// will not be randomized
-				if (lastShot == LastShot.HIT) {
-					lookForNeighbour(lastAttack[0], lastAttack[1]);
-					Iterator<int[]> iter = neighbours.iterator();
-					target = iter.next();
-					iter.remove();
-				} else if (lastShot == LastShot.MISS && neighbours.size() > 0) {
-					Iterator<int[]> iter = neighbours.iterator();
-					target = iter.next();
-					iter.remove();
-				} else 
-					target = randomAttack();
+			} else if (difficulties == 2) {
+				target = normalAttack(lastShot);
+			} else if (difficulties == 3) {
+				if (((new Random()).nextInt(2) > 0) && lastShot != LastShot.HIT) {
+					// Do cheating attack
+				} else
+					target = normalAttack(lastShot);
+					
 			}
 		} else if (difficulties == 4) {
 			// Will only shoot where a hit is guaranteed. This looks as if it
 			// will require access to opponents battlefield.
-			Iterator<int[]> it = cheat.iterator(); // iterator for the
-															// created list
-			if (it.hasNext()) { // if there is a next coordinate shoot on it.
-				target = it.next();
-				it.remove(); // don't forget to remove the used
-											// coordinate
-			}
+			target = insaneAttack();
 		} else {
 			// Gameengine should never do anything with these, but we may end
 			// up here if gameengine calls attack during difficulty 0
@@ -345,8 +327,43 @@ public class AI extends Player {
 
 		// Retain these attack coordinates for reference next turn
 		lastAttack = target;
-		if (difficulties < 4)
+		//if (difficulties < 4)
 			removeFiringSolution(target);
+		return target;
+	}
+	
+	private int[] insaneAttack() {
+		int[] target;
+		Iterator<int[]> it = cheat.iterator();
+		if (it.hasNext()) {
+			// Take the next coordinate from the list
+			target = it.next();
+			// removal of coordinates from the cheat list has been moved 
+			// to removeFiringSolution
+		} else {
+			target = new int[2];
+		}
+		return target;
+	}
+	
+	/**
+	 * 
+	 * @param lastShot status of our last attack
+	 * @return coordinates to attack
+	 */
+	private int[] normalAttack(LastShot lastShot) {
+		int[] target;
+		if (lastShot == LastShot.HIT) {
+			lookForNeighbour(lastAttack[0], lastAttack[1]);
+			Iterator<int[]> iter = neighbours.iterator();
+			target = iter.next();
+			iter.remove();
+		} else if (lastShot == LastShot.MISS && neighbours.size() > 0) {
+			Iterator<int[]> iter = neighbours.iterator();
+			target = iter.next();
+			iter.remove();
+		} else 
+			target = randomAttack();
 		return target;
 	}
 
