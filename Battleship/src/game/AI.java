@@ -310,9 +310,9 @@ public class AI extends Player {
 			} else if (difficulties == 3) {
 				if (((new Random()).nextInt(2) > 0) && lastShot != LastShot.HIT) {
 					// Do cheating attack
+					target = insaneAttack();
 				} else
 					target = normalAttack(lastShot);
-					
 			}
 		} else if (difficulties == 4) {
 			// Will only shoot where a hit is guaranteed. This looks as if it
@@ -327,11 +327,15 @@ public class AI extends Player {
 
 		// Retain these attack coordinates for reference next turn
 		lastAttack = target;
-		//if (difficulties < 4)
-			removeFiringSolution(target);
+		// Remove target from both lists of coordinates
+		removeFiringSolution(target);
 		return target;
 	}
 	
+	/**
+	 * Give the next cheating coordinates to attack
+	 * @return Coordinates to attack
+	 */
 	private int[] insaneAttack() {
 		int[] target;
 		Iterator<int[]> it = cheat.iterator();
@@ -390,7 +394,7 @@ public class AI extends Player {
 	 * A method to handle attacks when we are searching for a boat we already
 	 * hit once. If we do not have a list of zones to try, this method will
 	 * 
-	 * @return
+	 * @return coordinates to attack
 	 */
 	private int[] huntingAttack(boolean lastHit) {
 		int[] attackCoord = new int[2];
