@@ -296,7 +296,7 @@ public class GameEngine{
 	 */
 	private void inputPlayerName() {
 		String string = gui.enterName();
-		if(string == null) //<-------------------- It's fucking null when you press cancel.
+		if(string == null) //String needs to be checked for null.
 			string = "";
 		String[] splitString = string.split(" ");
 		playerName = "";

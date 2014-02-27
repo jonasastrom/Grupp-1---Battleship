@@ -294,49 +294,67 @@ public class AI extends Player {
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
 	public int[] attack(LastShot lastShot) {
+		boolean doNotCheat = true;
 		int[] target = new int[2];
 		if (cheat.isEmpty()) {
-			cheatList();
-		}
-		// Has this changed? Is 5 still insane or is that 4 now?
-		if (difficulties < 4) {
-			if (difficulties == 1) {
-				target = randomAttack();
-			} else if (difficulties == 2 || difficulties == 3) {
-				if (lastShot == LastShot.HIT) {
-					lookForNeighbour(lastAttack[0], lastAttack[1]);
-					Iterator<int[]> iter = neighbours.iterator();
-					target = iter.next();
-					iter.remove();
-				} else if (lastShot == LastShot.MISS && neighbours.size() > 0) {
-					Iterator<int[]> iter = neighbours.iterator();
-					target = iter.next();
-					iter.remove();
-				} else
-					target = randomAttack();
+			// If the list of cheating coordinates is empty, populate it.
+			if (cheat.isEmpty()) {
+				cheatList();
 			}
-		} else if (difficulties == 4) {
-			// Will only shoot where a hit is guaranteed. This looks as if it
-			// will require access to opponents battlefield.
-			Iterator<int[]> it = cheat.iterator(); // iterator for the
-													// created list
-			if (it.hasNext()) { // if there is a next coordinate shoot on it.
-				target = it.next();
-				it.remove(); // don't forget to remove the used
-								// coordinate
-			}
-		} else {
-			// Gameengine should never do anything with these, but we may end
-			// up here if gameengine calls attack during difficulty 0
-			target[0] = 0;
-			target[1] = 0;
-		}
 
-		// Retain these attack coordinates for reference next turn
-		lastAttack = target;
-		if (difficulties < 4)
-			removeFiringSolution(target);
-		return target;
+			if (difficulties < 4) {
+				// If we are diff 3, random doNotCheat
+				if (difficulties == 3) {
+					Random rand = new Random();
+					int test = rand.nextInt(2);
+					if (test == 0)
+						doNotCheat = false;
+				}
+				if (difficulties == 1) {
+					target = randomAttack();
+				} else if (doNotCheat || lastShot == LastShot.HIT) {
+					// This is will run if we are at diff = 2 because doNotCheat
+					// will not be randomized
+					if (lastShot == LastShot.HIT) {
+						lookForNeighbour(lastAttack[0], lastAttack[1]);
+						Iterator<int[]> iter = neighbours.iterator();
+						target = iter.next();
+						iter.remove();
+					} else if (lastShot == LastShot.MISS
+							&& neighbours.size() > 0) {
+						Iterator<int[]> iter = neighbours.iterator();
+						target = iter.next();
+						iter.remove();
+					} else
+						target = randomAttack();
+				}
+			} else if (difficulties == 4) {
+				// Will only shoot where a hit is guaranteed. This looks as if
+				// it
+				// will require access to opponents battlefield.
+				Iterator<int[]> it = cheat.iterator(); // iterator for the
+														// created list
+				if (it.hasNext()) { // if there is a next coordinate shoot on
+									// it.
+					target = it.next();
+					it.remove(); // don't forget to remove the used
+									// coordinate
+				}
+			} else {
+				// Gameengine should never do anything with these, but we may
+				// end
+				// up here if gameengine calls attack during difficulty 0
+				target[0] = 0;
+				target[1] = 0;
+			}
+
+			// Retain these attack coordinates for reference next turn
+			lastAttack = target;
+			if (difficulties < 4)
+				removeFiringSolution(target);
+		}
+			return target;
+		
 	}
 
 	/**
