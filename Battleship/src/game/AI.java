@@ -319,7 +319,7 @@ public class AI extends Player {
 															// created list
 			if (it.hasNext()) { // if there is a next coordinate shoot on it.
 				target = it.next();
-				cheatList().remove(target); // don't forget to remove the used
+				it.remove(); // don't forget to remove the used
 											// coordinate
 			}
 		} else {
