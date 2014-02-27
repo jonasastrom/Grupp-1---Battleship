@@ -45,7 +45,7 @@ public class AI extends Player {
 	public AI(int difficulties, Battlefield opponent, ZoneListener listener) {
 		super("ai", listener);
 		this.difficulties = difficulties;
-		// This is new as of 2014-02-20, Vickie needs to give us te players
+		// This is new as of 2014-02-20, Vickie needs to give us the players
 		// battlefield.
 		this.opponent = opponent;
 		firingSolution = new ArrayList<>();
