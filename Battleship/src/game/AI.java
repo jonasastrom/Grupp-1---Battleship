@@ -360,8 +360,8 @@ public class AI extends Player {
 		if (lastShot == LastShot.HIT) {
 			lookForNeighbour(lastAttack[0], lastAttack[1]);
 			Iterator<int[]> iter = neighbours.iterator();
-			target = iter.next();
-			iter.remove();
+			target = iter.next(); //better check if the iter.hasNext before going to next one in the list
+			iter.remove();			//error appeared
 		} else if (lastShot == LastShot.MISS && neighbours.size() > 0) {
 			Iterator<int[]> iter = neighbours.iterator();
 			target = iter.next();
