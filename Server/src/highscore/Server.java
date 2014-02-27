@@ -91,13 +91,15 @@ public class Server
 	 * Update the high score list with a new
 	 * score if it is good enough.
 	 * @param score The score
+	 * @return true if the score was added,
+	 *         false otherwise
 	 */
-	public void update(Score score)
+	public boolean update(Score score)
 	{
 		if (highScores.isEmpty()) {
 			highScores.add(score);
 			saveHighScores();
-			return;
+			return true;
 		}
 
 		int lastScore = highScores.size()-1;
@@ -116,13 +118,17 @@ public class Server
 				if (newPoints > highScores.get(i).getPoints()) {
 					highScores.add(i,score);
 					saveHighScores();
-					return;
+					return true;
 				}
 			}
 			highScores.add(score);
 			saveHighScores();
-			return;
+			return true;
 		}
+		
+		// Return false because the score
+		// didn't make the top list
+		return false;
 	}
 
 	/**
