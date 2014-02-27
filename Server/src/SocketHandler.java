@@ -77,7 +77,7 @@ public class SocketHandler extends Thread
 			} else if (request instanceof String) {
 				if (request.equals("fetch")) {
 					try {
-						output.writeObject(server.getHighScore());
+						output.writeObject(server.getHighScores());
 					} catch (IOException e) { e.printStackTrace(); }
 				} else {
 					try {

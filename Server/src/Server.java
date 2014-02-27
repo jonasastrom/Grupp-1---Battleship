@@ -19,7 +19,7 @@ public class Server
 	private static final int TOP_LIST_SIZE = 10;
 	private static final String FILE_PATH = "highscore.dat";
 
-	private ArrayList<Score> highScore;
+	private ArrayList<Score> highScores;
 	private ServerSocket serverSocket;
 
 	/**
@@ -48,14 +48,14 @@ public class Server
 			try {
 				ObjectInputStream input = new ObjectInputStream(
 						new FileInputStream(FILE_PATH));
-				highScore = (ArrayList<Score>)input.readObject();
+				highScores = (ArrayList<Score>)input.readObject();
 				input.close();
 			} catch(Exception e) {
 				e.printStackTrace();
 				System.exit(0);
 			}
 		} else {
-			highScore = new ArrayList<Score>();
+			highScores = new ArrayList<Score>();
 			saveHighScores();
 		}
 	}
@@ -68,7 +68,7 @@ public class Server
 		try {
 			ObjectOutputStream output = new ObjectOutputStream(
 					new FileOutputStream(FILE_PATH));
-			output.writeObject(highScore);
+			output.writeObject(highScores);
 			output.close();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -77,12 +77,12 @@ public class Server
 	}
 
 	/**
-	 * Get the high score list.
+	 * Get a list with the high scores.
 	 * @return The list
 	 */
-	public ArrayList<Score> getHighScore()
+	public ArrayList<Score> getHighScores()
 	{
-		return highScore;
+		return highScores;
 	}
 
 	/**
@@ -92,32 +92,32 @@ public class Server
 	 */
 	public void update(Score score)
 	{
-		if (highScore.isEmpty()) {
-			highScore.add(score);
+		if (highScores.isEmpty()) {
+			highScores.add(score);
 			saveHighScores();
 			return;
 		}
 
-		int lastScore = highScore.size()-1;
+		int lastScore = highScores.size()-1;
 		boolean listIsFull = TOP_LIST_SIZE == lastScore+1;
 
 		int newPoints = score.getPoints();
 		int lowestPoints = 0;
 
 		if (listIsFull)
-			lowestPoints = highScore.get(lastScore).getPoints();
+			lowestPoints = highScores.get(lastScore).getPoints();
 
 		if (!listIsFull || newPoints > lowestPoints) {
-			if (listIsFull) highScore.remove(lastScore);
+			if (listIsFull) highScores.remove(lastScore);
 
-			for (int i = 0; i < highScore.size(); i++) {
-				if (newPoints > highScore.get(i).getPoints()) {
-					highScore.add(i,score);
+			for (int i = 0; i < highScores.size(); i++) {
+				if (newPoints > highScores.get(i).getPoints()) {
+					highScores.add(i,score);
 					saveHighScores();
 					return;
 				}
 			}
-			highScore.add(score);
+			highScores.add(score);
 			saveHighScores();
 			return;
 		}
@@ -141,12 +141,12 @@ public class Server
 	private void printScores()
 	{
 		int rank;
-		for (int i = 0; i < highScore.size(); i++) {
+		for (int i = 0; i < highScores.size(); i++) {
 			rank = i + 1;
 			if (rank < 10)
-				System.out.println("rank=0"+rank+" "+highScore.get(i));
+				System.out.println("rank=0"+rank+" "+highScores.get(i));
 			else
-				System.out.println("rank="+rank+" "+highScore.get(i));
+				System.out.println("rank="+rank+" "+highScores.get(i));
 		}
 	}
 }
