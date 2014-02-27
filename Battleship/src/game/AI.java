@@ -522,6 +522,7 @@ public class AI extends Player {
 		}
 
 		goThroughNeighbors();
+		Collections.shuffle(neighbours, new Random());
 		return neighbours;
 	}
 
