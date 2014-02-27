@@ -63,21 +63,10 @@ public class SocketHandler extends Thread
 			}
 
 			if (request instanceof Score) {
-				Score score;
-				while (true) {
-					try {
-						score = (Score)input.readObject();
-					} catch (Exception e1) {
-						try {
-							input.close();
-							clientSocket.close();
-						} catch (IOException e2) {}
-						return;
-					}
-					server.update(score);
-				}
+				server.update((Score)request);
+				
 			} else if (request instanceof String) {
-				if (request.equals("fetch")) {
+				if (request.equals("load")) {
 					try {
 						output.writeObject(server.getHighScores());
 					} catch (IOException e) { e.printStackTrace(); }
