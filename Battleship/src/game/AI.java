@@ -295,6 +295,9 @@ public class AI extends Player {
 	 */
 	public int[] attack(LastShot lastShot) {
 		int[] target = new int[2];
+		if(cheat.isEmpty()){
+			cheatList();
+		}
 		// Has this changed? Is 5 still insane or is that 4 now?
 		if (difficulties < 4) {
 			if (difficulties == 1) {
@@ -315,7 +318,7 @@ public class AI extends Player {
 		} else if (difficulties == 4) {
 			// Will only shoot where a hit is guaranteed. This looks as if it
 			// will require access to opponents battlefield.
-			Iterator<int[]> it = cheatList().iterator(); // iterator for the
+			Iterator<int[]> it = cheat.iterator(); // iterator for the
 															// created list
 			if (it.hasNext()) { // if there is a next coordinate shoot on it.
 				target = it.next();
@@ -424,7 +427,7 @@ public class AI extends Player {
 	 * 
 	 * @return cheat
 	 */
-	private ArrayList<int[]> cheatList() {
+	private void cheatList() {
 		Zone[][] countZones = opponent.getZones(); // got the zones
 		int[] pos = new int[2];
 		pos[0] = 0;
@@ -447,7 +450,6 @@ public class AI extends Player {
 			}
 		}
 		Collections.shuffle(cheat, new Random());
-		return cheat;
 	}
 
 	/**
