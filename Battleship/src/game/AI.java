@@ -333,7 +333,7 @@ public class AI extends Player {
 															// created list
 			if (it.hasNext()) { // if there is a next coordinate shoot on it.
 				target = it.next();
-				cheatList().remove(target); // don't forget to remove the used
+				it.remove(); // don't forget to remove the used
 											// coordinate
 			}
 		} else {
@@ -525,24 +525,27 @@ public class AI extends Player {
 	 * @param pos
 	 */
 	private void goThroughNeighbors() {
-		for (int j = 0; j < firingSolution.size(); j++) {
-			Iterator<int[]> it = neighbours.iterator();
-			boolean keep = false;
-			while (it.hasNext()) {
-				
-				int[] neigh = it.next();
-				int[] hit = firingSolution.get(j);
-				if (neigh[0] == hit[0] && neigh[1] == hit[1]) {
-					keep = true;
-					break;
-				}
-			}
-			if (!keep) {
-				it.remove();
-				break;
-			}
-
-		}
+		
+		
+//		boolean keep = false;
+//		for (int j = 0; j < firingSolution.size(); j++) {
+//			Iterator<int[]> it = neighbours.iterator();
+//			
+//			while (it.hasNext()) {
+//				keep = true;	
+//				int[] neigh = it.next();
+//				int[] hit = firingSolution.get(j);
+//				if (neigh[0] == hit[0] && neigh[1] == hit[1]) {
+//					keep = false;
+//					break;
+//				}
+//			}
+//			if (keep) {
+//				it.remove();
+//				break;
+//			}
+//
+//		}
 	}
 
 	/**
