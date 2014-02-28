@@ -64,9 +64,6 @@ public class AI extends Player {
 		
 		// Ships have not been placed yet.
 		shipsPlaced = false;
-		
-		// In the beginning we are not searching for a ship
-		search = false;
 	}
 
 	/**
