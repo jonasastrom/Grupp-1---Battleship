@@ -17,21 +17,19 @@ import java.util.ArrayList;
  * @version 2.0
  */
 public class GameEngine{
-	private static Gui gui;
 	private Human player;
 	private AI ai;
+	private static Gui gui;
+	private int difficulty;
+	private String playerName;
 	private boolean winPlayer;
 	private boolean gameOver;
+	private boolean difficultyChanged;
 	private static boolean playerTurn;
 	private LastShot playerLastShot;
 	private LastShot aiLastShot;
 	private ZoneListener listener;
 	private HighScore highScore;
-	private int difficulty;
-	private String playerName;
-	private long points;
-	private boolean difficultyChanged;
-
 	public enum LastShot {MISS, HIT, SUNK}
 
 	public GameEngine(){
@@ -48,38 +46,6 @@ public class GameEngine{
 	public static void main(String[] args) {
 		new GameEngine();
 	}
-
-	public static Gui getGui(){
-		return gui;
-	}
-
-	public void init(){
-
-		listener = new ZoneListener();
-		player = new Human(listener);
-		gui = new Gui(this, player); //so gui can place the boats
-		inputPlayerName();
-		if(!difficultyChanged)
-			difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty
-		difficultyChanged = false;
-		ai = new AI(difficulty, player.getBattlefield(), listener);
-		listener.addObserver(gui);
-		Thread thread = new Thread(){
-			public void run(){ //kill the thread?
-				newGame();
-			}
-		}; 
-		thread.start();
-	}
-
-	/**
-	 * Called by gui to say the whole fleet is now placed by the human player
-	 * The player can start attacking the enemy
-	 */
-	public void setPlayerTurn(){
-		playerTurn = true;
-	}
-
 
 	/**
 	 *  Sets a new game up by saying that the game is not over
@@ -99,7 +65,24 @@ public class GameEngine{
 		// This gives the GUI enough time to update, since it is apparently on a different thread(??)
 	}
 
-
+	public void init(){
+	
+		listener = new ZoneListener();
+		player = new Human(listener);
+		gui = new Gui(this, player); //so gui can place the boats
+		inputPlayerName();
+		if(!difficultyChanged)
+			difficulty = gui.selectDifficultyWIndow();	//This actually lets you select a difficulty
+		difficultyChanged = false;
+		ai = new AI(difficulty, player.getBattlefield(), listener);
+		listener.addObserver(gui);
+		Thread thread = new Thread(){
+			public void run(){ //kill the thread?
+				newGame();
+			}
+		}; 
+		thread.start();
+	}
 
 	/**
 	 *  Ends the game, pops a prompt to the player, and cleans variables
@@ -108,10 +91,8 @@ public class GameEngine{
 	 *  Prompt.
 	 */
 	public void gameOver() {
-
+	
 		String winText;
-		boolean newHighScore = false;
-		newHighScore = highScore.addScore(points, playerName);
 		if (gameOver) {
 			if (winPlayer)
 				winText = "won";
@@ -133,53 +114,6 @@ public class GameEngine{
 	}
 
 	/**
-	 * Test method. Not going to be accessible by a normal player
-	 * This pops up a a game over screen where the player has won or lost
-	 * @param gameOverState True means the player has won, false that it hasn't
-	 */
-	public void testGameOver(boolean gameOverState) {
-		if(!gameOverState) {
-			gameOver = true;
-			winPlayer = false;
-			gameOver();
-		}
-		else if(gameOverState) {
-			gameOver = true;
-			winPlayer = true;
-			gameOver();
-		}
-	}
-
-	/**
-	 * @author Sebastian
-	 */
-	public void testCalculator() {
-		points = ScoreCalculator.testCalculator();
-		highScore.addScore(points, playerName);
-		highScore.addScore(5001, "Stefan");
-		highScore.addScore(-199, "Jimmie");
-		gui.showHighscore(highScore.getHighScoreList());
-		System.out.println("Testing server thingy");
-		testHighScoreServer();
-	}
-
-	/**
-	 * Test method. Not going to be accessible by normal players
-	 * This bombs every single square on the battlefield
-	 */
-	public void testNuke() {
-		System.out.println("Nuclear launch detected");
-		for(int x = 0 ; x < 10 ; x++) {
-			for(int y = 0 ; y < 10 ; y++) {
-				ai.bomb(x, y);
-				try {Thread.sleep(10);} catch (InterruptedException e) {} // Gui gets woozy when things get bombed too fast
-			}
-		}
-		System.out.println("Splash");
-		gui.changeInformationText("CHEATER!!!!!11!!1!!!");
-	}
-
-	/**
 	 *	Empties the objects, cleans them away and recreates them for a new game 
 	 */
 	private void resetGame() {
@@ -191,7 +125,7 @@ public class GameEngine{
 		player = null;
 		ai = null;
 		listener = null;
-
+	
 		System.gc();	// Calls GC here to make sure it does its job
 		// This keeps the program from ever taking up too much memory
 		// I do this because I think the GC is lazy
@@ -217,7 +151,7 @@ public class GameEngine{
 			gameOver = true;
 			gameOver();
 		}
-
+	
 		if(difficulty != 0){		//Ai should only attack if it's not training mode
 			int[] aiAttack = ai.attack(aiLastShot);
 			aiLastShot = player.bomb(aiAttack[0], aiAttack[1]);
@@ -233,11 +167,27 @@ public class GameEngine{
 		setPlayerTurn(); // Ai done, player's turn now
 	}
 
+	public static Gui getGui(){
+		return gui;
+	}
+
 	/**
-	 * test
+	 * Called by gui to say the whole fleet is now placed by the human player
+	 * The player can start attacking the enemy
 	 */
-	public void testHighScoreServer() {
+	public void setPlayerTurn(){
+		playerTurn = true;
+	}
+
+
+	/**
+	 * This updates the current high score list
+	 * and makes the gui print it
+	 */
+	public void printHighScore() {
 		updateHighScore();
+		if(highScore != null && !highScore.getHighScoreList().isEmpty())
+			gui.showHighscore(highScore.getHighScoreList());
 	}
 
 	/**
@@ -281,23 +231,11 @@ public class GameEngine{
 	}
 
 	/**
-	 * This updates the current high score list
-	 * and makes the gui print it
-	 */
-	public void printHighScore() {
-		updateHighScore();
-		if(highScore != null && !highScore.getHighScoreList().isEmpty())
-			gui.showHighscore(highScore.getHighScoreList());
-	}
-
-	/**
 	 * This pops up a text field via gui that allows the player to input its name
 	 * If the name contains spaces, they're removed.
 	 */
 	private void inputPlayerName() {
 		String string = gui.enterName();
-		if(string == null) //String needs to be checked for null.
-			string = "";
 		String[] splitString = string.split(" ");
 		playerName = "";
 		for( String split : splitString){
@@ -306,9 +244,17 @@ public class GameEngine{
 	}
 
 	/**
+	 * @return 0 if training, 1 if easy, 2 if normal, 3 if hard, 4 if impossible
+	 */
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	/**
 	 * This lets the player change difficulty in the middle of a game.
 	 * It also starts a new game with that difficulty.
-	 * @param newDifficulty The new difficulty that has been chosen
+	 * @param int newDifficulty The new difficulty that has been chosen
+	 * 							0 is training, 1 is training, 2 is normal, 3 is hard, 4 is impossible
 	 */
 	public void setDifficulty(int newDifficulty) {
 		this.difficulty = newDifficulty;
@@ -316,14 +262,6 @@ public class GameEngine{
 		resetGame();
 	}
 	
-	/**
-	 * @return 0 if training, 1 if easy, 2 if normal, 3 if hard, 4 if impossible
-	 */
-	public int getDifficulty() {
-		return difficulty;
-	}
-
-
 	/**
 	 * Returns if it's the players turn
 	 * @return returns true if it's the players turn
