@@ -60,7 +60,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	private int[] y;
 
 	/**
-	 * Constructor for Gui.
+	 * Constructor for creating the Gui.
 	 * @param gameEngine
 	 * @param human
 	 */
