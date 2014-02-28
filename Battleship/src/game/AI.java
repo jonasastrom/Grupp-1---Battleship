@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-//import java.util.ListIterator;
-
 /**
  * class AI
  * 
@@ -17,40 +15,48 @@ import java.util.Random;
  * @version 2.0
  */
 public class AI extends Player {
+	// How difficult the AI will be
 	int difficulties;
+	
 	// Random list of attack-coords
 	private List<int[]> firingSolution;
-	private ArrayList<int[]> cheat;
-	private ArrayList<int[]> neighbours;
+	
+	// List of all zones where a ship exists
+	private List<int[]> cheat;
+	
 	// List of coordinates to attack while searching
-	private List<int[]> huntSolution;
+	private List<int[]> neighbours;
+	
+	// Tells us whether the AI has placed its ships or not
 	private boolean shipsPlaced;
 
 	// Tells us that we are searching for the boat we hit last time
 	private boolean search;
 
+	// Reference to the opponents battlefield
 	private Battlefield opponent;
 
 	// The last coordinates this AI attacked
 	private int[] lastAttack;
 
-	private boolean DEBUG = true;
-	private boolean DEBUG_PLACE = true;
-
 	/**
 	 * the constructor of this class
 	 * 
-	 * @param battlefield
+	 * @param difficulties The difficulty of this AI, 
+	 * from 0 (easiest) to 4 (hardest)
+	 * @param battlefield A reference to our opponents battlefield
+	 * @param listener A listener handling changes to our own battlefield
 	 */
 	public AI(int difficulties, Battlefield opponent, ZoneListener listener) {
 		super("ai", listener);
 		this.difficulties = difficulties;
-		// This is new as of 2014-02-20, Vickie needs to give us te players
-		// battlefield.
 		this.opponent = opponent;
+		
+		// Create and fill the list of random coordinates to attack
 		firingSolution = new ArrayList<>();
 		createFiringSolution();
 
+		// These lists will not be filled until later
 		cheat = new ArrayList<>();
 		neighbours = new ArrayList<>();
 
@@ -58,47 +64,21 @@ public class AI extends Player {
 		lastAttack = new int[2];
 		lastAttack[0] = -1;
 		lastAttack[1] = -1;
+		
 		// Ships have not been placed yet.
 		shipsPlaced = false;
+		
+		// In the beginning we are not searching for a ship
 		search = false;
 	}
 
-	// @Override
 	/**
 	 * Placing out the ships and it will override the Player class method
 	 * placeShips() and call the method setShip()
 	 * 
+	 * @override
 	 */
 	public void placeShips() {
-		if (DEBUG)
-			if (DEBUG_PLACE)
-				placeShipsProposed(); // remember to change the name for the
-										// final version
-			else
-				placeShipsHardcoded(); // to debug if needed
-	}
-
-	/**
-	 * Used for debugging
-	 */
-	public void placeShipsHardcoded() {
-		Iterator<Ship> iter = getFleet().getShips().iterator();
-		int x = 0;
-		while (iter.hasNext()) {
-			Ship boat = iter.next();
-
-			for (int y = 0; y < boat.getLength(); y++) {
-				getBattlefield().setShip(x, y, boat);
-			}
-			// Go to next row
-			x++;
-		}
-	}
-
-	/**
-	 * Proposed method for randomly placing ships Work in progress
-	 */
-	public void placeShipsProposed() {
 		Random rng = new Random();
 
 		// Create a list of directions that will be randomized later
@@ -194,14 +174,11 @@ public class AI extends Player {
 	}
 
 	/**
-	 * Checks if the zones right to the start-zone are free
+	 * Checks if the zones right of the start-zone are free
 	 * 
-	 * @param yValue
-	 *            x-coordinate of the start-zone
-	 * @param xValue
-	 *            y-coordinate of the start-zone
-	 * @param ship
-	 *            The ship to use to get the length
+	 * @param yValue x-coordinate of the start-zone
+	 * @param xValue y-coordinate of the start-zone
+	 * @param ship The ship to use to get the length
 	 * @return true if the zones are not taken
 	 */
 	private boolean eastSpace(int xValue, int yValue, Ship ship) {
@@ -219,12 +196,9 @@ public class AI extends Player {
 	/**
 	 * Checks if the zones below to the start-zone are free
 	 * 
-	 * @param yValue
-	 *            x-coordinate of the start-zone
-	 * @param xValue
-	 *            y-coordinate of the start-zone
-	 * @param ship
-	 *            The ship to use to get the length
+	 * @param yValue x-coordinate of the start-zone
+	 * @param xValue y-coordinate of the start-zone
+	 * @param ship The ship to use to get the length
 	 * @return true if the zones are not taken
 	 */
 	private boolean southSpace(int xValue, int yValue, Ship ship) {
@@ -242,12 +216,9 @@ public class AI extends Player {
 	/**
 	 * Checks if the zones left to the start-zone are free
 	 * 
-	 * @param yValue
-	 *            x-coordinate of the start-zone
-	 * @param xValue
-	 *            y-coordinate of the start-zone
-	 * @param ship
-	 *            The ship to use to get the length
+	 * @param yValue x-coordinate of the start-zone
+	 * @param xValue y-coordinate of the start-zone
+	 * @param ship The ship to use to get the length
 	 * @return true if the zones are not taken
 	 */
 	private boolean westSpace(int xValue, int yValue, Ship ship) {
@@ -265,12 +236,9 @@ public class AI extends Player {
 	/**
 	 * Checks if the zones above to the start-zone are free
 	 * 
-	 * @param yValue
-	 *            x-coordinate of the start-zone
-	 * @param xValue
-	 *            y-coordinate of the start-zone
-	 * @param ship
-	 *            The ship to use to get the length
+	 * @param yValue x-coordinate of the start-zone
+	 * @param xValue y-coordinate of the start-zone
+	 * @param ship The ship to use to get the length
 	 * @return true if the zones are not taken
 	 */
 	private boolean northSpace(int xValue, int yValue, Ship ship) {
@@ -289,12 +257,11 @@ public class AI extends Player {
 	/**
 	 * AIs turn to attack
 	 * 
-	 * @param lastShot
-	 *            An enum telling us what happened on the last shot
+	 * @param lastShot An enum telling us what happened on the last shot
 	 * @return a two-position int containing X- and Y-coordinates to hit
 	 */
 	public int[] attack(LastShot lastShot) {
-		boolean doNotCheat = true;
+//		boolean doNotCheat = true;
 		int[] target = new int[2];
 		// If the list of cheating coordinates is empty, populate it.
 		if(cheat.isEmpty()){
@@ -333,7 +300,7 @@ public class AI extends Player {
 	}
 	
 	/**
-	 * Give the next cheating coordinates to attack
+	 * Give the next cheating coordinate to attack
 	 * @return Coordinates to attack
 	 */
 	private int[] insaneAttack() {
@@ -342,8 +309,6 @@ public class AI extends Player {
 		if (it.hasNext()) {
 			// Take the next coordinate from the list
 			target = it.next();
-			// removal of coordinates from the cheat list has been moved 
-			// to removeFiringSolution
 		} else {
 			target = new int[2];
 		}
@@ -351,6 +316,7 @@ public class AI extends Player {
 	}
 	
 	/**
+	 * Handle attacking on normal difficulty
 	 * 
 	 * @param lastShot status of our last attack
 	 * @return coordinates to attack
@@ -359,9 +325,9 @@ public class AI extends Player {
 		int[] target;
 		if (lastShot == LastShot.HIT) {
 			lookForNeighbour(lastAttack[0], lastAttack[1]);
-			Iterator<int[]> iter = neighbours.iterator();
-			target = iter.next(); //better check if the iter.hasNext before going to next one in the list
-			iter.remove();			//error appeared
+			Iterator<int[]> neighIt = neighbours.iterator();
+			target = neighIt.next(); //better check if the iter.hasNext before going to next one in the list
+			neighIt.remove();			//error appeared
 		} else if (lastShot == LastShot.MISS && neighbours.size() > 0) {
 			Iterator<int[]> iter = neighbours.iterator();
 			target = iter.next();
@@ -372,7 +338,7 @@ public class AI extends Player {
 	}
 
 	/**
-	 * Pops a random attack from firingSolution and returns it
+	 * Takes a random attack from firingSolution and returns it
 	 * 
 	 * @return the next random coordinate to attack
 	 */
@@ -391,57 +357,10 @@ public class AI extends Player {
 	}
 
 	/**
-	 * A method to handle attacks when we are searching for a boat we already
-	 * hit once. If we do not have a list of zones to try, this method will
-	 * 
-	 * @return coordinates to attack
-	 */
-	private int[] huntingAttack(boolean lastHit) {
-		int[] attackCoord = new int[2];
-
-		// If we aren't in the middle of a hunt, check to see if we should
-		// create the list of hunting coordinates
-		if (!search) {
-			if (lastHit) {
-				// Create the list of coordinates to attack around the last
-				// hit we made, set searching to true and return the first
-				// hunting coordinate
-				lookForNeighbour(lastAttack[0], lastAttack[1]);
-				search = true;
-			} else {
-				// Return random coordinate to attack and pop that off the
-				// random list
-				Iterator<int[]> iter = firingSolution.iterator();
-				attackCoord = iter.next();
-				// iter.remove();
-				return attackCoord;
-			}
-		}
-
-		if (neighbours.size() > 1) {
-			// Pop a hunt coordinate from the list and return it
-			Iterator<int[]> iter = neighbours.iterator();
-			attackCoord = iter.next();
-			iter.remove();
-			return attackCoord;
-		} else {
-			// set search to false to signal that we are out of coordinates
-			// to hunt in
-			// return next hunting coordinate
-			Iterator<int[]> iter = neighbours.iterator();
-			attackCoord = iter.next();
-			// iter.remove();
-			search = false;
-			return attackCoord;
-		}
-	}
-
-	/**
 	 * Create the AI-players firing solution based on the set difficulty.
 	 */
 	private void createFiringSolution() {
-		// In the initial, stupid iteration, only randomly attack zones.
-		// Do a loop to create random attacks, manually checking for conflicts?
+		// Create a list of all possible attacks and then randomise that list
 		for (int x = 0; x < 10; x++) {
 			for (int y = 0; y < 10; y++) {
 				int pos[] = new int[2];
@@ -450,32 +369,28 @@ public class AI extends Player {
 				firingSolution.add(pos);
 			}
 		}
-		// Randomize the hitlist
+		// Randomise the hitlist
 		Collections.shuffle(firingSolution, new Random());
 	}
 
 	/**
-	 * Create a list, where the opponent's ship is set.
+	 * Create a list with all of the opponents ships
 	 * 
-	 * @return cheat
 	 */
 	private void cheatList() {
-		Zone[][] countZones = opponent.getZones(); // got the zones
+		// get the zones
+		Zone[][] countZones = opponent.getZones(); 
 		int[] pos;
-		for (int i = 0; i < 10; i++) { // look through the zone
+		// look through the zone
+		for (int i = 0; i < 10; i++) { 
 			for (int j = 0; j < 10; j++) {
-				if (countZones != null && countZones[i][j].hasShip() == true) { // if
-																				// something
-																				// is
-																				// there
-																				// on
-																				// that
-																				// zone
+				// If something is in that zone
+				if (countZones != null && countZones[i][j].hasShip() == true) {
 					pos = new int[2];
-					pos[0] = countZones[i][j].getX(); // take out the x
-														// coordinate from zone
-					pos[1] = countZones[i][j].getY(); // take out the y
-														// coordinate from zone
+					// take out the x coordinate from zone
+					pos[0] = countZones[i][j].getX(); 
+					// take out the y coordinate from zone
+					pos[1] = countZones[i][j].getY(); 
 					cheat.add(pos); // add to cheat list
 				}
 			}
@@ -484,15 +399,14 @@ public class AI extends Player {
 	}
 
 	/**
-	 * look for the neighbor coordinates if coordinate already hit or does not
-	 * exist, do not put it in list put it in a list
+	 * look for the neighbour coordinates if coordinate already hit or does not
+	 * exist, do not put it in a list
 	 * 
 	 * @param x
 	 * @param y
-	 * @return neighbors
 	 */
-	private ArrayList<int[]> lookForNeighbour(int x, int y) {
-		int[] pos; // put the neighbors into the list
+	private void lookForNeighbour(int x, int y) {
+		int[] pos;
 
 		neighbours.clear();
 
@@ -523,15 +437,13 @@ public class AI extends Player {
 
 		goThroughNeighbors();
 		Collections.shuffle(neighbours, new Random());
-		return neighbours;
 	}
 
 	/**
 	 * Remove given coordinate from both the random list of coordinates and the
 	 * list of cheating coordinates.
 	 * 
-	 * @param pos
-	 *            coordinates to remove from lists
+	 * @param pos coordinates to remove from lists
 	 */
 	private void removeFiringSolution(int[] pos) {
 		for (int i = 0; i < firingSolution.size(); i++) {
@@ -552,10 +464,9 @@ public class AI extends Player {
 	}
 
 	/**
-	 * remove the ones AI already shot on compare the coordinates between
-	 * firingSolution() and neighbours()
+	 * remove the coordinates the AI already shot at by comparing the 
+	 * coordinates between firingSolution() and neighbours()
 	 * 
-	 * @param pos
 	 */
 	private void goThroughNeighbors() {
 		Iterator<int[]> test = neighbours.iterator();
