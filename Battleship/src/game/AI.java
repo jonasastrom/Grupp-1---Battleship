@@ -484,10 +484,4 @@ public class AI extends Player {
 	public boolean isShipsPlaced() {
 		return shipsPlaced;
 	}
-	
-	public void eraseAll() {
-		firingSolution.clear();
-		neighbours.clear();
-		cheat.clear();
-	}
 }
