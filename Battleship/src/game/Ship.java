@@ -11,7 +11,6 @@ public class Ship
 	private int length;
 	private String name;
 	private int health;
-	private boolean isVertical = false;
 	private boolean isPlaced = false;
 	private boolean isSunk = false;
 
