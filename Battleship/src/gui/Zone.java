@@ -18,6 +18,9 @@ public class Zone extends JButton{
 
 	/**
 	 * Constructor
+	 * @param x
+	 * @param y
+	 * @param name
 	 */
 	public Zone(int x, int y, String name){
 		this.x = x;
@@ -46,7 +49,8 @@ public class Zone extends JButton{
 	}
 
 	/**
-	 *  This method change the background color of the zone.
+	 * This method change the background color of the zone.
+	 * @param color
 	 */
 	public void changeColor(Color color){
 		setBackground(color);

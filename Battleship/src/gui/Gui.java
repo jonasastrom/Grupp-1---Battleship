@@ -41,7 +41,7 @@ import game.ZoneListener;
 public class Gui extends JFrame implements ActionListener, Observer {
 
 	private static final long serialVersionUID = -508235750073237690L;
-	private JMenuItem newGame, quit, highScore, about, rules, training, easy, normal, hard, insane, playerWins, playerLose, ATOMBOMB, allPoints;
+	private JMenuItem newGame, quit, highScore, about, rules, training, easy, normal, hard, insane;
 	private JRadioButton carrier, battleship, submarine, cruiser, destroyer;
 	private JLabel informatioText;
 	private ArrayList<String> letters = new ArrayList<String>();
@@ -60,7 +60,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	private int[] y;
 
 	/**
-	 *  Constructor for Gui
+	 * Constructor for Gui.
+	 * @param gameEngine
+	 * @param human
 	 */
 	public Gui(GameEngine gameEngine, Human human){
 		this.gameEngine = gameEngine;
@@ -290,27 +292,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		insane = new JMenuItem("Insane");
 		difficulty.add(insane);
 		insane.addActionListener(this);
-
-		// Add the debug button to the menuBar
-		JMenu debug = new JMenu("Debug");
-		menuBar.add(debug);
-
-		// Add the sub-buttons to the debug-button
-		playerWins = new JMenuItem("Player Wins");
-		debug.add(playerWins);
-		playerWins.addActionListener(this);
-
-		playerLose = new JMenuItem("Player Lose");
-		debug.add(playerLose);
-		playerLose.addActionListener(this);
-
-		ATOMBOMB = new JMenuItem("Döda alla!");
-		debug.add(ATOMBOMB);
-		ATOMBOMB.addActionListener(this);
-
-		allPoints = new JMenuItem("Få alla poäng");
-		debug.add(allPoints);
-		allPoints.addActionListener(this);
 	}
 
 	/**
@@ -324,7 +305,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	}
 
 	/**
-	 * Show an input dialog where the user can select a difficulty
+	 * Show an input dialog where the user can select a difficulty.
+	 * @return difficulty as an int, difficulty can be 0 - 4
 	 */
 	public int selectDifficultyWIndow(){
 		Object[] options = {"Training", "Easy", "Normal", "Hard", "Insane"};
@@ -371,6 +353,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 
 	/**
 	 * This method asks for the users name, and return it as a string.
+	 * @return the players input, his name, as a string
 	 */
 	public String enterName(){
 		String name = JOptionPane.showInputDialog("Enter your name, sir");
@@ -379,6 +362,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 
 	/**
 	 * This method create a frame with the high score
+	 * @param list
 	 */
 	public void showHighscore(ArrayList<Score> list){
 		JFrame frame = new JFrame("Highscore");
@@ -419,21 +403,11 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	}
 
 	/**
-	 *  This method listen to the users actions.
+	 * This method listen to the users actions.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e){
-		if(e.getSource() == allPoints){
-			gameEngine.testCalculator();
-		}else if(e.getSource() == playerWins){
-			gameEngine.testGameOver(true);
-			System.out.println("debug player wins");
-		}else if(e.getSource() == playerLose){
-			gameEngine.testGameOver(false);
-			System.out.println("debug player lose");
-		}else if(e.getSource() == ATOMBOMB){
-			gameEngine.testNuke();
-		}else if(e.getSource() == newGame){
+		if(e.getSource() == newGame){
 			gameEngine.gameOver();
 		}else if(e.getSource() == quit){
 			System.exit(0);
@@ -573,7 +547,6 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		 * This if-statement check if the class that send gui the update was ZoneListener, and the object was a ZoneLink
 		 */
 		if( observable instanceof ZoneListener && object instanceof ZoneLink){
-
 			Zone zone = null;
 			/**
 			 * Check if it is the left or right battlefield that should be modified
