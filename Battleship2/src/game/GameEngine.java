@@ -137,9 +137,7 @@ public class GameEngine
 	public void newGame()
 	{
 		ai.placeShips();
-
-		//human.placeShips();
-		human.placeShipsDebug();
+		human.placeShips();
 
 		// TODO remove?
 		try { Thread.sleep(100); }
@@ -158,7 +156,6 @@ public class GameEngine
 	{
 		if (gameOver) {
 
-			boolean highScoreOpen = false;
 			String winText;
 
 			if (humanWin) winText = "won";
@@ -190,23 +187,12 @@ public class GameEngine
 						scoreText = "Sorry but your score was too low...";
 					else if (scoreStatus == ScoreStatus.ERROR)
 						gui.error("Unable to contact the server!");
-
-					if (scoreStatus != ScoreStatus.ERROR) {
-						if (gui.prompt("High Score", scoreText+
-								"\nWould you like to view the high scores?")) {
-							gui.viewHighScores();
-							highScoreOpen = true;
-						}
-					}
 				}
 			}
 
-			if (!highScoreOpen) {
-				if (gui.prompt("Game Over", "Would you like to play again?")) {
-					resetGame();
-				}
-				else System.exit(0);
-			}
+			if (gui.prompt("Game Over", "Would you like to play again?"))
+				resetGame();
+			else System.exit(0);
 
 		} else {
 			// If the game is not over but the menu option
