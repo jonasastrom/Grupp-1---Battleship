@@ -13,16 +13,16 @@ public class HighScore {
 
 	public HighScore() {
 		highScore = new ArrayList<Score>();
-		highScore.add(0,new Score(10000, "Batman"));		// These are only the
-		highScore.add(1,new Score(9000, "Superman"));	// the standard Best Players
-		highScore.add(2,new Score(8000, "Bar"));
-		highScore.add(3,new Score(7000, "GIT"));
-		highScore.add(4,new Score(6000, "Ratatosk"));
-		highScore.add(5,new Score(5000, "Foo"));
-		highScore.add(6,new Score(4000, "Knugen"));
-		highScore.add(7,new Score(3000, "Gunhild"));
-		highScore.add(8,new Score(2000, "Powerking"));
-		highScore.add(9,new Score(-89, "Resverk"));
+		highScore.add(0,new Score(0, "Batman"));		// These are only the
+		highScore.add(1,new Score(0, "Superman"));	// the standard Best Players
+		highScore.add(2,new Score(0, "Bar"));
+		highScore.add(3,new Score(0, "GIT"));
+		highScore.add(4,new Score(0, "Ratatosk"));
+		highScore.add(5,new Score(0, "Foo"));
+		highScore.add(6,new Score(0, "Knugen"));
+		highScore.add(7,new Score(0, "Gunhild"));
+		highScore.add(8,new Score(0, "Powerking"));
+		highScore.add(9,new Score(0, "Resverk"));
 	}
 
 	/**

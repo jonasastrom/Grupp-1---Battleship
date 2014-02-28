@@ -21,6 +21,7 @@ public class GameEngine{
 	private AI ai;
 	private static Gui gui;
 	private int difficulty;
+	private long points;
 	private String playerName;
 	private boolean winPlayer;
 	private boolean gameOver;
@@ -65,8 +66,12 @@ public class GameEngine{
 		// This gives the GUI enough time to update, since it is apparently on a different thread(??)
 	}
 
+	/**
+	 * This method initiate new objects.
+	 */
 	public void init(){
 	
+		points = 0;
 		listener = new ZoneListener();
 		player = new Human(listener);
 		gui = new Gui(this, player); //so gui can place the boats
@@ -80,7 +85,7 @@ public class GameEngine{
 			public void run(){ //kill the thread?
 				newGame();
 			}
-		}; 
+		};
 		thread.start();
 	}
 
@@ -93,6 +98,7 @@ public class GameEngine{
 	public void gameOver() {
 	
 		String winText;
+		highScore.addScore(points, playerName);
 		if (gameOver) {
 			if (winPlayer)
 				winText = "won";
@@ -143,6 +149,7 @@ public class GameEngine{
 	public void coordinates (int x, int y ){
 		playerTurn = false;			// Player's turn is over
 		playerLastShot = ai.bomb(x, y);
+		points = points + ScoreCalculator.updateScore(playerLastShot);
 		if(playerLastShot == LastShot.SUNK){gui.changeInformationText("You Sunk a Ship!");}
 		else if(playerLastShot == LastShot.HIT){gui.changeInformationText("You Hit!");}
 		else if(playerLastShot == LastShot.MISS){gui.changeInformationText("You Missed!");}
