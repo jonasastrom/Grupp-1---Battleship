@@ -63,7 +63,7 @@ public class GameEngine{
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
 		ai.placeShips();
 		try {Thread.sleep(20);} catch (InterruptedException e) {}
-		// This gives the GUI enough time to update, since it is apparently on a different thread(??)
+		// This gives the GUI enough time to update
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class GameEngine{
 		ai = new AI(difficulty, player.getBattlefield(), listener);
 		listener.addObserver(gui);
 		Thread thread = new Thread(){
-			public void run(){ //kill the thread?
+			public void run(){ 
 				newGame();
 			}
 		};
