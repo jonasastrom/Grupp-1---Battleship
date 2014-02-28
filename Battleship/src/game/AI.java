@@ -30,9 +30,6 @@ public class AI extends Player {
 	// Tells us whether the AI has placed its ships or not
 	private boolean shipsPlaced;
 
-	// Tells us that we are searching for the boat we hit last time
-	private boolean search;
-
 	// Reference to the opponents battlefield
 	private Battlefield opponent;
 
