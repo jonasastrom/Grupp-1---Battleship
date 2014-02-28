@@ -114,8 +114,8 @@ bg=green
     <coordinates>
       <x>270</x>
       <y>60</y>
-      <w>130</w>
-      <h>40</h>
+      <w>140</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>30;30;120;30</additional_attributes>
@@ -125,8 +125,8 @@ bg=green
     <coordinates>
       <x>270</x>
       <y>130</y>
-      <w>100</w>
-      <h>40</h>
+      <w>110</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>30;30;90;30</additional_attributes>
@@ -159,8 +159,8 @@ bg=green
     <coordinates>
       <x>540</x>
       <y>130</y>
-      <w>110</w>
-      <h>40</h>
+      <w>120</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
 </panel_attributes>
@@ -171,8 +171,8 @@ bg=green
     <coordinates>
       <x>520</x>
       <y>50</y>
-      <w>130</w>
-      <h>40</h>
+      <w>140</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
 </panel_attributes>
@@ -356,7 +356,7 @@ m2=5</panel_attributes>
       <w>370</w>
       <h>250</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <panel_attributes>lt=&lt;.</panel_attributes>
     <additional_attributes>350;230;350;140;90;140;90;30;30;30</additional_attributes>
   </element>
   <element>
@@ -367,7 +367,7 @@ m2=5</panel_attributes>
       <w>330</w>
       <h>160</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <panel_attributes>lt=&lt;.</panel_attributes>
     <additional_attributes>310;140;310;60;50;60;50;30;30;30</additional_attributes>
   </element>
   <element>
@@ -389,8 +389,8 @@ m2=100
     <coordinates>
       <x>870</x>
       <y>720</y>
-      <w>170</w>
-      <h>40</h>
+      <w>180</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-&gt;
 m1=  1
@@ -427,7 +427,7 @@ m2=200</panel_attributes>
       <w>360</w>
       <h>100</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::HighScore
 HighScore
 --
 bg=light_gray
@@ -444,7 +444,7 @@ bg=light_gray
       <w>230</w>
       <h>140</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::HighScore
 Score
 --
 bg=light_gray
@@ -462,7 +462,7 @@ bg=light_gray
       <w>160</w>
       <h>70</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::HighScore
 ScoreCalculator
 --
 bg=light_gray
@@ -474,8 +474,8 @@ _+ updateScore() : void_</panel_attributes>
     <coordinates>
       <x>1360</x>
       <y>120</y>
-      <w>40</w>
-      <h>230</h>
+      <w>50</w>
+      <h>240</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
@@ -487,8 +487,8 @@ m2=10</panel_attributes>
     <coordinates>
       <x>820</x>
       <y>100</y>
-      <w>360</w>
-      <h>140</h>
+      <w>370</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>350;130;80;130;80;30;30;30</additional_attributes>
@@ -498,8 +498,8 @@ m2=10</panel_attributes>
     <coordinates>
       <x>820</x>
       <y>70</y>
-      <w>330</w>
-      <h>40</h>
+      <w>340</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>30;30;320;30</additional_attributes>
