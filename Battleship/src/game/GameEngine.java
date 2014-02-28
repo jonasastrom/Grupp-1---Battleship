@@ -131,7 +131,7 @@ public class GameEngine{
 		player = null;
 		ai = null;
 		listener = null;
-	
+
 		System.gc();	// Calls GC here to make sure it does its job
 		// This keeps the program from ever taking up too much memory
 		// I do this because I think the GC is lazy
@@ -243,6 +243,9 @@ public class GameEngine{
 	 */
 	private void inputPlayerName() {
 		String string = gui.enterName();
+		if(string == null){
+			string = "";
+		}
 		String[] splitString = string.split(" ");
 		playerName = "";
 		for( String split : splitString){
