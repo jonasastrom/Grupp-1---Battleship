@@ -1,16 +1,15 @@
 package game;
 
 /**
+ * class ScoreCalculator
  * 
- * @author Vivi
- * 
+ * @author Group 1 - DAT055 2014
+ * @version 3.0
  */
 public class ScoreCalculator {
 	private static long combo;
 	private static boolean preHit;
 	private static boolean sunkShip;
-	private static long points;
-
 	private static final int ONE = 1;
 	private static final int TWO = 2;
 	private static final int THREE = 3;
@@ -73,44 +72,5 @@ public class ScoreCalculator {
 							// attack was a MISS
 							// or the current attack was a hit but the previous
 							// was a MISS
-	}
-
-	public static long testCalculator() {
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.SUNK);
-		
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.SUNK);
-		
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.SUNK);
-		
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.SUNK);
-		
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.HIT);
-		points += updateScore(GameEngine.LastShot.SUNK);
-		
-
-		// points += updateScore(GameEngine.LastShot.MISS); // 2 points
-		// points += updateScore(GameEngine.LastShot.HIT); // 5000 points
-		// points += updateScore(GameEngine.LastShot.HIT); // 5000 + 5000*3
-		// points
-		// points += updateScore(GameEngine.LastShot.HIT); // 20 000 + 5000*3
-		// points += updateScore(GameEngine.LastShot.SUNK); // omg math....
-		// -____-'
-		// points += updateScore(GameEngine.LastShot.SUNK);
-		// points += updateScore(GameEngine.LastShot.MISS);
-		// points += updateScore(GameEngine.LastShot.SUNK);
-		System.out.println("Congratz you got: " + points + "points");
-		return points;
-
 	}
 }
