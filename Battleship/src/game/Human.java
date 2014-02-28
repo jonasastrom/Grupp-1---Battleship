@@ -39,47 +39,6 @@ public class Human extends Player
 	}
 
 	/**
-	 * A debug version of placeShips,
-	 * called by the GameEngine.
-	 */
-	public void placeShipsDebug()
-	{
-		ArrayList<Ship> ships = fleet.getShips();
-
-		// carrier
-		battlefield.setShip(0, 0, ships.get(0));
-		battlefield.setShip(1, 0, ships.get(0));
-		battlefield.setShip(2, 0, ships.get(0));
-		battlefield.setShip(3, 0, ships.get(0));
-		battlefield.setShip(4, 0, ships.get(0));
-		ships.get(0).setPlaced();
-
-		// battleship
-		battlefield.setShip(0, 1, ships.get(1));
-		battlefield.setShip(1, 1, ships.get(1));
-		battlefield.setShip(2, 1, ships.get(1));
-		battlefield.setShip(3, 1, ships.get(1));
-		ships.get(1).setPlaced();
-
-		// submarine
-		battlefield.setShip(0, 2, ships.get(2));
-		battlefield.setShip(1, 2, ships.get(2));
-		battlefield.setShip(2, 2, ships.get(2));
-		ships.get(2).setPlaced();
-
-		// cruiser
-		battlefield.setShip(0, 3, ships.get(3));
-		battlefield.setShip(1, 3, ships.get(3));
-		battlefield.setShip(2, 3, ships.get(3));
-		ships.get(3).setPlaced();
-
-		// destroyer
-		battlefield.setShip(0, 4, ships.get(4));
-		battlefield.setShip(1, 4, ships.get(4));
-		ships.get(4).setPlaced();
-	}
-
-	/**
 	 * Called by the GUI when a ship has been
 	 * placed on the battlefield.
 	 * @param name The name of the ship

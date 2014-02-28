@@ -46,24 +46,6 @@ public class Ship
 	}
 
 	/**
-	 * Check the orientation of this ship.
-	 * @return true if this ship is vertical,
-	 *         false if it is horizontal
-	 */
-	public boolean isVertical()
-	{
-		return isVertical;
-	}
-
-	/**
-	 * Rotate this ship 90 degrees.
-	 */
-	public void rotate()
-	{
-		isVertical = !isVertical;
-	}
-
-	/**
 	 * Check if the ship has been placed.
 	 * @return true if this ship is placed,
 	 *         false otherwise
