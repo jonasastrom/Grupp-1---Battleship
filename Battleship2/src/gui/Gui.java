@@ -32,12 +32,13 @@ import game.Human;
 import game.Ship;
 import game.ZoneLink;
 import game.ZoneListener;
+import highscore.Score;
 
 /**
  * This class creates the GUI.
  * 
  * @author Group 1 - DAT055 2014
- * @version 2.0
+ * @version 3.0
  */
 public class Gui extends JFrame implements ActionListener, Observer {
 
@@ -241,13 +242,13 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		quit = new JMenuItem("Quit");
 		game.add(quit);
 		quit.addActionListener(this);
-		
+
 		/**
 		 *  Add the high score button on the menuBar
 		 */
 		JMenu highScore = new JMenu("High Score");
 		menuBar.add(highScore);
-		
+
 		/**
 		 *  Add the sub-buttons to the highScore-button
 		 */
@@ -312,7 +313,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		default:
 			difficulty = Difficulty.NORMAL;
 		}
-		
+
 		return difficulty;
 	}
 
@@ -339,65 +340,70 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}
 	}
 
-	/**
-	 * This method displays a nice message where the player is asked whether
-	 * they want to play again
-	 * @param winText A string that contains either "won" or "lost". 
-	 * @return	True if yes has been answered, false if not
-	 */
-	public boolean gameOverText(String winText) {
-		return (JOptionPane.showConfirmDialog(null, "You have " + winText + "!\n Would you like to play again?", "GAME OVER",
+	public boolean prompt(String title, String info) {
+		return (JOptionPane.showConfirmDialog(null, info, title,
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+	}
+
+	public void error(String info) {
+		JOptionPane.showMessageDialog(null, info, "Error",
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**
 	 * This method asks for the users name, and return it as a string.
 	 */
 	public String enterName(){
-		String name = JOptionPane.showInputDialog("Enter your name, sir");
-		return name;
+		return JOptionPane.showInputDialog("Enter your name, sir");
 	}
-
+	
 	/**
-	 * This method create a frame with the high score
+	 * This method create a frame with the high scores
 	 */
-	/*public void showHighscore(ArrayList<Score> list){
-		JFrame frame = new JFrame("Highscore");
+	public void viewHighScores()
+	{
+		ArrayList<Score> list = gameEngine.getHighScores();
+		
+		if (list == null) return;
+		
+		JFrame frame = new JFrame("Global High Scores");
 		frame.setLayout(new GridLayout(11, 2, 50, 0));
 
-		int size = 30;
-		JLabel nameLabel = new JLabel("Name:");
-		JLabel pointLabel = new JLabel("Points:");
+		JLabel rankLabel = new JLabel("RANK");
+		JLabel pointLabel = new JLabel("SCORE");
+		JLabel nameLabel = new JLabel("NAME");
 
-		nameLabel.setFont(new Font("Serif", Font.PLAIN, size));
-		pointLabel.setFont(new Font("Serif", Font.PLAIN, size));
+		rankLabel.setHorizontalAlignment(JLabel.LEFT);
+		pointLabel.setHorizontalAlignment(JLabel.CENTER);
 		pointLabel.setHorizontalAlignment(JLabel.RIGHT);
 
+		frame.add(rankLabel);
+		frame.add(pointLabel);
 		frame.add(nameLabel);
-		frame.add(pointLabel);	
-*/
-		/**
-		 * Iterate through the list, and add it to the frame, with a text-size that get smaller for every loop
-		 */
-		/*for(Score score : list){
+		
+		for (int i = 0; i < list.size(); i++) {
+			
+			Score score = list.get(i);
+			
+			JLabel rank = new JLabel(Integer.toString(i+1));
+			rank.setHorizontalAlignment(JLabel.LEFT);
+			
+			JLabel points = new JLabel(Integer.toString(score.getPoints()));
+			points.setHorizontalAlignment(JLabel.CENTER);
+			
 			JLabel name = new JLabel(score.getName());
-			name.setFont(new Font("Serif", Font.PLAIN, size));
-
-			JLabel points = new JLabel(score.getPoints() + "");
-			points.setHorizontalAlignment(JLabel.RIGHT);
-			points.setFont(new Font("Serif", Font.PLAIN, size));
-
-			frame.add(name);
+			name.setHorizontalAlignment(JLabel.RIGHT);
+			
+			frame.add(rank);
 			frame.add(points);
-
-			size = size - 2;
+			frame.add(name);
 		}
 
 		frame.pack();
-		frame.setSize(500, 600);
+		frame.setSize(300, 500);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-	}*/
+	}
 
 	/**
 	 *  This method listen to the users actions.
@@ -409,7 +415,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() == quit){
 			System.exit(0);
 		}else if(e.getSource() == viewHighScores){
-			System.exit(0);
+			viewHighScores();
 		}else if(e.getSource() == about){
 			JOptionPane.showMessageDialog(null, "Hej! \nVi är 7 coola kids från DAT055 och vi gör ett spel " +
 					"som utspelar sig år 1944 i Stilla Havet.", "About", JOptionPane.INFORMATION_MESSAGE);

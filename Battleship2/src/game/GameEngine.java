@@ -1,6 +1,11 @@
 package game;
 
+import java.util.ArrayList;
+
 import gui.Gui;
+import highscore.Score;
+import highscore.ScoreCalculator;
+import highscore.SocketConnector;
 
 /**
  * TODO class description
@@ -16,13 +21,14 @@ public class GameEngine
 
 	private static Gui gui;
 
-	private Difficulty difficulty;
-	private boolean difficultyChanged = false;
 	private AI ai;
 	private Human human;
 	private ZoneListener listener;
+	private Difficulty difficulty;
 	private BombStatus aiLastBomb;
 	private BombStatus humanLastBomb;
+	private ScoreCalculator scoreCalculator;
+	private SocketConnector socketConnector;
 	private boolean humanWin = false;
 	private boolean gameOver = false;
 	private boolean bombsAway = false;
@@ -82,31 +88,18 @@ public class GameEngine
 	}
 
 	/**
-	 * This lets the player change difficulty
-	 * in the middle of a game. It also starts
-	 * a new game with that difficulty.
-	 * @param difficulty The new difficulty
-	 */
-	public void setDifficulty(Difficulty difficulty)
-	{
-		this.difficulty = difficulty;
-		difficultyChanged = true;
-		resetGame();
-	}
-
-	/**
 	 * TODO method description
 	 */
 	public void init()
 	{
+		scoreCalculator = new ScoreCalculator();
+		socketConnector = new SocketConnector();
+
 		listener = new ZoneListener();
 		human = new Human(listener);
 		gui = new Gui(this,human);
 
-		if (!difficultyChanged)
-			difficulty = gui.selectDifficulty();
-		else
-			difficultyChanged = false;
+		difficulty = gui.selectDifficulty();
 
 		ai = new AI(difficulty,human.getBattlefield(),listener);
 
@@ -121,13 +114,13 @@ public class GameEngine
 				while (true) {
 					try { Thread.sleep(100); }
 					catch (InterruptedException e) {}
-					
+
 					if (bombsAway && !humanTurn) {
 
 						// Simulate thinking
 						try { Thread.sleep(500); }
 						catch (InterruptedException e) {}
-						
+
 						aiTurn();
 					}
 				}
@@ -159,29 +152,67 @@ public class GameEngine
 	}
 
 	/**
-	 * 
+	 * TODO method description
 	 */
 	public void gameOver()
 	{
-		String winText;
 		if (gameOver) {
-			if (humanWin)
-				winText = "won";
+
+			boolean highScoreOpen = false;
+			String winText;
+
+			if (humanWin) winText = "won";
 			else {
-				ai.getBattlefield().showShips(); // AI's ships will be visible 
+				// Show hidden AI ships
+				ai.getBattlefield().showShips(); 
 				winText = "lost";
 			}
-			if (gui.gameOverText(winText)) { // gameOverText returns a boolean
-				// depending on which button got
-				// pressed
-				winText = null; // If yes, then the game is reset and remade
-				resetGame();
-			} else
-				System.exit(0); // Else the game exits
-		} else
-			resetGame(); // If the game is not over but the menu option for a
-		// New Game has been chosen, then the win/lose
-		// messages won't be displayed.
+
+			int points = scoreCalculator.calculate(
+					difficulty, ai.getFleet(), human.getFleet());
+
+			if (gui.prompt("Game Over", "You have "+winText +"! You scored "+
+					points+"\nWould you like to submit your score?")) {
+
+				// Get the player name
+				String name = gui.enterName();
+
+				if (name != null) {
+
+					ScoreStatus scoreStatus;
+					scoreStatus = socketConnector.sendHighScore(
+							new Score(points,name));
+
+					String scoreText = "";
+					if (scoreStatus == ScoreStatus.ADDED)
+						scoreText = "Yay! You got a new high score!";
+					else if (scoreStatus == ScoreStatus.LOW)
+						scoreText = "Sorry but your score was too low...";
+					else if (scoreStatus == ScoreStatus.ERROR)
+						gui.error("Unable to contact the server!");
+
+					if (scoreStatus != ScoreStatus.ERROR) {
+						if (gui.prompt("High Score", scoreText+
+								"\nWould you like to view the high scores?")) {
+							gui.viewHighScores();
+							highScoreOpen = true;
+						}
+					}
+				}
+			}
+
+			if (!highScoreOpen) {
+				if (gui.prompt("Game Over", "Would you like to play again?")) {
+					resetGame();
+				}
+				else System.exit(0);
+			}
+
+		} else {
+			// If the game is not over but the menu option
+			// for a new game has been chosen
+			resetGame();
+		}
 	}
 
 	/**
@@ -197,6 +228,9 @@ public class GameEngine
 
 		aiLastBomb = BombStatus.MISS;
 		humanLastBomb = BombStatus.MISS;
+
+		scoreCalculator = null;
+		socketConnector = null;
 
 		listener.deleteObservers();
 		gui.setVisible(false);
@@ -286,5 +320,21 @@ public class GameEngine
 
 		// AI is done, player's turn now
 		humanTurn = true;
+	}
+
+	/**
+	 * TODO method description
+	 * @return
+	 */
+	public ArrayList<Score> getHighScores()
+	{
+		ArrayList<Score> highScores = socketConnector.loadHighScores();
+
+		if (highScores == null) {
+			gui.error("Unable to contact the server!");
+			return null;
+		} else {
+			return highScores;
+		}
 	}
 }
