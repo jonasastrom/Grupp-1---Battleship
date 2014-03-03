@@ -1,4 +1,6 @@
-package highscore;
+package server;
+
+import highscore.Score;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

@@ -1,4 +1,4 @@
-package highscore;
+package server;
 
 import javax.swing.JOptionPane;
 
