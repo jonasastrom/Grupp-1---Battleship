@@ -17,10 +17,8 @@ public class Main
 	{
 		new Server(SERVER_PORT);
 
-		int selectedOption = 1;
-
 		Object[] options = {"Stop Server"};
-		selectedOption = JOptionPane.showOptionDialog(
+		int selectedOption = JOptionPane.showOptionDialog(
 				null,
 				"\nThe High Score Server is running\n"+
 				"Listening on port "+SERVER_PORT+"\n\n",

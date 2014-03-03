@@ -31,12 +31,11 @@ public class Server
 	public Server(int serverPort)
 	{
 		loadHighScores();
+
 		try { serverSocket = new ServerSocket(serverPort); }
 		catch (IOException e) { e.printStackTrace(); }
-		new SocketReceiver(this,serverSocket);
 
-		// Debug
-		//addScores(); printScores();
+		new SocketReceiver(this,serverSocket);
 	}
 
 	/**
@@ -54,7 +53,7 @@ public class Server
 				input.close();
 			} catch(Exception e) {
 				e.printStackTrace();
-				System.exit(0);
+				System.exit(-1);
 			}
 		} else {
 			highScores = new ArrayList<Score>();
@@ -74,7 +73,7 @@ public class Server
 			output.close();
 		} catch(Exception e) {
 			e.printStackTrace();
-			System.exit(0);
+			System.exit(-1);
 		}
 	}
 
@@ -125,36 +124,9 @@ public class Server
 			saveHighScores();
 			return true;
 		}
-		
+
 		// Return false because the score
-		// didn't make the top list
+		// didn't make it to the top list
 		return false;
-	}
-
-	/**
-	 * Debug: add a few scores
-	 */
-	@SuppressWarnings("unused")
-	private void addScores()
-	{
-		update(new Score(1000,"Bob"));
-		update(new Score(2000,"Alice"));
-		update(new Score(3000,"John"));
-	}
-
-	/**
-	 * Debug: print all scores
-	 */
-	@SuppressWarnings("unused")
-	private void printScores()
-	{
-		int rank;
-		for (int i = 0; i < highScores.size(); i++) {
-			rank = i + 1;
-			if (rank < 10)
-				System.out.println("rank=0"+rank+" "+highScores.get(i));
-			else
-				System.out.println("rank="+rank+" "+highScores.get(i));
-		}
 	}
 }

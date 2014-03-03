@@ -35,6 +35,8 @@ public class SocketHandler extends Thread
 	public void run()
 	{
 		try {
+			// The order of input and output must
+			// match the client's output and input
 			input = new ObjectInputStream(clientSocket.getInputStream());
 			output = new ObjectOutputStream(clientSocket.getOutputStream());
 		} catch (IOException e) { e.printStackTrace(); }
@@ -62,13 +64,18 @@ public class SocketHandler extends Thread
 				return;
 			}
 
+			// The client sends a score object if it
+			// wants to add the score to the list
 			if (request instanceof Score) {
 				boolean added = server.update((Score)request);
 				try {
 					output.writeObject(added);
 				} catch (IOException e) { e.printStackTrace(); }
-				
+
 			} else if (request instanceof String) {
+
+				// The client sends a "load" command if
+				// it wants to get the high score list
 				if (request.equals("load")) {
 					try {
 						output.writeObject(server.getHighScores());

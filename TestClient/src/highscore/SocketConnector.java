@@ -1,7 +1,9 @@
 package highscore;
 
-import game.TestGame.ScoreStatus;
+// Enum import
+import game.Game.ScoreStatus;
 
+// Import Java libraries
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -28,8 +30,31 @@ public class SocketConnector
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
 	private boolean connected = false;
+	private InetAddress serverAddress = null;
 
-	public SocketConnector() {}
+	/**
+	 * Construct the SocketConnector and
+	 * try to resolve the server name.
+	 */
+	public SocketConnector()
+	{
+		// Try to get the IP address of the server
+		try {
+			serverAddress = InetAddress.getByName(SERVER_NAME);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Get the server's IP address (used by the GUI).
+	 * @return The IP address of the server or
+	 *         null if the hostname lookup failed
+	 */
+	public String getServerAddress()
+	{
+		return serverAddress.getHostAddress();
+	}
 
 	/**
 	 * Connect to the high score server and open
@@ -38,19 +63,12 @@ public class SocketConnector
 	 */
 	private void connect()
 	{
-		InetAddress serverIP = null;
-
-		// Try to get the IP address of the server
-		try {
-			serverIP = InetAddress.getByName(SERVER_NAME);
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			return;
-		}
+		// Check if hostname resolution failed
+		if (serverAddress == null) return;
 
 		// Try to connect to the server
 		try {
-			socket = new Socket(serverIP,SERVER_PORT);
+			socket = new Socket(serverAddress,SERVER_PORT);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
@@ -58,6 +76,8 @@ public class SocketConnector
 
 		// Try to get input and output streams
 		try {
+			// The order of output and input must
+			// match the server's input and output
 			output = new ObjectOutputStream(socket.getOutputStream());
 			input = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException e) {
