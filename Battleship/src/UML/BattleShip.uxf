@@ -9,7 +9,7 @@
       <w>210</w>
       <h>150</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::game
 GameEngine
 --
 bg=green
@@ -30,7 +30,7 @@ _+ isPlayerTurn() : boolean_
       <w>160</w>
       <h>70</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::game
 Human
 --
 bg=green
@@ -45,7 +45,7 @@ bg=green
       <w>210</w>
       <h>100</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::game
 AI
 --
 bg=green
@@ -62,7 +62,7 @@ bg=green
       <w>240</w>
       <h>130</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::game
 BattleField
 --
 bg=green
@@ -81,7 +81,7 @@ bg=green
       <w>200</w>
       <h>110</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::game
 Fleet
 --
 bg=green
@@ -98,7 +98,7 @@ bg=green
       <w>210</w>
       <h>140</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::game
 Player
 --
 bg=green
@@ -182,11 +182,12 @@ bg=green
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>1030</x>
-      <y>720</y>
+      <y>710</y>
       <w>150</w>
-      <h>60</h>
+      <h>80</h>
     </coordinates>
-    <panel_attributes>Package::GUI
+    <panel_attributes>&lt;&lt;JButton&gt;&gt;
+Package::gui
 Zone
 --
 bg=white
@@ -199,9 +200,10 @@ bg=white
       <x>300</x>
       <y>260</y>
       <w>370</w>
-      <h>60</h>
+      <h>80</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>&lt;&lt;Observable&gt;&gt;
+Package::game
 ZoneListener
 --
 bg=green
@@ -212,11 +214,11 @@ bg=green
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>160</x>
-      <y>340</y>
+      <y>350</y>
       <w>140</w>
       <h>120</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::game
 ZoneLink
 --
 bg=green
@@ -236,7 +238,7 @@ _+ String state_
       <w>170</w>
       <h>190</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::game
 Ship
 bg=green
 --
@@ -258,7 +260,7 @@ bg=green
       <w>180</w>
       <h>140</h>
     </coordinates>
-    <panel_attributes>Package::Game
+    <panel_attributes>Package::game
 Zone
 bg=green
 --
@@ -273,11 +275,13 @@ bg=green
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>550</x>
-      <y>690</y>
+      <y>680</y>
       <w>350</w>
-      <h>130</h>
+      <h>150</h>
     </coordinates>
-    <panel_attributes>GUI
+    <panel_attributes>&lt;&lt;JFrame&gt;&gt;
+&lt;&lt;implements Observer&gt;&gt;
+GUI
 --
 bg=white
 + selectDifficultyWindow() : int
@@ -293,11 +297,11 @@ bg=white
       <x>200</x>
       <y>270</y>
       <w>120</w>
-      <h>90</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
 </panel_attributes>
-    <additional_attributes>100;30;30;30;30;70</additional_attributes>
+    <additional_attributes>100;30;30;30;30;80</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -388,7 +392,7 @@ m2=100
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>870</x>
-      <y>720</y>
+      <y>710</y>
       <w>180</w>
       <h>50</h>
     </coordinates>
@@ -401,12 +405,12 @@ m2=200</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>530</x>
-      <y>290</y>
+      <y>310</y>
       <w>90</w>
-      <h>420</h>
+      <h>390</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>30;30;30;260;70;260;70;400</additional_attributes>
+    <additional_attributes>30;30;30;240;70;240;70;370</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -427,7 +431,7 @@ m2=200</panel_attributes>
       <w>360</w>
       <h>100</h>
     </coordinates>
-    <panel_attributes>Package::HighScore
+    <panel_attributes>Package::highscore
 HighScore
 --
 bg=light_gray
@@ -444,7 +448,7 @@ bg=light_gray
       <w>230</w>
       <h>140</h>
     </coordinates>
-    <panel_attributes>Package::HighScore
+    <panel_attributes>Package::highscore
 Score
 --
 bg=light_gray
@@ -457,12 +461,12 @@ bg=light_gray
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1170</x>
+      <x>1160</x>
       <y>200</y>
       <w>160</w>
       <h>70</h>
     </coordinates>
-    <panel_attributes>Package::HighScore
+    <panel_attributes>Package::highscore
 ScoreCalculator
 --
 bg=light_gray
@@ -487,11 +491,11 @@ m2=10</panel_attributes>
     <coordinates>
       <x>820</x>
       <y>100</y>
-      <w>370</w>
+      <w>360</w>
       <h>150</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>350;130;80;130;80;30;30;30</additional_attributes>
+    <additional_attributes>340;130;80;130;80;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
