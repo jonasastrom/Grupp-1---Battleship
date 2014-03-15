@@ -1,7 +1,7 @@
 package game;
 
 /**
- * class ScoreCalculator
+ * Handles calculation of player scores.
  * 
  * @author Group 1 - DAT055 2014
  * @version 3.0
@@ -18,10 +18,9 @@ public class ScoreCalculator {
 	private static final int SIXTY_ONE_K = 61000;
 
 	/**
-	 * Construktor for the calculator, sets the init for the instances. Created
+	 * Constructor for the calculator, sets the init for the instances. Created
 	 * by gameEngine maybe?
 	 * 
-	 * @param score
 	 */
 	public ScoreCalculator() {
 		combo = 1;
