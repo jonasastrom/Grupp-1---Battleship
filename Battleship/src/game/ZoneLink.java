@@ -14,6 +14,17 @@ public class ZoneLink
 	public static String leftOrRight;
 	public static String state;
 
+	/**
+	 * Handles information about the zone that this particular instance refers
+	 * to.
+	 * 
+	 * @param x X-coordinate of this zone
+	 * @param y Y-coordinate of this zone
+	 * @param leftOrRight Which gameboard this zone belongs to, 'left' for the
+	 * 			AI player, 'right' for the human player.
+	 * @param state The state of this zone, 'hit', 'miss', 'sea', 'ship' 
+	 * 			or 'sunk'
+	 */
 	public ZoneLink(int x, int y, String leftOrRight, String state)
 	{
 		ZoneLink.x = x;
