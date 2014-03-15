@@ -11,6 +11,9 @@ import java.util.ArrayList;
 public class HighScore {
 	ArrayList<Score> highScore;
 
+	/**
+	 * Initialises the highscore list with standard names.
+	 */
 	public HighScore() {
 		highScore = new ArrayList<Score>();
 		highScore.add(0,new Score(0, "Batman"));		// These are only the
@@ -28,7 +31,9 @@ public class HighScore {
 	/**
 	 * This compares the current high score list to anew high score list and
 	 * updated the current one with new scores if they're higher
+	 * 
 	 * @param newHighScore The high score list to check against
+	 * @return True if the highscore was updated, false otherwise.
 	 */
 	public boolean compHighScore(HighScore newHighScore){
 		boolean changed = false;	// Nothing has happened, therefore nothing is changed
@@ -64,6 +69,10 @@ public class HighScore {
 		return false;
 	}
 
+	/**
+	 * Returns the highscores.
+	 * @return The highscorelist
+	 */
 	public ArrayList<Score> getHighScoreList() {
 		return this.highScore;
 	}
