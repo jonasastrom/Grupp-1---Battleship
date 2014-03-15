@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * class AI
+ * This class handles all the actions the AI player can make. 
  * 
  * @author Group 1 - DAT055 2014
  * @version 2.0
