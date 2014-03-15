@@ -11,6 +11,16 @@ import java.util.Observable;
  */
 public class ZoneListener extends Observable
 {
+	/**
+	 * Tells the GUI that a zone on the battlefield has been updated.
+	 * 
+	 * @param x X-coordinate of the zone
+	 * @param y Y-coordinate of the zone
+	 * @param leftOrRight Which gameboard the zone belongs to, 'left' for the
+	 * 			AI player, 'right' for the human player.
+	 * @param state The state of the zone, 'hit', 'miss', 'sea', 'ship' 
+	 * 			or 'sunk'
+	 */
 	public void update(int x, int y, String side, String state)
 	{
 		setChanged();
