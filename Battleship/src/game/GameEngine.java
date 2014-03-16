@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 /**
  * class GameEngine
+ * Starts the game and handles the scripted events.
  * 
  * @author Group 1 - DAT055 2014
  * @version 2.0
@@ -33,6 +34,9 @@ public class GameEngine{
 	private HighScore highScore;
 	public enum LastShot {MISS, HIT, SUNK}
 
+	/**
+	 * Constructor of the class - Starts the initiation
+	 */
 	public GameEngine(){
 		highScore = new HighScore();
 		difficultyChanged = false;
@@ -40,8 +44,7 @@ public class GameEngine{
 	}
 
 	/**
-	 * This is a main method.
-	 * It methods mains.
+	 * The main method - Starts the game.
 	 * @param args Does absolutely nothing in this program
 	 */
 	public static void main(String[] args) {
@@ -49,8 +52,7 @@ public class GameEngine{
 	}
 
 	/**
-	 *  Sets a new game up by saying that the game is not over
-	 *  and making the players place their ships.
+	 *  Sets up a new game.
 	 */
 	public void newGame() {
 		playerTurn = false; // before the ships are placed it's not the player's
@@ -67,7 +69,7 @@ public class GameEngine{
 	}
 
 	/**
-	 * This method initiate new objects.
+	 * Initiates new objects.
 	 */
 	public void init(){
 	
@@ -90,10 +92,7 @@ public class GameEngine{
 	}
 
 	/**
-	 *  Ends the game, pops a prompt to the player, and cleans variables
-	 *  between games. This also starts a new game if the player has prompted it
-	 *  whether through the prompt or from being called before the game is over.
-	 *  Prompt.
+	 *  Ends the game, the player can either quit or start a new game.
 	 */
 	public void gameOver() {
 	
@@ -140,9 +139,8 @@ public class GameEngine{
 	}
 
 	/**
-	 * This is called by the gui once a square has been pressed
+	 * Called when a square has been pressed
 	 * It takes the coordinates of that square and sends them to the ai to be bombed
-	 * It then lets the ai have its turn
 	 * @param x The x coordinate of the column to be bombed
 	 * @param y The y coordinate of the row to be bombed
 	 */
@@ -174,6 +172,10 @@ public class GameEngine{
 		setPlayerTurn(); // Ai done, player's turn now
 	}
 
+	/**
+	 * Gets the gui object
+	 * @return the object of gui
+	 */
 	public static Gui getGui(){
 		return gui;
 	}
@@ -254,6 +256,7 @@ public class GameEngine{
 	}
 
 	/**
+	 * Gets the difficulty for the current game.
 	 * @return 0 if training, 1 if easy, 2 if normal, 3 if hard, 4 if impossible
 	 */
 	public int getDifficulty() {

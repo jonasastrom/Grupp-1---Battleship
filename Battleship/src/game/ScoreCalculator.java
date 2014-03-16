@@ -18,8 +18,7 @@ public class ScoreCalculator {
 	private static final int SIXTY_ONE_K = 61000;
 
 	/**
-	 * Constructor for the calculator, sets the init for the instances. Created
-	 * by gameEngine maybe?
+	 * Constructor for the calculator, sets the init for the instances.
 	 * 
 	 */
 	public ScoreCalculator() {
