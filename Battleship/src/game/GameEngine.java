@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 /**
  * class GameEngine
- * Starts the game and handles the scripted events.
  * 
  * @author Group 1 - DAT055 2014
  * @version 2.0
@@ -181,10 +180,12 @@ public class GameEngine{
 	}
 
 	/**
-	 * Called by gui to say the whole fleet is now placed by the human player
-	 * The player can start attacking the enemy
+	 * It is the player's turn
 	 */
 	public void setPlayerTurn(){
+		// Called by gui to say the whole fleet is now placed by the human player
+		 // The player can start attacking the enemy
+		 
 		playerTurn = true;
 	}
 
@@ -276,7 +277,7 @@ public class GameEngine{
 	}
 	
 	/**
-	 * Returns if it's the players turn
+	 * Asks if it is the player's turn
 	 * @return returns true if it's the players turn
 	 * 			else false
 	 */
