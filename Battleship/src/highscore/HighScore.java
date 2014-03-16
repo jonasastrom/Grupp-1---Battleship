@@ -3,7 +3,7 @@ package highscore;
 import java.util.ArrayList;
 
 /**
- * class HighScore
+ * Stores the top 10 scores.
  * 
  * @author Group 1 - DAT055 2014
  * @version 3.0

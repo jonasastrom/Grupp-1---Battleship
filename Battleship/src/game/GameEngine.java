@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * class GameEngine
+ * Ensures that the game features and mechanics are running as designed.
  * 
  * @author Group 1 - DAT055 2014
  * @version 2.0
