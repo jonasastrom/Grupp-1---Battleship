@@ -1,4 +1,4 @@
-package game;
+package highscore;
 
 import java.util.ArrayList;
 

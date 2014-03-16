@@ -1,4 +1,4 @@
-package game;
+package highscore;
 
 /**
  * This class handles a single score for the game.

@@ -27,10 +27,10 @@ import javax.swing.JRadioButton;
 import game.Fleet;
 import game.GameEngine;
 import game.Human;
-import game.Score;
 import game.Ship;
 import game.ZoneLink;
 import game.ZoneListener;
+import highscore.Score;
 
 /**
  * This class creates the GUI.

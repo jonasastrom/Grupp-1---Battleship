@@ -1,6 +1,9 @@
 package game;
 
 import gui.Gui;
+import highscore.HighScore;
+import highscore.Score;
+import highscore.ScoreCalculator;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
