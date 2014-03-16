@@ -34,6 +34,13 @@ public class GameEngine{
 	private LastShot aiLastShot;
 	private ZoneListener listener;
 	private HighScore highScore;
+	
+	/**
+	 * Information of the last attack
+	 * @author Group 1 - DAT055 2014
+	 * @version 2.0
+	 *
+	 */
 	public enum LastShot {MISS, HIT, SUNK}
 
 	/**
