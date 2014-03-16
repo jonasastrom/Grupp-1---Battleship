@@ -19,9 +19,9 @@ public class Zone extends JButton{
 	/**
 	 * Constructor for creating a Zone-object that have x and y coordinates and a name.
 	 * These are the squares in the battlefield.  
-	 * @param x
-	 * @param y
-	 * @param name
+	 * @param x - The x-coordinate
+	 * @param y - The y-coordinate
+	 * @param name - Name of the Zone
 	 */
 	public Zone(int x, int y, String name){
 		this.x = x;
