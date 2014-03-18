@@ -16,6 +16,8 @@ public class Human extends Player
 
 	/**
 	 * Construct the human player.
+	 * @param zoneListener The ZoneListener object that will be
+	 * passed to the battlefield. Used to update the GUI.
 	 */
 	public Human(ZoneListener zoneListener)
 	{
