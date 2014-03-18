@@ -14,6 +14,9 @@ public class Battlefield
 
 	/**
 	 * Construct the battlefield with 100 zones.
+	 * @param id The id of the owner of the battlefield
+	 * @param zoneListener The ZoneListener object used
+	 * to update the GUI.
 	 */
 	public Battlefield(String id, ZoneListener zoneListener)
 	{
