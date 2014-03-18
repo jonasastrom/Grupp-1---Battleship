@@ -79,9 +79,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		setTitle("Battleship");
 		setLayout(new BorderLayout(10, 10));
 
-		/**
-		 *  Add the buttons to the right in the frame, add them in a group of button, and add actionListeners
-		 */
+		// Add the buttons to the right in the frame, add them in a group of button, and add actionListeners
 		buttonGroup = new ButtonGroup();
 
 		carrier = new JRadioButton("Carrier 5 Squares");
@@ -118,9 +116,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 
 		add(radioButtonPanel, BorderLayout.EAST);
 
-		/**
-		 * Add the color-description to the top of the frame
-		 */
+		// Add the color-description to the top of the frame
 		JPanel colorPanel = new JPanel(new GridLayout(1, 0));
 		JLabel green = new JLabel("Green - Hit");
 		JLabel black = new JLabel("Black - Ship");
@@ -142,21 +138,15 @@ public class Gui extends JFrame implements ActionListener, Observer {
 
 		add(colorPanel, BorderLayout.NORTH);
 
-		/**
-		 * Add a empty JLabel to the bottom of the frame, the text of the label can be change 
-		 * by calling a method changeInformationText with a String as parameter
-		 */
+		// Add a empty JLabel to the bottom of the frame, the text of the label can be change 
+		// by calling a method changeInformationText with a String as parameter
 		informatioText = new JLabel("Place your ship on the right side. Bomb on the left side");
 		add(informatioText, BorderLayout.SOUTH);
 
-		/**
-		 * Add a empty text-label to the left of the frame
-		 */
+		// Add a empty text-label to the left of the frame 
 		add(new JLabel("   "), BorderLayout.WEST);
 
-		/**
-		 * Add the zones in the middle of the frame. Create two JPanel and add them to a third one and add that one to the frame.
-		 */
+		// Add the zones in the middle of the frame. Create two JPanel and add them to a third one and add that one to the frame. 
 		JPanel centerFrame = new JPanel(new GridLayout(1, 2, 50, 0));
 		JPanel leftGamePanel  = new JPanel(new GridLayout(11, 11, 2, 2));
 		JPanel rightGamePanel = new JPanel(new GridLayout(11, 11, 2, 2));
@@ -176,11 +166,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		letters.add(9, "I");
 		letters.add(10, "J");
 
-		/**
-		 * Add all the zones to the left frame, and then to the right frame.
-		 * Add actionListeners to every zones, and setEnable false for the left frames zones.
-		 * Add all the left zone in one array, and the right ones to another array.
-		 */
+		// Add all the zones to the left frame, and then to the right frame.
+		// Add actionListeners to every zones, and setEnable false for the left frames zones.
+		// Add all the left zone in one array, and the right ones to another array.		 
 		Zone zone = null;
 		for(int i = 0; i < 11; i++){
 			for(int j = 0; j < 11; j++){
@@ -220,21 +208,15 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 *  This method creates the menu bar for the GUI.
 	 */
 	private void makeMenuBar(){
-		/**
-		 *  Add the menuBar to the frame
-		 */
+		// Add the menuBar to the frame
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		/**
-		 *  Add the menu button on the menuBar
-		 */
+		// Add the menu button on the menuBar
 		JMenu menu = new JMenu("Menu");
 		menuBar.add(menu);
 
-		/**
-		 *  Add the sub-buttons to the menu-button
-		 */
+		// Add the sub-buttons to the menu-button
 		newGame = new JMenuItem("New Game");
 		menu.add(newGame);
 		newGame.addActionListener(this);
@@ -247,15 +229,11 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		menu.add(quit);
 		quit.addActionListener(this);
 
-		/**
-		 * Add the help button to the menuBar
-		 */
+		// Add the help button to the menuBar		 
 		JMenu help = new JMenu("Help");
 		menuBar.add(help);
 
-		/**
-		 *  Add the sub-buttons to the help-button
-		 */
+		// Add the sub-buttons to the help-button		 
 		about = new JMenuItem("About");
 		help.add(about);
 		about.addActionListener(this);
@@ -264,15 +242,11 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		help.add(rules);
 		rules.addActionListener(this);
 
-		/**
-		 *  Add the difficulty button to the menuBar
-		 */
+		// Add the difficulty button to the menuBar		 
 		JMenu difficulty = new JMenu("Difficulty");
 		menuBar.add(difficulty);
 
-		/**
-		 *  Add the sub-buttons to the difficulty-button
-		 */
+		// Add the sub-buttons to the difficulty-button
 		training = new JMenuItem("Training");
 		difficulty.add(training);
 		training.addActionListener(this);
@@ -379,9 +353,7 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		frame.add(nameLabel);
 		frame.add(pointLabel);	
 
-		/**
-		 * Iterate through the list, and add it to the frame, with a text-size that get smaller for every loop
-		 */
+		// Iterate through the list, and add it to the frame, with a text-size that get smaller for every loop
 		for(Score score : list){
 			JLabel name = new JLabel(score.getName());
 			name.setFont(new Font("Serif", Font.PLAIN, size));
@@ -429,20 +401,14 @@ public class Gui extends JFrame implements ActionListener, Observer {
 		}else if(e.getSource() == insane){
 			gameEngine.setDifficulty(4);
 		}else if(e.getSource() instanceof Zone){
-			/**
-			 * This is when the user has click on a zone
-			 */
+			// This is when the user has click on a zone
 			Zone tempZone = (Zone) e.getSource();
-			/**
-			 * This if-statement is when it is the players turn
-			 */
+			// This if-statement is when it is the players turn
 			if( GameEngine.isPlayerTurn() == true){
 				tempZone.setEnabled(false);
 				gameEngine.coordinates(tempZone.x - 1, tempZone.y - 1);
 			}else if( sizeOnShip != 0){
-				/**
-				 * When the user choose to select his battleships, this if-statement will get true.
-				 */
+				// When the user choose to select his battleships, this if-statement will get true.
 				tempZone.changeColor(Color.BLACK);
 				tempZone.setEnabled(false);
 				zoneName.add(tempZone.name);
@@ -450,10 +416,8 @@ public class Gui extends JFrame implements ActionListener, Observer {
 				x[sizeOnShip] = tempZone.x - 1;
 				y[sizeOnShip] = tempZone.y - 1;
 
-				/**
-				 * sizeOnShip is 0 when the user has selected all his spot for the battlefield,
-				 * then call human.placeShip with the selected zones. If all ships are done, start the game.
-				 */
+				// sizeOnShip is 0 when the user has selected all his spot for the battlefield,
+				// then call human.placeShip with the selected zones. If all ships are done, start the game.
 				if(sizeOnShip == 0){
 					buttonGroup.clearSelection();
 					human.placeShip(ship, x, y);
@@ -475,11 +439,9 @@ public class Gui extends JFrame implements ActionListener, Observer {
 					y = null;
 				}
 			}
-			/**
-			 * Here are the if-statements when the user click on battleship button to the right.
-			 * This methods disable all buttons, and keep the pressed one selected.
-			 * Save the selected ships size, and name, and initialize the int-arrays x and y to the size of the ship.
-			 */
+			// Here are the if-statements when the user click on battleship button to the right.
+			// This methods disable all buttons, and keep the pressed one selected.
+			// Save the selected ships size, and name, and initialize the int-arrays x and y to the size of the ship.
 		}else if(e.getSource() == carrier){
 			ship = "carrier";
 			sizeOnShip = 5;
@@ -543,22 +505,17 @@ public class Gui extends JFrame implements ActionListener, Observer {
 	 */
 	@Override
 	public void update(Observable observable, Object object) {
-		/**
-		 * This if-statement check if the class that send gui the update was ZoneListener, and the object was a ZoneLink
-		 */
+		// This if-statement check if the class that send gui the update was ZoneListener, and the object was a ZoneLink
 		if( observable instanceof ZoneListener && object instanceof ZoneLink){
 			Zone zone = null;
-			/**
-			 * Check if it is the left or right battlefield that should be modified
-			 */
+			// Check if it is the left or right battlefield that should be modified
 			if(ZoneLink.leftOrRight.equals("right")){
 				zone = rightZoneArray.get(((ZoneLink.y) * 10) + ZoneLink.x);
 			}else if(ZoneLink.leftOrRight.equals("left")){
 				zone = leftZoneArray.get(((ZoneLink.y) * 10) + ZoneLink.x);
 			}
-			/**
-			 * Change the color of the zone to gray, green, pink, black or blue, depends on the input
-			 */
+
+			// Change the color of the zone to gray, green, pink, black or blue, depends on the input
 			try{
 				if(ZoneLink.state.equals("miss")){
 					zone.changeColor(Color.GRAY);

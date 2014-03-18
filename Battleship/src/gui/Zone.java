@@ -28,10 +28,8 @@ public class Zone extends JButton{
 		this.y = y;
 		this.name = name;
 
-		/**
-		 * If x or y is 0 (x*y will be 0), its the buttons outside the 10x10 frame, 
-		 * and the buttons should have a text, 1-10 or A-J. Otherwise set background blue.
-		 */
+		// If x or y is 0 (x*y will be 0), its the buttons outside the 10x10 frame, 
+		// and the buttons should have a text, 1-10 or A-J. Otherwise set background blue.		 
 		if((x * y) == 0){
 			setBackground(null);
 			setBorder(null);
