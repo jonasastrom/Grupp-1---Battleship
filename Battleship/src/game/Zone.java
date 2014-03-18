@@ -19,6 +19,11 @@ public class Zone
 
 	/**
 	 * Construct a single zone.
+	 * @param xPos The x-coordinate of the zone.
+	 * @param yPos The y-coordinate of the zone.
+	 * @param id The id of the owner of the zone-object.
+	 * @param zonListener The ZoneListener object that will be
+	 *	  used to update the GUI.
 	 */
 	public Zone(int xPos, int yPos, String id, ZoneListener zoneListener)
 	{
