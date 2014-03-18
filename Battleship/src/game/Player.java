@@ -15,6 +15,9 @@ public abstract class Player
 
 	/**
 	 * Construct a battlefield and a fleet.
+	 * @param id The name of the player object.
+	 * @param zoneListener The ZoneListener object that will be
+	 * passed to the battlefield. Used to update the GUI.
 	 */
 	public Player(String id, ZoneListener zoneListener)
 	{
